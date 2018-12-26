@@ -7,7 +7,7 @@ trait ProcessImage {
     //save images to images folder with different name
 	public function process_image( $file ) {
 
-		$destinationPath = 'images';
+		$destinationPath = 'uploads';
 		$name            = md5( $file->getClientOriginalName() ) //first is hashed file name
                             . '_' . Carbon::now()->timestamp    //current timestamp
 		                    . '.' .

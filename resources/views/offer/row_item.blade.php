@@ -1,9 +1,9 @@
-<div class="item ">
+<div class="item">
     <div class="image">
-        <img src="/images/no-thumbnail.png">
+        <img src="/uploads/{{json_decode($item->images)[0]}}">
     </div>
     <div class="content">
-        <a class="header">{{$item->title}}</a>
+        <a class="header" href="/offers/{{$item->id}}">{{$item->title}}</a>
         <div class="meta">
             <span>{{$item->address}}</span>
         </div>

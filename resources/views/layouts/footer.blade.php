@@ -3,9 +3,10 @@
 <div style="background: black;padding-top:10px;padding-bottom: 50px">
     <div class="ui container">
         <div class="ui inverted secondary menu stackable three column grid">
-            <div class="column">
+            <div class="column"></div>
+            <div class="column" >
                 <p class="ui dividing header item"><strong>Copyright</strong></p>
-                <p class="item"> PetStore © 2018. All Rights Reserved.</p>
+                <p class="item"> C-Home © 2018. All Rights Reserved.</p>
             </div>
             {{--<div class="column">--}}
                 {{--<p class="ui dividing header item"><strong>Contact</strong></p>--}}

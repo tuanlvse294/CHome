@@ -54,19 +54,12 @@ class OfferController extends Controller
     public function show(Offer $offer)
     {
         $liked = null;
-        $is_bought = false;
-        if (\Auth::check()) {
-            $mycomment = $this->get_my_comment($offer->id);
-            $mycomment->fill_olds();
-            $is_bought = $this->is_bought_this_offer($offer->id);
-        }
 
-        $related = $offer->category->offers->random(min(4, $offer->category->offers->count()));
+//        $related = $offer->category->offers->random(min(4, $offer->category->offers->count()));
         return view('offer.detail', ['item' => $offer,
-            'is_bought' => $is_bought,
             'liked' => $liked,
             'title' => $offer->name,
-            'related' => $related
+//            'related' => $related
         ]);
     }
 
@@ -136,7 +129,7 @@ class OfferController extends Controller
                 $path = $this->process_image($file);
                 array_push($urls, $path);
             }
-            $offer->image_urls = json_encode($urls);
+            $offer->images = json_encode($urls);
         } else if (is_null($offer->image_urls)) {
             $offer->images = json_encode(['no-thumbnail.png']); //there's no image, we will use default image
         }

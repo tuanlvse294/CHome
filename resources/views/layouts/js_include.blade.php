@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/bower_components/slick-carousel/slick/slick.js"></script>
 
 <script>
-    $(function () {
+    $(window).on('load', function () {
         $('.square').each(function () {
             $(this).height($(this).width());
             var image = $(this).find('.product_image');
@@ -23,6 +23,9 @@
             mainImage.attr('src', $(this).attr('src'));
             mainImage.css('margin-top', (mainImage.parent().height() - mainImage.height()) / 2);
         });
+
+    });
+    $(function () {
         $('.ui.dropdown').dropdown({
             on: 'hover'
         });
