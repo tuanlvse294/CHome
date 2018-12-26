@@ -12,9 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/cities/{city}/districts', function ($city_id) {
+    $city = \App\City::query()->findOrNew($city_id);
+    $district = new \App\District();
+    $district->id = -1;
+    $district->name = 'Tất cả quận, huyện';
+    $city->districts = $city->districts->prepend($district);
+    return view('layouts.search.distrct_select', ['districts' => $city->districts]);
+});
+Route::get('/cities', function () {
+    return \App\City::query()->select('id', 'name')->get();
+});
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
