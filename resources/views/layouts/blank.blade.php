@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{isset($title)?$title.' - ':''}}PetStore - Thế giới thú nuôi</title>
+    <title>{{isset($title)?$title.' - ':''}}CHome - Rao vặt bất động sản</title>
 
     @include('layouts.js_include')
 
