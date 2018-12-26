@@ -36,3 +36,6 @@ Route::get('/logout', function () {
 });
 
 Route::resource('/offers', 'OfferController');
+Route::get('/update_git', function () {
+    dd(shell_exec('pwd;cd ..;pwd;git pull'));
+});
