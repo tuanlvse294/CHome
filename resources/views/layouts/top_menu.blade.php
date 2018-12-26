@@ -10,7 +10,7 @@
 
         <div class="right menu">
             <div class="item" href="/cart">
-                <a href="/" class="ui yellow button">
+                <a href="/offers/create" class="ui yellow button">
                     <i class="edit icon"></i> Đăng tin mới
                 </a>
             </div>

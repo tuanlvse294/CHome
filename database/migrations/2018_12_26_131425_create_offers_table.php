@@ -15,6 +15,17 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->string('address');
+            $table->integer('area');
+            $table->integer('price');
+            $table->integer('views');
+            $table->longText('content');
+            $table->longText('images');
+            $table->integer('city_id')->unsigned()->index();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->integer('district_id')->unsigned()->index();
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
             $table->timestamps();
         });
     }

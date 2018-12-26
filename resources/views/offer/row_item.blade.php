@@ -3,15 +3,15 @@
         <img src="/images/no-thumbnail.png">
     </div>
     <div class="content">
-        <a class="header">Header</a>
+        <a class="header">{{$item->title}}</a>
         <div class="meta">
-            <span>Description</span>
+            <span>{{$item->address}}</span>
         </div>
         <div class="description">
-            <p></p>
+            <p><i class="money icon"></i> {{$item->price}}</p>
         </div>
         <div class="extra">
-            Additional Details
+            {{$item->updated_at}}
         </div>
     </div>
 </div>

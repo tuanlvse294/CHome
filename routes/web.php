@@ -34,3 +34,5 @@ Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
 });
+
+Route::resource('/offers', 'OfferController');
