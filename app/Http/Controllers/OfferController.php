@@ -130,7 +130,7 @@ class OfferController extends Controller
                 array_push($urls, $path);
             }
             $offer->images = json_encode($urls);
-        } else if (is_null($offer->image_urls)) {
+        } else if (is_null($offer->images)) {
             $offer->images = json_encode(['no-thumbnail.png']); //there's no image, we will use default image
         }
         $offer->save(); //save model to database
