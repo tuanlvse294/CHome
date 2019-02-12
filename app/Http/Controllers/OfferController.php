@@ -88,7 +88,7 @@ class OfferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $offer = Offer::findOrFail($id);
+        $offer = Offer::query()->findOrFail($id);
 
         return $this->process($request, $offer);
     }
@@ -130,8 +130,6 @@ class OfferController extends Controller
                 array_push($urls, $path);
             }
             $offer->images = json_encode($urls);
-        } else if (is_null($offer->images)) {
-            $offer->images = json_encode(['no-thumbnail.png']); //there's no image, we will use default image
         }
         $offer->save(); //save model to database
 
@@ -204,12 +202,5 @@ class OfferController extends Controller
         \Session::flash('message', $offer->name . ' đã bỏ thích.');
     }
 
-    private function log($type, $offer_id)
-    {
-        $log = Log::query()->firstOrNew(
-            ['type' => $type, 'value1' => $offer_id, 'date' => Carbon::today()->timestamp]);
-        $log->value2++;
-        $log->save();
-    }
 
 }

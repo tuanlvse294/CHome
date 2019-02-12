@@ -36,7 +36,7 @@
                             </div>
                         @endif
                         @include('ui.form.select',['name'=>'city_id','label'=>'Tỉnh, thành phố *','options'=>\App\City::all()])
-                        @include('ui.form.select',['name'=>'district_id','label'=>'Quận, huyện *','options'=>\App\District::all()])
+                        @include('ui.form.select',['name'=>'district_id','label'=>'Quận, huyện *','options'=>[]])
                         @include('ui.form.input',['name'=>'address','label'=>'Địa chỉ nhà *','type'=>'text'])
                         @include('ui.form.input',['name'=>'price','label'=>'Giá (VNĐ) *','type'=>'number','min'=>0])
                         @include('ui.form.input',['name'=>'area','label'=>'Diện tích (m2) *','type'=>'number','min'=>0])
@@ -46,5 +46,15 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(() => {
+                $('select[name=city_id]').change(()=>{
+                    $.get('/cities/' + event.currentTarget.value + '/districts', (res) => {
+                        console.log(res);
+                        $('select[name=district_id]').html(res);
+                    });
+                });
+            });
+        </script>
     </div>
 @endsection
