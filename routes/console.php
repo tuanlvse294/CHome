@@ -16,3 +16,10 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('reset_admin', function () {
+    $admin = \App\User::query()->where('email', '=', 'admin@gmail.com')->firstOrFail();
+    $admin->password = bcrypt('123456');
+    $admin->save();
+    $this->comment('Reset admin');
+})->describe('Reset admin password');

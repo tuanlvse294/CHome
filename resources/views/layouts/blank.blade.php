@@ -11,6 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{isset($title)?$title.' - ':''}}CHome - Rao vặt bất động sản</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
     @include('layouts.js_include')
 

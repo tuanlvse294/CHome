@@ -3,7 +3,7 @@
 
         <div class="left menu">
             <a class="item" href="/">
-                <b >C-Home.net</b>
+                <b>C-Home.net</b>
             </a>
         </div>
 

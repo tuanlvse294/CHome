@@ -17,6 +17,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    });
+
+    Route::get('/profile/info', 'ProfileController@edit_info');
+    Route::post('/profile/info', 'ProfileController@save_info');
+    Route::get('/profile/password', 'ProfileController@edit_password');
+    Route::post('/profile/password', 'ProfileController@save_password');
+
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/cities/{city}/districts', function ($city_id) {
@@ -27,15 +41,10 @@ Route::get('/cities/{city}/districts', function ($city_id) {
     $city->districts = $city->districts->prepend($district);
     return view('layouts.search.distrct_select', ['districts' => $city->districts]);
 });
+
 Route::get('/cities', function () {
     return \App\City::query()->select('id', 'name')->get();
 });
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('/');
-});
 
 Route::resource('/offers', 'OfferController');
-Route::get('/update_git', function () {
-    dd(shell_exec('pwd;cd ..;pwd;git pull'));
-});
+
