@@ -56,3 +56,25 @@ Artisan::command('reset_admin', function () {
     $admin->save();
     $this->comment('Reset admin');
 })->describe('Reset admin password');
+
+Artisan::command('fill_crawl', function () {
+    \App\Offer::query()->delete();
+    $scanned_directory = array_diff(scandir('crawl_data'), array('..', '.'));
+    foreach ($scanned_directory as $bds_dir) {
+        $metadata = json_decode(file_get_contents('crawl_data/' . $bds_dir . '/metadata.json'));
+//        dd($metadata);
+        $this->comment($metadata->uid);
+        $offer = new \App\Offer();
+        $offer->fill(array('id' => $metadata->uid, 'title' => $metadata->title, 'area' => 0, 'city_id' => 107, 'district_id' => 1096, 'address' => 'aasa', 'content' => $metadata->content, 'price' => 0));
+        $imgs_scanned_directory = array_diff(scandir('crawl_data/' . $metadata->uid . '/images'), array('..', '.'));
+        if (sizeof($imgs_scanned_directory) > 0) {
+            $imgs = [];
+            foreach ($imgs_scanned_directory as $img) {
+                $imgs[] = $img;
+                copy('crawl_data/' . $metadata->uid . '/images/' . $img, 'public/uploads/' . $img);
+            }
+            $offer->images = json_encode($imgs);
+        }
+        $offer->save();
+    }
+})->describe("Fill database by crawl data");
