@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/home', function () {
+    return redirect('/');
 });
 
 Auth::routes();
@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/cities/{city}/districts', function ($city_id) {
     $city = \App\City::query()->findOrNew($city_id);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Offer;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $offers = Offer::query()->paginate(10);
+        return view('home', ['offers' => $offers]);
     }
 }
