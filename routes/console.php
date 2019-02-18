@@ -65,7 +65,8 @@ Artisan::command('fill_crawl', function () {
 //        dd($metadata);
         $this->comment($metadata->uid);
         $offer = new \App\Offer();
-        $offer->fill(array('id' => $metadata->uid, 'title' => $metadata->title, 'area' => 0, 'city_id' => 107, 'district_id' => 1096, 'address' => 'aasa', 'content' => $metadata->content, 'price' => 0));
+        $district = \App\District::query()->inRandomOrder()->get();
+        $offer->fill(array('id' => $metadata->uid, 'title' => $metadata->title, 'area' => 0, 'city_id' => $district->city->id, 'district_id' => $district->id, 'address' => 'aasa', 'content' => $metadata->content, 'price' => 0));
         $imgs_scanned_directory = array_diff(scandir('crawl_data/' . $metadata->uid . '/images'), array('..', '.'));
         if (sizeof($imgs_scanned_directory) > 0) {
             $imgs = [];
