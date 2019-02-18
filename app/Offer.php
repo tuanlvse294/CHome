@@ -18,4 +18,9 @@ class Offer extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function likers()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

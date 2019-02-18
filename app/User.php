@@ -32,4 +32,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function liked_offers()
+    {
+        return $this->belongsToMany(Offer::class);
+
+    }
 }

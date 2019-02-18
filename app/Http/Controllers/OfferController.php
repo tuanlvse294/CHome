@@ -53,11 +53,10 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {
-        $liked = null;
-
+        $offer->views += 1;
+        $offer->save();
 //        $related = $offer->category->offers->random(min(4, $offer->category->offers->count()));
         return view('offer.detail', ['item' => $offer,
-            'liked' => $liked,
             'title' => $offer->name,
 //            'related' => $related
         ]);
@@ -136,70 +135,21 @@ class OfferController extends Controller
         return redirect('/');
     }
 
-    //save user's review comment
-    public function save_comment(Request $request, $offer_id)
-    {
-        $request->validate([
-            'content' => 'required|string',
-            'score' => 'required|numeric'
-        ]);
-        $comment = $this->get_my_comment($offer_id);
-        $comment->user_id = \Auth::id();
-        $comment->offer_id = $offer_id;
-        $comment->fill($request->all());
-        $comment->save();
 
-        return redirect('/offers/' . $offer_id);
+    public function like(Offer $offer)
+    {
+        if (!\Auth::user()->liked_offers->contains($offer))
+            \Auth::user()->liked_offers()->attach($offer);
+        $offer->refresh();
+        return view('offer.like_button', ['item' => $offer]);
     }
 
-    //get user's review comment in this offer
-    protected function get_my_comment($offer_id)
+    public function unlike(Offer $offer)
     {
-        $query = Comment::whereUserId(\Auth::id())->whereOfferId($offer_id);
-        if ($query->count() > 0) //there's existed comment
-            return $query->get()[0]; //take the first
-        return new Comment(); //return new comment
-    }
-
-    //like this offer
-    public function like_offer(Request $request, $offer_id)
-    {
-        \Auth::user()->liked_offers()->attach($offer_id);
-
-        return redirect('/offers/' . $offer_id);
-    }
-
-    //dislike this offer
-    public function dislike_offer(Request $request, $offer_id)
-    {
-        \Auth::user()->liked_offers()->detach($offer_id);
-
-        return redirect('/offers/' . $offer_id);
-    }
-
-    //check if the user has boudgt this offer before?
-    private function is_bought_this_offer($offer_id)
-    {
-        foreach (\Auth::user()->orders()->whereStatus('done')->get() as $order) {
-
-            foreach ($order->items as $item) {
-                if ($item->offer_id == $offer_id)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    public function add_to_wishlist(Offer $offer)
-    {
-        \Auth::user()->liked_offers()->attach($offer);
-        \Session::flash('message', $offer->name . ' đã thêm vào ưa thích.');
-    }
-
-    public function remove_from_wishlist(Offer $offer)
-    {
-        \Auth::user()->liked_offers()->detach($offer);
-        \Session::flash('message', $offer->name . ' đã bỏ thích.');
+        if (\Auth::user()->liked_offers->contains($offer))
+            \Auth::user()->liked_offers()->detach($offer);
+        $offer->refresh();
+        return view('offer.like_button', ['item' => $offer]);
     }
 
 

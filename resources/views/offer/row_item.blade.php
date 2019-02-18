@@ -3,6 +3,7 @@
         <img src="/uploads/{{json_decode($item->images)[0]}}">
     </div>
     <div class="content">
+        @include('offer.like_button')
         <a class="header" href="/offers/{{$item->id}}">{{$item->title}}</a>
         <div class="meta">
             <span>{{$item->address}}</span>

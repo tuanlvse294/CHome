@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/info', 'ProfileController@save_info');
     Route::get('/profile/password', 'ProfileController@edit_password');
     Route::post('/profile/password', 'ProfileController@save_password');
+    Route::get('/offers/{offer}/like', 'OfferController@like');
+    Route::get('/offers/{offer}/unlike', 'OfferController@unlike');
 
 });
 

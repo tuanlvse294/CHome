@@ -15,7 +15,7 @@
         <div class="ui two column stackable grid ">
             <div class="column">
                 <div class="image square">
-                    <img src="/uploads/{{json_decode($item->images)[0]}}" style="width: 100%" class="product_image"
+                    <img src="/uploads/{{json_decode($item->images)[0]}}" style="width: 100%" class="offer_image"
                          id="main_image">
                 </div>
                 <div class="ui divider"></div>
@@ -28,26 +28,12 @@
                 </div>
             </div>
             <div class="column">
-                <h1>{{$item->title}}</h1>
-                <p>({{$item->views}} đánh giá)</p>
+                <h1>{{$item->title}} </h1>
+                @include('offer.like_button')
+                <h4>({{$item->views}} lượt xem)</h4>
                 <h2>
                     {{$item->price}}$
                 </h2>
-                <div class="ui labeled action input">
-                    @if(Auth::check())
-                        @if(Auth::user()->liked_products->contains($item))
-                            <div class="ui red button remove_from_wishlist_button"
-                                 data-product_id="{{$item->id}}">
-                                <i class="heart icon"></i> Bỏ thích
-                            </div>
-                        @else
-                            <div class="ui red button add_to_wishlist_button"
-                                 data-product_id="{{$item->id}}">
-                                <i class="heart icon"></i> Thích
-                            </div>
-                        @endif
-                    @endif
-                </div>
             </div>
         </div>
 
@@ -60,9 +46,9 @@
         {{--<h1>Sản phẩm liên quan</h1>--}}
 
         {{--<div class="ui four column stackable grid">--}}
-        {{--@foreach($related as $product)--}}
+        {{--@foreach($related as $offer)--}}
         {{--<div class="column">--}}
-        {{--@include('product.card',['item'=>$product])--}}
+        {{--@include('offer.card',['item'=>$offer])--}}
         {{--</div>--}}
         {{--@endforeach--}}
         {{--</div>--}}
