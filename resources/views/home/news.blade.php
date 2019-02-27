@@ -1,9 +1,9 @@
-<h1 class="ui header">Tin mới đăng</h1>
-<div class="ui items">
+<div class="ui items segment">
     @foreach($offers as $offer)
         @include('offer.row_item',['item'=>$offer])
+        <hr class="ui divider">
     @endforeach
-</div>
-<div class="ui container" style="text-align: center">
-    {{ $offers->links('vendor.pagination.default') }}
+    <div style="text-align: center">
+        {{ $offers->appends(Request::except('page'))->links('vendor.pagination.default') }}
+    </div>
 </div>

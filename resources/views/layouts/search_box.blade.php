@@ -1,4 +1,4 @@
-<div class="ui container">
+<div class="ui container segment">
     <form class="ui stackable grid">
         <div class="row">
             <div class="seven wide column ">
@@ -31,18 +31,45 @@
                 <button type="submit" class="ui yellow fluid button"><i class="search icon"></i>Tìm kiếm</button>
             </div>
         </div>
-        {{--<div class="row">--}}
-            {{--<div class="four wide column ">--}}
-                {{--<div class="ui fluid input">--}}
-                    {{--<select class="ui compact selection fluid dropdown" name="area">--}}
-                        {{--<option value="all">Tất cả diện tích</option>--}}
-                        {{--@foreach($areas as $index=>$area)--}}
-                            {{--<option value="{{$index+1}}" {{Request::input('area')==($index+1)?'selected':''}}>{{$area}}</option>--}}
-                        {{--@endforeach--}}
-                    {{--</select>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+        <div class="row">
+            <div class="four wide column">
+                <div class="ui fluid input">
+                    <select class="ui compact selection fluid dropdown" name="area">
+                        @foreach($areas as $index=>$area)
+                            <option value="{{$index}}" {{Request::input('area')==$index?'selected':''}}>{{$area}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="ui fluid input">
+                    <select class="ui compact selection fluid dropdown" name="price">
+                        @foreach($prices as $index=>$price)
+                            <option value="{{$index}}" {{Request::input('price')==$index?'selected':''}}>{{$price}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="ui fluid input">
+                    <select class="ui compact selection fluid dropdown" name="front">
+                        @foreach($fronts as $index=>$front)
+                            <option value="{{$index}}" {{Request::input('front')==$index?'selected':''}}>{{$front}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="ui fluid input">
+                    <select class="ui compact selection fluid dropdown" name="sort">
+                        @foreach($sorts as $index=>$sort)
+                            <option value="{{$index}}" {{Request::input('sort')==$index?'selected':''}}>{{$sort}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+        </div>
     </form>
 </div>
 
