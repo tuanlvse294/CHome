@@ -27,16 +27,16 @@
                         @if(isset($item))
                             <div class="field">
                                 <div class="ui five column grid">
-                                    @foreach(array_filter(explode(';',$item->images)) as $image)
+                                    @foreach(json_decode($item->images) as $image)
                                         <div class="column">
-                                            <img src="/images/{{$image}}" style="margin: 4px;width: 100%">
+                                            <img src="/uploads/{{$image}}" style="margin: 4px;width: 100%">
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         @endif
                         @include('ui.form.select',['name'=>'city_id','label'=>'Tỉnh, thành phố *','options'=>\App\City::all()])
-                        @include('ui.form.select',['name'=>'district_id','label'=>'Quận, huyện *','options'=>[]])
+                        @include('ui.form.select',['name'=>'district_id','label'=>'Quận, huyện *','options'=>isset($item)?$item->city->districts:[]])
                         @include('ui.form.input',['name'=>'address','label'=>'Địa chỉ nhà *','type'=>'text'])
                         @include('ui.form.input',['name'=>'price','label'=>'Giá (VNĐ) *','type'=>'number','min'=>0])
                         @include('ui.form.input',['name'=>'area','label'=>'Diện tích (m2) *','type'=>'number','min'=>0])
@@ -48,7 +48,7 @@
         </div>
         <script>
             $(() => {
-                $('select[name=city_id]').change(()=>{
+                $('select[name=city_id]').change(() => {
                     $.get('/cities/' + event.currentTarget.value + '/districts', (res) => {
                         console.log(res);
                         $('select[name=district_id]').html(res);

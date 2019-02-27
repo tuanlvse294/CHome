@@ -71,9 +71,7 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
-        if (null == \Session::get('errors'))
-            $offer->fill_olds();
-
+        $offer->fill_olds();
         return view('offer.edit', ['item' => $offer, 'title' => "Chỉnh sửa tin rao vặt"]);
     }
 

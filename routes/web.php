@@ -37,11 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/cities/{city}/districts', function ($city_id) {
     $city = \App\City::query()->findOrNew($city_id);
-    $district = new \App\District();
-    $district->id = -1;
-    $district->name = 'Tất cả quận, huyện';
-    $city->districts = $city->districts->prepend($district);
-    return view('layouts.search.distrct_select', ['districts' => $city->districts]);
+    return view('layouts.search.district_select', ['districts' => $city->districts]);
 });
 
 Route::get('/cities', function () {

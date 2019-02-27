@@ -1,6 +1,6 @@
 <div class="item">
     <div class="image">
-        <img src="/uploads/{{json_decode($item->images)[0]}}">
+        <img src="/uploads/{{json_decode($item->images)[0]}}" style="max-height: 150px">
     </div>
     <div class="content">
         @include('offer.like_button')

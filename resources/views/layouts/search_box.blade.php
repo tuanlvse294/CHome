@@ -1,30 +1,49 @@
 <div class="ui container">
-    <div class="ui stackable grid">
+    <form class="ui stackable grid">
         <div class="row">
             <div class="seven wide column ">
                 <div class="ui fluid input">
-                    <input class="fluid " type="text" placeholder="Bạn cần tìm kiếm gì?">
+                    <input class="fluid " type="text" name="query" placeholder="Bạn cần tìm kiếm gì?"
+                           value="{{Request::get('query')}}">
                 </div>
             </div>
             <div class="three wide column" style="padding: 0px">
-                <select class="ui compact selection fluid dropdown" onchange="select_city()"
+                <select class="ui compact selection fluid dropdown" onchange="select_city()" name="city"
                         style="min-width: 400px">
-                    <option value="-1">Tất cả tỉnh, thành phố</option>
+                    <option value="all">Tất cả tỉnh, thành phố</option>
                     @foreach(\App\City::all() as $city)
-                        <option value="{{$city->id}}">{{$city->name}}</option>
+                        <option value="{{$city->id}}" {{Request::input('city')==$city->id?'selected':''}}>{{$city->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="three wide column" style="padding-right: 0px">
-                <select class="ui compact selection fluid dropdown" id="districts_select">
+                <select class="ui compact selection fluid dropdown" id="districts_select" name="district">
                     <option value="all">Tất cả quận, huyện</option>
+
+                    @if(Request::input('city')!="all")
+                        @foreach(\App\City::query()->findOrNew(Request::input('city'))->districts as $district)
+                            <option value="{{$district->id}}" {{Request::input('district')==$district->id?'selected':''}}>{{$district->name}}</option>
+                        @endforeach
+                    @endif
                 </select>
             </div>
             <div class="three wide column">
-                <div class="ui yellow fluid button"><i class="search icon"></i>Tìm kiếm</div>
+                <button type="submit" class="ui yellow fluid button"><i class="search icon"></i>Tìm kiếm</button>
             </div>
         </div>
-    </div>
+        {{--<div class="row">--}}
+            {{--<div class="four wide column ">--}}
+                {{--<div class="ui fluid input">--}}
+                    {{--<select class="ui compact selection fluid dropdown" name="area">--}}
+                        {{--<option value="all">Tất cả diện tích</option>--}}
+                        {{--@foreach($areas as $index=>$area)--}}
+                            {{--<option value="{{$index+1}}" {{Request::input('area')==($index+1)?'selected':''}}>{{$area}}</option>--}}
+                        {{--@endforeach--}}
+                    {{--</select>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    </form>
 </div>
 
 <script>

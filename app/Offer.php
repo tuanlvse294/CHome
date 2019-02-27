@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Offer extends Model
 {
+    use \App\CanFillOld;
+
     protected $fillable = ['title', 'address', 'area', 'price', 'content', 'images', 'city_id', 'district_id'];
     protected $attributes = ['images' => '["no-thumbnail.png"]', 'views' => 0];
 

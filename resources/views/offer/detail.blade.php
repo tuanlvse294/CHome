@@ -5,9 +5,10 @@
         <div class="ui breadcrumb" style="margin-bottom: 10px">
             <a class="section" href="/">Trang chủ</a>
             <i class="right angle icon divider"></i>
-            <a class="section">{{$item->city->name}}</a>
+            <a class="section" href="/?city={{$item->city->id}}">{{$item->city->name}}</a>
             <i class="right angle icon divider"></i>
-            <a class="section">{{$item->district->name}}</a>
+            <a class="section"
+               href="/?city={{$item->city->id}}&district={{$item->district->id}}">{{$item->district->name}}</a>
             <i class="right angle icon divider"></i>
             <div class="active section">{{$item->title}}</div>
         </div>
