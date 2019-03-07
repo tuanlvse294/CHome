@@ -16,7 +16,7 @@
         <div class="ui two column stackable grid ">
             <div class="column">
                 <div class="image square">
-                    <img src="/uploads/{{json_decode($item->images)[0]}}" style="width: 100%" class="offer_image"
+                    <img src="/uploads/{{$item->get_icon()}}" style="width: 100%" class="offer_image"
                          id="main_image">
                 </div>
                 <div class="ui divider"></div>
@@ -30,10 +30,12 @@
             </div>
             <div class="column">
                 <h1>{{$item->title}} </h1>
-                @include('offer.like_button')
+                <div style="text-align: right">
+                    @include('offer.like_button')
+                </div>
                 <h4>({{$item->views}} lượt xem)</h4>
-                <h2>
-                    {{$item->price}}$
+                <h2 style="color: red">
+                    {{$item->get_price_vnd()}}
                 </h2>
             </div>
         </div>

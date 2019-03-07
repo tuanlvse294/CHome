@@ -2,8 +2,6 @@
 @section('content')
     <div class="ui container">
         @include('layouts.search_box')
-        @include('home.news')
+        @include('offer.list2')
     </div>
-
-
 @endsection

@@ -18,7 +18,7 @@ class CreateOffersTable extends Migration
             $table->string('title');
             $table->string('address');
             $table->integer('area');
-            $table->integer('price');
+            $table->double('price');
             $table->integer('views');
             $table->longText('content');
             $table->longText('images');

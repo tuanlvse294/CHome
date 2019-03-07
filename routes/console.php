@@ -80,3 +80,14 @@ Artisan::command('fill_crawl', function () {
         $offer->save();
     }
 })->describe("Fill database by crawl data");
+
+Artisan::command('random_price', function () {
+    foreach (\App\Offer::all() as $offer) {
+        $offer->price = rand(19, 100) * 50000000;
+        $offer->area = rand(8, 30) * 5;
+        $offer->front = rand(2, 12) ;
+        $offer->address= 'Quận '.$offer->district->name.' - '.$offer->district->city->name;
+        echo $offer->get_price_vnd();
+        $offer->save();
+    }
+})->describe('Randomize offer info');

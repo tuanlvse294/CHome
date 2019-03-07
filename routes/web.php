@@ -12,25 +12,6 @@
 */
 
 
-//free access zone
-Route::get('/home', function () {
-    return redirect('/');
-});
-Route::get('/', 'HomeController@index')->name('home');
-
-
-Route::get('/cities/{city}/districts', function ($city_id) {
-    $city = \App\City::query()->findOrNew($city_id);
-    return view('layouts.search.district_select', ['districts' => $city->districts]);
-});
-
-Route::get('/cities', function () {
-    return \App\City::query()->select('id', 'name')->get();
-})->name('cities');
-
-
-Auth::routes();
-
 //auth zone
 Route::middleware(['auth'])->group(function () {
 
@@ -75,5 +56,26 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     });
     Route::get('setting', 'SettingController@index')->name('setting');
 });
+
+
+//free access zone
+Route::get('/home', function () {
+    return redirect('/');
+});
+Route::get('/', 'HomeController@index')->name('home');
+
+
+Route::get('/cities/{city}/districts', function ($city_id) {
+    $city = \App\City::query()->findOrNew($city_id);
+    return view('layouts.search.district_select', ['districts' => $city->districts]);
+});
+
+Route::get('/cities', function () {
+    return \App\City::query()->select('id', 'name')->get();
+})->name('cities');
+
+
+Auth::routes();
+
 Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
 

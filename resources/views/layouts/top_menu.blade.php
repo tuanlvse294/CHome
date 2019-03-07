@@ -2,8 +2,8 @@
     <div class="ui container">
 
         <div class="left menu">
-            <a class="item" href="/">
-                <b>C-Home.net</b>
+            <a class="item" href="/" >
+                <img src="/images/logo.png" alt="">
             </a>
         </div>
 
