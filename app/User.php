@@ -36,6 +36,10 @@ class User extends Authenticatable
     public function liked_offers()
     {
         return $this->belongsToMany(Offer::class);
+    }
 
+    public function has_role($role)
+    {
+        return in_array($role, json_decode($this->roles));
     }
 }

@@ -1,4 +1,4 @@
-<div class="ui container segment">
+<div class="ui segment">
     <form class="ui stackable grid">
         <div class="row">
             <div class="seven wide column ">

@@ -11,13 +11,28 @@
 |
 */
 
+
+//free access zone
 Route::get('/home', function () {
     return redirect('/');
 });
 Route::get('/', 'HomeController@index')->name('home');
 
+
+Route::get('/cities/{city}/districts', function ($city_id) {
+    $city = \App\City::query()->findOrNew($city_id);
+    return view('layouts.search.district_select', ['districts' => $city->districts]);
+});
+
+Route::get('/cities', function () {
+    return \App\City::query()->select('id', 'name')->get();
+});
+
+Route::resource('/offers', 'OfferController');
+
 Auth::routes();
 
+//auth zone
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/logout', function () {
@@ -31,18 +46,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/password', 'ProfileController@save_password');
     Route::get('/offers/{offer}/like', 'OfferController@like');
     Route::get('/offers/{offer}/unlike', 'OfferController@unlike');
-
 });
 
+//admin zone
 
-Route::get('/cities/{city}/districts', function ($city_id) {
-    $city = \App\City::query()->findOrNew($city_id);
-    return view('layouts.search.district_select', ['districts' => $city->districts]);
+Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
+    Route::get('test', function () {
+        return "ok";
+    });
 });
-
-Route::get('/cities', function () {
-    return \App\City::query()->select('id', 'name')->get();
-});
-
-Route::resource('/offers', 'OfferController');
 

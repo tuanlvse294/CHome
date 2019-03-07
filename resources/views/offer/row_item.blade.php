@@ -9,7 +9,8 @@
             <span>{{$item->address}}</span>
         </div>
         <div class="description">
-            <p><i class="money icon"></i> {{$item->price}}</p>
+            <p><i class=" grey money icon"></i> {{$item->price}}</p>
+            <p><i class="grey eye icon"></i> {{$item->views}}</p>
         </div>
         <div class="extra">
             {{$item->updated_at}}

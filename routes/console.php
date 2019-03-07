@@ -52,6 +52,7 @@ Artisan::command('make_admin', function () {
 
 Artisan::command('reset_admin', function () {
     $admin = \App\User::query()->where('email', '=', 'admin@gmail.com')->firstOrFail();
+    $admin->roles = json_encode(['admin']);
     $admin->password = bcrypt('123456');
     $admin->save();
     $this->comment('Reset admin');
