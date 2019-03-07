@@ -25,7 +25,7 @@
                     @include('ui.form.input',['name'=>'password','label'=>'Mật khẩu *','type'=>'password'])
                     @include('ui.form.input',['name'=>'password_confirmation','label'=>'Xác nhận mật khẩu *','type'=>'password'])
                     <button class="ui primary button" type="submit">Đăng ký</button>
-                    <p><a href="/login">Đã có tài khoản? Đăng nhập ngay!</a></p>
+                    <p><a href="{{route('login')}}">Đã có tài khoản? Đăng nhập ngay!</a></p>
 
                 </form>
 

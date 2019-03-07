@@ -26,26 +26,38 @@ Route::get('/cities/{city}/districts', function ($city_id) {
 
 Route::get('/cities', function () {
     return \App\City::query()->select('id', 'name')->get();
-});
+})->name('cities');
 
-Route::resource('/offers', 'OfferController');
 
 Auth::routes();
 
 //auth zone
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/logout', function () {
+    Route::get('logout', function () {
         Auth::logout();
-        return redirect('/');
+        return redirect(route('home'));
+    })->name('logout.get');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('info', 'UserController@edit_info')->name('info.edit');
+        Route::post('info', 'UserController@save_info')->name('info.save');
+        Route::get('password', 'UserController@edit_password')->name('password.edit');
+        Route::post('password', 'UserController@save_password')->name('password.save');
+
     });
 
-    Route::get('/profile/info', 'ProfileController@edit_info');
-    Route::post('/profile/info', 'ProfileController@save_info');
-    Route::get('/profile/password', 'ProfileController@edit_password');
-    Route::post('/profile/password', 'ProfileController@save_password');
-    Route::get('/offers/{offer}/like', 'OfferController@like');
-    Route::get('/offers/{offer}/unlike', 'OfferController@unlike');
+    Route::prefix('offers')->as('offers.')->group(function () {
+        Route::get('manage', 'OfferController@manage')->name('manage');
+        Route::get('trash', 'OfferController@trash')->name('trash');
+        Route::get('{offer}/like', 'OfferController@like')->name('like');
+        Route::get('{offer}/unlike', 'OfferController@unlike')->name('unlike');
+        Route::get('{offer}/delete', 'OfferController@destroy')->name('delete');
+        Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
+        Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
+    });
+    Route::resource('offers', 'OfferController');
+
 });
 
 //admin zone
@@ -53,6 +65,15 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     Route::get('test', function () {
         return "ok";
+    })->name('admin.test');
+    Route::prefix('users')->group(function () {
+        Route::get('manage', 'UserController@manage')->name('users.manage');
+        Route::get('trash', 'UserController@trash')->name('users.trash');
+        Route::get('{user}/delete', 'UserController@delete')->name('users.delete');
+        Route::get('{user}/force_delete', 'UserController@force_delete')->name('users.force_delete');
+        Route::get('{user}/restore', 'UserController@restore')->name('users.restore');
     });
+    Route::get('setting', 'SettingController@index')->name('setting');
 });
+Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
 

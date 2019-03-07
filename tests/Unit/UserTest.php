@@ -6,7 +6,7 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+class UserTest extends TestCase
 {
     /**
      * A basic test example.
@@ -18,5 +18,7 @@ class ExampleTest extends TestCase
         $user = new User();
         $this->assertTrue($user->has_role("user"));
         $this->assertFalse($user->has_role("admin"));
+        $user->add_role('admin');
+        $this->assertTrue($user->has_role("admin"));
     }
 }

@@ -3,40 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Offer;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
     use ProcessImage;
 
-    /**
-     * Display a listing of the offer.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function manage()
     {
-        return view('offer.list', ['items' => Offer::all(), 'title' => 'Quản lý bài đăng']);
+        return view('offer.list', ['items' => Offer::all(), 'title' => 'Quản lý tin rao vặt']);
     }
 
-    /**
-     * Show the form for creating a new offer.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function trash()
+    {
+        return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã xoá', 'trash' => true]);
+    }
+
+
+    public function restore($offer)
+    {
+        $offer = Offer::withTrashed()->find($offer);
+        $offer->restore();
+        \Session::flash("message", "Khôi phục tin rao vặt " . $offer->title);
+        return redirect(route('offers.manage'));
+    }
+
+    public function force_delete($offer)
+    {
+        $offer = Offer::withTrashed()->find($offer);
+        \Session::flash("message", "Đã xoá vĩnh viễn tin rao vặt " . $offer->title);
+        $offer->forceDelete();
+        return redirect(route('offers.trash'));
+    }
+
     public function create()
     {
         return view('offer.edit', ['title' => "Đăng tin rao vặt mới"]);
     }
 
-    /**
-     * Store a newly created offer in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $offer = new Offer();
@@ -44,45 +48,21 @@ class OfferController extends Controller
         return $this->process($request, $offer);
     }
 
-    /**
-     * Display the specified offer.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function show(Offer $offer)
     {
         $offer->views += 1;
         $offer->save();
-//        $related = $offer->category->offers->random(min(4, $offer->category->offers->count()));
         return view('offer.detail', ['item' => $offer,
             'title' => $offer->name,
-//            'related' => $related
         ]);
     }
 
-    /**
-     * Show the form for editing the specified offer.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Offer $offer)
     {
         $offer->fill_olds();
         return view('offer.edit', ['item' => $offer, 'title' => "Chỉnh sửa tin rao vặt"]);
     }
 
-    /**
-     * Update the specified offer in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $offer = Offer::query()->findOrFail($id);
@@ -90,18 +70,11 @@ class OfferController extends Controller
         return $this->process($request, $offer);
     }
 
-    /**
-     * Remove the specified offer from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Offer $offer)
     {
-        Offer::destroy($id);
-
-        return redirect('/manage/offers');
+        \Session::flash("message", "Đã xoá tin rao vặt " . $offer->title);
+        $offer->delete();
+        return redirect(route('offers.manage'));
     }
 
 

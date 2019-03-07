@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -10,6 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use \App\CanFillOld;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +23,8 @@ class User extends Authenticatable
     protected $attributes = [
         'avatar_url' => 'no_avatar.png',
         'phone' => '',
-        'address' => ''
+        'address' => '',
+        'roles' => '["user"]'
     ];
 
     /**
@@ -40,6 +43,14 @@ class User extends Authenticatable
 
     public function has_role($role)
     {
-        return in_array($role, json_decode($this->roles));
+        $roles_arr = json_decode($this->roles);
+        return in_array($role, $roles_arr);
+    }
+
+    public function add_role($role)
+    {
+        $roles_arr = json_decode($this->roles);
+        $roles_arr[] = $role;
+        $this->roles = json_encode($roles_arr);
     }
 }

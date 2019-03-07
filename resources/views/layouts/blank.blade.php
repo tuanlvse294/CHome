@@ -28,6 +28,9 @@
         .slick-next:before {
             color: darkgray;
         }
+        #DataTables_Table_0_length{
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>

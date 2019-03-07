@@ -9,8 +9,8 @@
 
 
         <div class="right menu">
-            <div class="item" href="/cart">
-                <a href="/offers/create" class="ui yellow button">
+            <div class="item">
+                <a href="{{route('offers.create')}}" class="ui yellow button">
                     <i class="edit icon"></i> Đăng tin mới
                 </a>
             </div>
@@ -20,34 +20,28 @@
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     @if(Auth::check())
-                        <a class="item" href="/orders">Xem đơn hàng</a>
-                        <a class="item" href="/profile/wishlist">Danh sách yêu thích</a>
-                        <a class="item" href="/profile/info">Sửa thông tin cá nhân</a>
-                        <a class="item" href="/profile/password">Đổi mật khẩu</a>
-                        <a class="item" href="/logout">Đăng xuất</a>
+                        {{--<a class="item" href="/profile/wishlist">Danh sách yêu thích</a>--}}
+                        <a class="item" href="{{route('info.edit')}}">Sửa thông tin cá nhân</a>
+                        <a class="item" href="{{route('password.edit')}}">Đổi mật khẩu</a>
+                        <a class="item" href="{{route('logout.get')}}">Đăng xuất</a>
                     @else
-                        <a class="item" href="/login">Đăng nhập</a>
-                        <a class="item" href="/register">Đăng ký</a>
+                        <a class="item" href="{{route('login')}}">Đăng nhập</a>
+                        <a class="item" href="{{route('register')}}">Đăng ký</a>
                     @endif
 
                 </div>
             </div>
 
-            @if(Auth::check()&&Auth::user()->is_admin)
+            @if(Auth::check()&&Auth::user()->has_role('admin'))
                 <div class="ui dropdown item">
-                    <div class="header">Quản lý</div>
+                    <div class="header"><i class="list icon"></i>Quản lý</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a class="item" href="/statistics">Thống kê</a>
-                        <a class="item" href="/manage/products">Sản phẩm</a>
-                        <a class="item" href="/manage/categories">Danh mục</a>
-                        <a class="item" href="/manage/users">Người dùng</a>
-                        <a class="item" href="/manage/orders">Đơn hàng <span class="ui red label"
-                                                                             style="margin-left: 20px">{{\App\Order::whereStatus('wait_confirm')->count()}}</span></a>
-                        <a class="item" href="/manage/ads">Quảng cáo</a>
-                        <a class="item" href="/manage/discounts">Mã giảm giá</a>
-                        <a class="item" href="/manage/blogs">Bài viết</a>
-                        <a class="item" href="/manage/settings">Cài đặt</a>
+                        <a class="item" href="{{route('offers.manage')}}">Tin rao vặt</a>
+                        <a class="item" href="{{route('offers.trash')}}">Tin rao vặt đã xoá</a>
+                        <a class="item" href="{{route('users.manage')}}">Người dùng</a>
+                        <a class="item" href="{{route('users.trash')}}">Người dùng đã xoá</a>
+                        <a class="item" href="{{route('setting')}}">Cài đặt</a>
                     </div>
                 </div>
             @endif

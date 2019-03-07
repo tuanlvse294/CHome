@@ -12,7 +12,7 @@
             <div class="eight wide column">
                 <div class="ui huge header">Đổi mật khẩu</div>
                 @include('layouts.errors_block')
-                <form class="ui form" method="post" action="/profile/password">
+                <form class="ui form" method="post" action="{{route('password.save')}}">
                     {{csrf_field()}}
                     @include('ui.form.input',['name'=>'old_password','label'=>'Mật khẩu cũ ','type'=>'password'])
                     @include('ui.form.input',['name'=>'new_password','label'=>'Mật khẩu mới','type'=>'password'])

@@ -30,8 +30,8 @@
 
                     @include('ui.form.checkbox',['name'=>'remember','label'=>'Ghi nhớ'])
                     <button class="ui primary button" type="submit">Đăng nhập</button>
-                    <p><a href="/password/reset">Quên mật khẩu?</a></p>
-                    <p><a href="/register">Không có tài khoản? Đăng ký ngay!</a></p>
+                    <p><a href="{{route('password.request')}}">Quên mật khẩu?</a></p>
+                    <p><a href="{{route('register')}}">Không có tài khoản? Đăng ký ngay!</a></p>
 
                 </form>
             </div>

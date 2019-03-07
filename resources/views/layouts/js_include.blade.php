@@ -44,10 +44,7 @@
         });
 
 
-
-
-
-        $('table').DataTable();
+        $('table').DataTable({"pageLength": 50});
         $('.dataTables_filter > label').attr('class', 'ui input');
         $('select[name="DataTables_Table_0_length"]').attr('class', 'ui dropdown');
         $('select.dropdown')

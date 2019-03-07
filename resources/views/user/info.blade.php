@@ -12,7 +12,7 @@
             <div class="eight wide column">
                 <div class="ui huge header">Thông tin cá nhân</div>
                 @include('layouts.errors_block')
-                <form class="ui form" method="post" action="/profile/info">
+                <form class="ui form" method="post" action="{{route('info.save')}}">
                     {{csrf_field()}}
                     @include('ui.form.input',['name'=>'name','label'=>'Tên *','type'=>'text'])
                     @include('ui.form.input',['name'=>'phone','label'=>'Số điện thoại *','type'=>'tel'])
