@@ -15,10 +15,8 @@
         </div>
         <div class="ui huge header">{{$title}}</div>
 
-        <div class="ui modal" >
-            <div class="image content">
-                <img src="/apple-icon.png" id="modal_img" style="max-width: 100%;height: auto;margin: auto">
-            </div>
+        <div class="ui  modal" >
+                <img src="/apple-icon.png" id="modal_img" style="width: 100%;">
         </div>
         <div class="ui two column stackable grid ">
             <div class="column">
