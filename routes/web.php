@@ -37,7 +37,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
         Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
     });
-    Route::resource('offers', 'OfferController');
+
+    Route::resource('offers', 'OfferController')->except([
+        'show'
+    ]);;
 
 });
 
@@ -80,3 +83,7 @@ Auth::routes();
 
 Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
 
+
+Route::resource('offers', 'OfferController')->only([
+    'show'
+]);;
