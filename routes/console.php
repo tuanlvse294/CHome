@@ -86,6 +86,7 @@ Artisan::command('random_price', function () {
         $offer->price = rand(19, 100) * 50000000;
         $offer->area = rand(8, 30) * 5;
         $offer->front = rand(2, 12) ;
+        $offer->user_id= \App\User::query()->inRandomOrder()->first()->id;
         $offer->address= 'Quận '.$offer->district->name.' - '.$offer->district->city->name;
         echo $offer->get_price_vnd();
         $offer->save();

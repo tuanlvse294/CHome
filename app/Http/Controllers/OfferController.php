@@ -53,7 +53,7 @@ class OfferController extends Controller
         $offer->views += 1;
         $offer->save();
         return view('offer.detail', ['item' => $offer,
-            'title' => $offer->name,
+            'title' => $offer->title,
         ]);
     }
 

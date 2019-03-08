@@ -5,6 +5,8 @@ $dark-gray: #9f9693;
 
 .small_thumbnail {
   width: 100%;
+  height: 100px;
+  object-fit: cover;
   border: solid 2px white;
   &:hover {
     border: solid 2px $dark-gray;

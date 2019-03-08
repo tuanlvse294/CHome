@@ -8,20 +8,15 @@
 
 <script type="text/javascript" src="/bower_components/slick-carousel/slick/slick.js"></script>
 
+
 <script>
     $(window).on('load', function () {
-        $('.square').each(function () {
-            $(this).height($(this).width());
-            var image = $(this).find('.offer_image');
-            if (image.height() < $(this).height()) {
-                image.css('margin-top', ($(this).height() - image.height()) / 2);
-            }
-        });
 
-        $('.small_thumbnail').on('hover', function (e) {
-            var mainImage = $('#main_image');
-            mainImage.attr('src', $(this).attr('src'));
-            mainImage.css('margin-top', (mainImage.parent().height() - mainImage.height()) / 2);
+        $('.small_thumbnail').on('click', function (e) {
+            $('#modal_img').attr('src',e.target.src);
+            $('.ui.modal')
+                .modal('show')
+            ;
         });
 
     });
@@ -51,55 +46,7 @@
             .dropdown()
         ;
 
-        var $slider = $("#slider-range");
-        $slider.slider({
-            range: true,
-            min: 0,
-            max: 500,
-            values: [ {{old('lower_price',60)}}, {{old('higher_price',300)}}],
-            slide: function (event, ui) {
-                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                $("#lower_price").val(ui.values[0]);
-                $("#higher_price").val(ui.values[1]);
-
-            }
-        });
-        $("#amount").val("$" + $slider.slider("values", 0) +
-            " - $" + $slider.slider("values", 1));
-        $("#lower_price").val($slider.slider("values", 0));
-        $("#higher_price").val($slider.slider("values", 1));
-
-        $("#caro").slick({
-            infinite: true,
-            dots: true,
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            responsive: [
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }
-            ]
-        });
     });
-
-    function ask_to_delete(confirm_text, link) {
-        if (confirm(confirm_text)) {
-            location.href = link;
-        }
-    }
 
 
 </script>
