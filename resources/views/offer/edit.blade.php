@@ -34,6 +34,7 @@
                 @include('ui.form.input',['name'=>'address','label'=>'Địa chỉ nhà *','type'=>'text'])
                 @include('ui.form.input',['name'=>'price','label'=>'Giá (VNĐ) *','type'=>'number','min'=>0])
                 @include('ui.form.input',['name'=>'area','label'=>'Diện tích (m2) *','type'=>'number','min'=>0])
+                @include('ui.form.input',['name'=>'front','label'=>'Mặt tiền (m) *','type'=>'number','min'=>0])
                 @include('ui.form.ckeditor',['name'=>'content','label'=>'Nội dung chi tiết *'])
                 <button class="ui primary button" type="submit">Đăng</button>
             </form>

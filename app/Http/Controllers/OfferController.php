@@ -86,12 +86,13 @@ class OfferController extends Controller
             'city_id' => 'required',
             'district_id' => 'required',
             'area' => 'required',
+            'front' => 'required',
             'address' => 'required',
             'content' => 'required',
             'price' => 'required|numeric|min:0'
         ]);
         $offer->fill($request->all()); //fill all inputs to model
-
+        $offer->user_id = \Auth::id();
         if ($request->files->has('image')) { //save uploaded images
             $urls = array();
 
