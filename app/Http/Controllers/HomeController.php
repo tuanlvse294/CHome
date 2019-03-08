@@ -63,6 +63,8 @@ class HomeController extends Controller
             } elseif ($request->get('sort') == 'des') {
                 $offers = $offers->orderByDesc('price');
             }
+        }else{
+            $offers = $offers->orderByDesc('updated_at');
         }
         $offers = $offers->paginate(10);
         return view('home', ['offers' => $offers, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
