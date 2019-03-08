@@ -13,7 +13,20 @@
     <title>{{isset($title)?$title.' - ':''}}CHome - Rao vặt bất động sản</title>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
-    @include('layouts.js_include')
+@include('layouts.js_include')
+<!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135879890-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-135879890-1');
+    </script>
 
     <link href="/css/semantic.min.css" rel="stylesheet">
     <link href="/css/app.css?t={{rand()}}" rel="stylesheet">
@@ -28,7 +41,8 @@
         .slick-next:before {
             color: darkgray;
         }
-        #DataTables_Table_0_length{
+
+        #DataTables_Table_0_length {
             margin-bottom: 20px;
         }
     </style>
