@@ -55,6 +55,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
         Route::get('{user}/restore', 'UserController@restore')->name('users.restore');
     });
     Route::get('setting', 'SettingController@index')->name('setting');
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 });
 
 

@@ -24,6 +24,11 @@ class Offer extends Model
         return $this->belongsTo(District::class);
     }
 
+    public function user()
+    {
+        return User::query()->find($this->user_id);
+    }
+
     public function likers()
     {
         return $this->belongsToMany(User::class);
