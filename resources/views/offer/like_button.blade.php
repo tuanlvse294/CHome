@@ -1,6 +1,6 @@
 @if(Auth::check())
     @if($item->likers->contains(Auth::user()))
-        <div class="ui basic compact yellow icon button unlike_button"
+        <div class="ui basic compact orange icon button unlike_button"
              data-offer_id="{{$item->id}}"><i class="star icon"></i></div>
     @else
         <div class="ui basic compact grey icon button like_button"

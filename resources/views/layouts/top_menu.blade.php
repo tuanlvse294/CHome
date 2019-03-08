@@ -10,7 +10,7 @@
 
         <div class="right menu">
             <div class="item">
-                <a href="{{route('offers.create')}}" class="ui yellow button">
+                <a href="{{route('offers.create')}}" class="ui orange button">
                     <i class="edit icon"></i> Đăng tin mới
                 </a>
             </div>

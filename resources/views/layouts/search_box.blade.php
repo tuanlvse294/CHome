@@ -28,7 +28,7 @@
                 </select>
             </div>
             <div class="three wide column">
-                <button type="submit" class="ui yellow fluid button"><i class="search icon"></i>Tìm kiếm</button>
+                <button type="submit" class="ui orange fluid button"><i class="search icon"></i>Tìm kiếm</button>
             </div>
         </div>
         <div class="row">
