@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('logout.get');
 
     Route::prefix('profile')->group(function () {
+        Route::get('liked', 'UserController@liked')->name('users.liked');
         Route::get('info', 'UserController@edit_info')->name('info.edit');
         Route::post('info', 'UserController@save_info')->name('info.save');
         Route::get('password', 'UserController@edit_password')->name('password.edit');

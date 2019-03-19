@@ -29,6 +29,10 @@ class UserController extends Controller
     {
         return view('offer.list', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name]);
     }
+    public function liked()
+    {
+        return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Danh sách yêu thích']);
+    }
 
     public function restore($user)
     {
