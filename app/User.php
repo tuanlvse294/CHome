@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->hasMany(Offer::class);
     }
 
+    public function my_notifications()
+    {
+        return $this->hasMany(Notification::class)->where('seen', '=', true);
+    }
+
     public function has_role($role)
     {
         $roles_arr = json_decode($this->roles);

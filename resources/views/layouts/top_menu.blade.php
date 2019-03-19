@@ -14,9 +14,18 @@
                     <i class="edit icon"></i> Đăng tin mới
                 </a>
             </div>
-            <a class="item">
-                <i class=" red bell icon"></i> Thông báo (22)
-            </a>
+            @if(Auth::check())
+
+                <div class="ui dropdown item">
+                    <i class=" red bell icon"></i> Thông báo ({{Auth::user()->my_notifications()->count()}})
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="red item" href="{{route('users.notications')}}"><i
+                                    class="list icon"></i>
+                            Xem tất cả thông báo</a>
+                    </div>
+                </div>
+            @endif
 
             <div class="ui dropdown item"><i class="user icon"></i>
                 {{Auth::check()?Auth::user()->name:'Tài khoản'}}
@@ -25,7 +34,8 @@
                     @if(Auth::check())
                         <a class="item" href="{{route('users.show',['id'=>\Auth::id()])}}"><i class="building icon"></i>
                             Tin đăng của tôi</a>
-                        <a class="item" href="{{route('users.liked')}}"><i class="star icon"></i> Danh sách yêu thích</a>
+                        <a class="item" href="{{route('users.liked')}}"><i class="star icon"></i> Danh sách yêu
+                            thích</a>
                         <a class="item" href="{{route('info.edit')}}"><i class="blue info icon"></i>Sửa thông tin cá
                             nhân</a>
                         <a class="item" href="{{route('password.edit')}}"><i class="grey user secret icon"></i>Đổi mật

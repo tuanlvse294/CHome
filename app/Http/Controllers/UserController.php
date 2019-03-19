@@ -33,6 +33,10 @@ class UserController extends Controller
     {
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Danh sách yêu thích']);
     }
+    public function notications()
+    {
+        return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Tất cả thông báo']);
+    }
 
     public function restore($user)
     {
