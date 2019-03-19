@@ -31,13 +31,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('offers')->as('offers.')->group(function () {
-        Route::get('manage', 'OfferController@manage')->name('manage');
-        Route::get('trash', 'OfferController@trash')->name('trash');
         Route::get('{offer}/like', 'OfferController@like')->name('like');
         Route::get('{offer}/unlike', 'OfferController@unlike')->name('unlike');
-        Route::get('{offer}/delete', 'OfferController@destroy')->name('delete');
-        Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
-        Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
     });
 
     Route::resource('offers', 'OfferController')->except([
@@ -49,15 +44,22 @@ Route::middleware(['auth'])->group(function () {
 //admin zone
 
 Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
-    Route::get('test', function () {
-        return "ok";
-    })->name('admin.test');
-    Route::prefix('users')->group(function () {
-        Route::get('manage', 'UserController@manage')->name('users.manage');
-        Route::get('trash', 'UserController@trash')->name('users.trash');
-        Route::get('{user}/delete', 'UserController@delete')->name('users.delete');
-        Route::get('{user}/force_delete', 'UserController@force_delete')->name('users.force_delete');
-        Route::get('{user}/restore', 'UserController@restore')->name('users.restore');
+    Route::get('/', function () {
+        return redirect(route('offers.manage'));
+    });
+    Route::prefix('offers')->as('offers.')->group(function () {
+        Route::get('manage', 'OfferController@manage')->name('manage');
+        Route::get('trash', 'OfferController@trash')->name('trash');
+        Route::get('{offer}/delete', 'OfferController@destroy')->name('delete');
+        Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
+        Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
+    });
+    Route::prefix('users')->as('users.')->group(function () {
+        Route::get('manage', 'UserController@manage')->name('manage');
+        Route::get('trash', 'UserController@trash')->name('trash');
+        Route::get('{user}/delete', 'UserController@delete')->name('delete');
+        Route::get('{user}/force_delete', 'UserController@force_delete')->name('force_delete');
+        Route::get('{user}/restore', 'UserController@restore')->name('restore');
     });
     Route::get('setting', 'SettingController@index')->name('setting');
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');

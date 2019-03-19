@@ -48,22 +48,6 @@
 
                 </div>
             </div>
-
-            @if(Auth::check()&&Auth::user()->has_role('admin'))
-                <div class="ui dropdown item">
-                    <div class="header"><i class="orange dashboard icon"></i> Quản lý</div>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="{{route('dashboard')}}"><i class="green chart line icon"></i>Thống kê</a>
-                        <a class="item" href="{{route('offers.manage')}}"><i class="blue building icon"></i>Tin rao vặt</a>
-                        <a class="item" href="{{route('offers.trash')}}"><i class="grey building icon"></i>Tin rao vặt
-                            đã ẩn</a>
-                        <a class="item" href="{{route('users.manage')}}"><i class="blue users icon"></i>Người dùng</a>
-                        <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã ẩn</a>
-                        <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 </div>

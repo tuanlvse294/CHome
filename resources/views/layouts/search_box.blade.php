@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="row" id="advanced-row" style="display: none">
-            <div class="three wide column" style="padding: 0px">
+            <div class="three wide column" >
                 <select class="ui compact selection fluid dropdown" onchange="select_city()" name="city"
                         style="min-width: 400px">
                     <option value="all">Tất cả tỉnh, thành phố</option>

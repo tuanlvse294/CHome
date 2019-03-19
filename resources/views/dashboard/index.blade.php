@@ -1,16 +1,11 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 @section('content')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
     <script src="/bower_components/moment/min/moment.min.js"></script>
     <script src="/bower_components/semantic-ui-daterangepicker-master/daterangepicker.js"></script>
     <link rel="stylesheet" href="/bower_components/semantic-ui-daterangepicker-master/daterangepicker.css"/>
 
-    <div class="ui container">
-        <div class="ui breadcrumb">
-            <a class="section" href="/">Trang chủ</a>
-            <i class="right angle icon divider"></i>
-            <div class="active section">{{$title}}</div>
-        </div>
+    <div class="ui fluid container">
         <div class="ui huge header">{{$title}}</div>
         <div class="ui one column grid">
             <div class="column">

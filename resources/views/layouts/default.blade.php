@@ -1,5 +1,6 @@
 @extends('layouts.blank')
 @section('body_content')
+    <body>
     @include('layouts.top_menu')
     @if(Session::has('error'))
         <div class="ui error message container">
@@ -18,5 +19,7 @@
     @endif
     @yield('content')
     @include('layouts.footer')
+    </body>
+
 @endsection
 

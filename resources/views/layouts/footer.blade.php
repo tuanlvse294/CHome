@@ -19,6 +19,6 @@
             {{--</div>--}}
         </div>
         <h1 style="color: white;text-align: center">
-            <span style="border: solid 2px white;padding: 10px">C-Home.net</span></h1>
+            <span style="border: solid 2px white;padding: 10px">C-Home.xyz</span></h1>
     </div>
 </div>

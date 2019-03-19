@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('offer.list', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name]);
+        return view('offer.mine', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name]);
     }
     public function liked()
     {
