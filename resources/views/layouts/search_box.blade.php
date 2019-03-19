@@ -1,12 +1,27 @@
 <div class="ui segment">
     <form class="ui stackable grid">
         <div class="row">
-            <div class="seven wide column ">
+            <div class="ten wide column ">
                 <div class="ui fluid input">
                     <input class="fluid " type="text" name="query" placeholder="Bạn cần tìm kiếm gì?"
                            value="{{Request::get('query')}}">
                 </div>
             </div>
+
+            <div class="four wide column">
+                <button type="submit" class="ui orange fluid button"><i class="search icon"></i>Tìm kiếm
+                </button>
+            </div>
+            <div class="two wide column" style="vertical-align: center">
+                <h4 style="text-align: center"><a href="#" id="advanced-switch-open">Tìm kiếm nâng cao <i
+                                class="down arrow icon"></i></a></h4>
+            </div>
+            <div class="two wide column" style="vertical-align: center;display: none">
+                <h4 style="text-align: center"><a href="#" id="advanced-switch-hide">Tìm kiếm nâng cao <i
+                                class="up arrow icon"></i></a></h4>
+            </div>
+        </div>
+        <div class="row" id="advanced-row" style="display: none">
             <div class="three wide column" style="padding: 0px">
                 <select class="ui compact selection fluid dropdown" onchange="select_city()" name="city"
                         style="min-width: 400px">
@@ -28,14 +43,6 @@
                 </select>
             </div>
             <div class="three wide column">
-                <button type="submit" class="ui orange fluid button"><i class="search icon"></i>Tìm kiếm
-                </button>
-                <h4 style="text-align: center;margin-top: 10px"><a href="#" id="advanced-switch">Tìm kiếm nâng cao <i
-                                class="down arrow icon"></i></a></h4>
-            </div>
-        </div>
-        <div class="row" id="advanced-row" style="display: none">
-            <div class="four wide column">
                 <div class="ui fluid input">
                     <select class="ui compact selection fluid dropdown" name="area">
                         @foreach($areas as $index=>$area)
@@ -44,7 +51,7 @@
                     </select>
                 </div>
             </div>
-            <div class="four wide column">
+            <div class="two wide column">
                 <div class="ui fluid input">
                     <select class="ui compact selection fluid dropdown" name="price">
                         @foreach($prices as $index=>$price)
@@ -53,7 +60,7 @@
                     </select>
                 </div>
             </div>
-            <div class="four wide column">
+            <div class="two wide column">
                 <div class="ui fluid input">
                     <select class="ui compact selection fluid dropdown" name="front">
                         @foreach($fronts as $index=>$front)
@@ -62,7 +69,7 @@
                     </select>
                 </div>
             </div>
-            <div class="four wide column">
+            <div class="three wide column">
                 <div class="ui fluid input">
                     <select class="ui compact selection fluid dropdown" name="sort">
                         @foreach($sorts as $index=>$sort)

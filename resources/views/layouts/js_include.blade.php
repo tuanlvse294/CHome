@@ -45,9 +45,15 @@
         $('select.dropdown')
             .dropdown()
         ;
-        $("#advanced-switch").on('click', function () {
+        $("#advanced-switch-open").on('click', function () {
             $("#advanced-row").show(1);
-            $("#advanced-switch").hide(1);
+            $("#advanced-switch-open").parent().parent().hide(1);
+            $("#advanced-switch-hide").parent().parent().show(1);
+        });
+        $("#advanced-switch-hide").on('click', function () {
+            $("#advanced-row").hide(1);
+            $("#advanced-switch-hide").parent().parent().hide(1);
+            $("#advanced-switch-open").parent().parent().show(1);
         });
     });
 
