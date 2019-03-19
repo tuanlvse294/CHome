@@ -34,14 +34,14 @@
                     <td>{{$item->updated_at}}</td>
                     <td>
                         <div class="ui buttons">
-                            @if(isset($trash))
+                            @if(isset($trash) )
                                 <a href="{{route('offers.restore',[$item->id])}}"
                                    class="ui icon green button"><i class="recycle icon"></i> Phục hồi</a>
-                                <a href="{{route('offers.force_delete',[$item->id])}}"
-                                   class="ui icon red button"><i class="delete icon"></i> Xóa</a>
+                            <!-- <a href="{{route('offers.force_delete',[$item->id])}}"
+                                   class="ui icon red button"><i class="delete icon"></i> Xóa</a> -->
                             @else
                                 <a href="{{route('offers.delete',[$item->id])}}" class="ui icon yellow button"><i
-                                            class="trash icon"></i> Xóa</a>
+                                            class="low vision icon"></i> Ẩn</a>
                             @endif
                         </div>
                     </td>

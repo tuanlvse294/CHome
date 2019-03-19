@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfferController extends Controller
 {
@@ -12,6 +13,11 @@ class OfferController extends Controller
     public function manage()
     {
         return view('offer.list', ['items' => Offer::all(), 'title' => 'Quản lý tin rao vặt']);
+    }
+
+    public function mine()
+    {
+        return view('offer.list', ['items' => Auth::user()->offers, 'title' => 'Quản lý tin rao vặt']);
     }
 
     public function trash()
@@ -86,7 +92,7 @@ class OfferController extends Controller
             'city_id' => 'required',
             'district_id' => 'required',
             'area' => 'required',
-            'front' => 'required',
+            'front' => 'required|numeric|min:1|max:10000',
             'address' => 'required',
             'content' => 'required',
             'price' => 'required|numeric|min:0'

@@ -14,13 +14,18 @@
                     <i class="edit icon"></i> Đăng tin mới
                 </a>
             </div>
+            <a class="item">
+                <i class=" red bell icon"></i> Thông báo (22)
+            </a>
 
             <div class="ui dropdown item"><i class="user icon"></i>
                 {{Auth::check()?Auth::user()->name:'Tài khoản'}}
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     @if(Auth::check())
-                        {{--<a class="item" href="/profile/wishlist">Danh sách yêu thích</a>--}}
+                        <a class="item" href="{{route('users.show',['id'=>\Auth::id()])}}"><i class="building icon"></i>
+                            Tin đăng của tôi</a>
+                        <a class="item" href="#"><i class="star icon"></i> Danh sách yêu thích</a>
                         <a class="item" href="{{route('info.edit')}}"><i class="blue info icon"></i>Sửa thông tin cá
                             nhân</a>
                         <a class="item" href="{{route('password.edit')}}"><i class="grey user secret icon"></i>Đổi mật
@@ -42,9 +47,9 @@
                         <a class="item" href="{{route('dashboard')}}"><i class="green chart line icon"></i>Thống kê</a>
                         <a class="item" href="{{route('offers.manage')}}"><i class="blue building icon"></i>Tin rao vặt</a>
                         <a class="item" href="{{route('offers.trash')}}"><i class="grey building icon"></i>Tin rao vặt
-                            đã xoá</a>
+                            đã ẩn</a>
                         <a class="item" href="{{route('users.manage')}}"><i class="blue users icon"></i>Người dùng</a>
-                        <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã xoá</a>
+                        <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã ẩn</a>
                         <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
                     </div>
                 </div>

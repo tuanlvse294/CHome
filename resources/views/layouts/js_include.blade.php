@@ -13,7 +13,7 @@
     $(window).on('load', function () {
 
         $('.small_thumbnail').on('click', function (e) {
-            $('#modal_img').attr('src',e.target.src);
+            $('#modal_img').attr('src', e.target.src);
             $('.ui.modal')
                 .modal('show')
             ;
@@ -45,7 +45,10 @@
         $('select.dropdown')
             .dropdown()
         ;
-
+        $("#advanced-switch").on('click', function () {
+            $("#advanced-row").show(1);
+            $("#advanced-switch").hide(1);
+        });
     });
 
 

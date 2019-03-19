@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Offer::class);
     }
 
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
+
     public function has_role($role)
     {
         $roles_arr = json_decode($this->roles);

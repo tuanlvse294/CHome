@@ -25,6 +25,11 @@ class UserController extends Controller
         return redirect(route('users.manage'));
     }
 
+    public function show(User $user)
+    {
+        return view('offer.list', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name]);
+    }
+
     public function restore($user)
     {
         $user = User::withTrashed()->find($user);

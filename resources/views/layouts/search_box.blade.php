@@ -28,10 +28,13 @@
                 </select>
             </div>
             <div class="three wide column">
-                <button type="submit" class="ui orange fluid button"><i class="search icon"></i>Tìm kiếm</button>
+                <button type="submit" class="ui orange fluid button"><i class="search icon"></i>Tìm kiếm
+                </button>
+                <h4 style="text-align: center;margin-top: 10px"><a href="#" id="advanced-switch">Tìm kiếm nâng cao <i
+                                class="down arrow icon"></i></a></h4>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="advanced-row" style="display: none">
             <div class="four wide column">
                 <div class="ui fluid input">
                     <select class="ui compact selection fluid dropdown" name="area">
