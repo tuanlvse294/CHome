@@ -24,6 +24,10 @@ class OfferController extends Controller
     {
         return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã xoá', 'trash' => true]);
     }
+    public function renew()
+    {
+        return 'nope';
+    }
 
 
     public function restore($offer)

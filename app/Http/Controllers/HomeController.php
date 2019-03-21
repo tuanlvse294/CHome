@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Offer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -63,10 +64,17 @@ class HomeController extends Controller
             } elseif ($request->get('sort') == 'des') {
                 $offers = $offers->orderByDesc('price');
             }
-        }else{
+        } else {
             $offers = $offers->orderByDesc('updated_at');
         }
         $offers = $offers->paginate(10);
-        return view('home', ['offers' => $offers, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
+
+        $premiums = Offer::query()->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
+        foreach ($premiums as $offer) {
+            $offer->last_seen = Carbon::now();
+            $offer->save();
+        }
+
+        return view('home', ['offers' => $offers, 'premiums' => $premiums, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
     }
 }

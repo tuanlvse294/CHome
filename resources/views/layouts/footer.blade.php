@@ -1,4 +1,5 @@
-<div style="background: black;padding-top:10px;padding-bottom: 50px;margin-top: 20px">
+<div id="footer-padding"></div>
+<div style="background: black;padding-top:10px;padding-bottom: 50px;" id="xfooter">
     <div class="ui container">
         <div class="ui inverted secondary menu stackable three column grid">
             <div class="column"></div>
@@ -22,3 +23,14 @@
             <span style="border: solid 2px white;padding: 10px">C-Home.xyz</span></h1>
     </div>
 </div>
+
+<script>
+    $(() => {
+        footer_h = $('#xfooter').height();
+        footer_bottom = $('#xfooter').offset().top + footer_h;
+        doc_height = $(document).height();
+        if (footer_bottom < doc_height) {
+            $('#footer-padding').height(doc_height - footer_bottom - 40)
+        }
+    });
+</script>
