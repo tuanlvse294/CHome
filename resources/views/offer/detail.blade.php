@@ -60,6 +60,17 @@
                         @endforeach
                     </div>
                 </div>
+                @if($item->video_url!='')
+                    <div class="ui segment">
+                        <h3 class="ui dividing header">Video</h3>
+                        <div class="ui embed" data-url="{{$item->video_url}}"></div>
+                        <script>
+                            $(() => {
+                                $('.ui .embed').embed();
+                            });
+                        </script>
+                    </div>
+                @endif
             </div>
         </div>
 

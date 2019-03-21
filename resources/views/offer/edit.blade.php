@@ -36,6 +36,7 @@
                 @include('ui.form.input',['name'=>'area','label'=>'Diện tích (m2) *','type'=>'number','min'=>0])
                 @include('ui.form.input',['name'=>'front','label'=>'Mặt tiền (m) *','type'=>'number','min'=>0])
                 @include('ui.form.ckeditor',['name'=>'content','label'=>'Nội dung chi tiết *'])
+                @include('ui.form.input',['name'=>'video_url','label'=>'Video','placeholder'=>'https://www.youtube.com/embed/'])
                 <button class="ui primary button" type="submit">Đăng</button>
             </form>
         </div>

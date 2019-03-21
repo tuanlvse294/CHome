@@ -11,7 +11,7 @@ class Offer extends Model
 
     use \App\CanFillOld;
 
-    protected $fillable = ['title', 'address', 'area', 'price', 'content', 'images', 'city_id', 'district_id','front'];
+    protected $fillable = ['title', 'address', 'area', 'price', 'content', 'images', 'city_id', 'district_id','front','video_url'];
     protected $attributes = ['images' => '["no-thumbnail.png"]', 'views' => 0];
 
     public function city()
