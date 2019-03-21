@@ -17,17 +17,22 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        if (\Auth::check() && \Auth::user()->has_role('admin')){
+        if (\Auth::check() && \Auth::user()->has_role('admin')) {
             return redirect(url('admin'));
         }
         $offers = Offer::query();
+        $premiums = Offer::query();
 
         if ($request->has('query'))
             $offers = $offers->where('title', 'like', "%" . $request->get('query') . "%");
-        if ($request->has('city') and $request->get('city') != 'all')
+        if ($request->has('city') and $request->get('city') != 'all') {
             $offers = $offers->where('city_id', '=', $request->get('city'));
-        if ($request->has('district') and $request->get('district') != 'all')
+            $premiums = $premiums->where('city_id', '=', $request->get('city'));
+        }
+        if ($request->has('district') and $request->get('district') != 'all') {
+            $premiums = $premiums->where('district_id', '=', $request->get('district'));
             $offers = $offers->where('district_id', '=', $request->get('district'));
+        }
         if ($request->has('price') and $request->get('price') != 'all') {
             $values = explode('-', $request->get('price'));
             $lower = (int)$values[0];
@@ -63,12 +68,6 @@ class HomeController extends Controller
         }
 
 
-        $premiums = $offers->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
-        foreach ($premiums as $offer) {
-            $offer->last_seen = Carbon::now();
-            $offer->save();
-        }
-
         if ($request->has('sort') and $request->get('sort') != 'time') {
             if ($request->get('sort') == 'asc') {
                 $offers = $offers->orderBy('price');
@@ -76,11 +75,15 @@ class HomeController extends Controller
                 $offers = $offers->orderByDesc('price');
             }
         } else {
-            $offers = $offers->orderByDesc('updated_at');
+            $offers = $offers->orderByDesc('created_at');
         }
         $offers = $offers->paginate(10);
 
-
+        $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
+        foreach ($premiums as $offer) {
+            $offer->last_seen = Carbon::now();
+            $offer->save();
+        }
 
         return view('home', ['offers' => $offers, 'premiums' => $premiums, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
     }
