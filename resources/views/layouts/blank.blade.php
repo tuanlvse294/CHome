@@ -59,6 +59,27 @@
         #DataTables_Table_0_length {
             margin-bottom: 20px;
         }
+        .blinking {
+            animation: blinkingText 0.8s infinite;
+        }
+
+        @keyframes blinkingText {
+            0% {
+                color: white;
+            }
+            49% {
+                color: white;
+            }
+            50% {
+                color: transparent;
+            }
+            99% {
+                color: transparent;
+            }
+            100% {
+                color: white;
+            }
+        }
     </style>
 </head>
 @yield('body_content')

@@ -13,10 +13,11 @@
             <i class="right angle icon divider"></i>
             <div class="active section">{{$title}}</div>
         </div>
-        <div class="ui huge header">{{$title}}</div>
+        @include('ads.leaderboard')
 
-        <div class="ui  modal" >
-                <img src="/apple-icon.png" id="modal_img" style="width: 100%;">
+        <div class="ui huge header">{{$title}}</div>
+        <div class="ui  modal">
+            <img src="/apple-icon.png" id="modal_img" style="width: 100%;">
         </div>
         <div class="ui two column stackable grid ">
             <div class="column">
@@ -61,8 +62,6 @@
                 </div>
             </div>
         </div>
-
-
 
 
     </div>

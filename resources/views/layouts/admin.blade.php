@@ -34,6 +34,20 @@
                 <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
             </div>
         </div>
+        <div class="item">
+            <div class="header">User</div>
+            <div class="menu">
+                <a class="item" href="{{route('users.show',['id'=>\Auth::id()])}}"><i class="building icon"></i>
+                    Tin đăng của tôi</a>
+                <a class="item" href="{{route('users.liked')}}"><i class="star icon"></i> Danh sách yêu
+                    thích</a>
+                <a class="item" href="{{route('info.edit')}}"><i class="blue info icon"></i>Sửa thông tin cá
+                    nhân</a>
+                <a class="item" href="{{route('password.edit')}}"><i class="grey user secret icon"></i>Đổi mật
+                    khẩu</a>
+                <a class="item" href="{{route('logout.get')}}"><i class="red sign out icon"></i>Đăng xuất</a>
+            </div>
+        </div>
     </div>
     <div style="padding-right: 28px;margin-left:280px">
         <br>

@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('offers')->as('offers.')->group(function () {
+        Route::get('{offer}/promote', 'OfferController@promote')->name('promote');
         Route::get('{offer}/like', 'OfferController@like')->name('like');
         Route::get('{offer}/unlike', 'OfferController@unlike')->name('unlike');
     });

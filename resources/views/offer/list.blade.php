@@ -3,7 +3,6 @@
 
     <div class="ui fluid container">
         <div class="ui huge header">{{$title}}</div>
-
         <table class="ui celled table">
             <thead>
             <tr>

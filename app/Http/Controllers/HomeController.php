@@ -17,6 +17,9 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        if (\Auth::check() && \Auth::user()->has_role('admin')){
+            return redirect(url('admin'));
+        }
         $offers = Offer::query();
 
         if ($request->has('query'))

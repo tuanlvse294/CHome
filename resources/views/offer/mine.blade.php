@@ -2,6 +2,11 @@
 @section('content')
 
     <div class="ui container">
+        <div class="ui breadcrumb">
+            <a class="section" href="/">Trang chủ</a>
+            <i class="right angle icon divider"></i>
+            <div class="active section">{{$title}}</div>
+        </div>
         <div class="ui huge header">{{$title}}</div>
 
         <table class="ui celled table">
@@ -35,10 +40,10 @@
                             {{--<a href="{{route('offers.force_delete',[$item->id])}}"--}}
                                    {{--class="ui icon red button"><i class="delete icon"></i> Xóa</a>--}}
                             @else
-                                <a href="{{route('offers.delete',[$item->id])}}" class="ui icon yellow button"><i
-                                            class="low vision icon"></i> Ẩn</a>
-                                <a href="{{route('offers.renew',[$item->id])}}"
-                                   class="ui icon green button"><i class="recycle icon"></i> Gia hạn</a>
+                                <a href="{{route('offers.delete',[$item->id])}}" class="ui icon red button"><i
+                                            class="low vision icon"></i> Ẩn tin</a>
+                                <a href="{{route('offers.promote',[$item->id])}}"
+                                   class="ui icon green button"><i class="bullhorn icon"></i> Bán nhanh hơn</a>
 
                             @endif
                         </div>
