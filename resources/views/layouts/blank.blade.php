@@ -59,6 +59,7 @@
         #DataTables_Table_0_length {
             margin-bottom: 20px;
         }
+
         .blinking {
             animation: blinkingText 0.8s infinite;
         }
@@ -79,6 +80,20 @@
             100% {
                 color: white;
             }
+        }
+
+        .max_2_lines {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .max_1_lines {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
     </style>
 </head>
