@@ -14,4 +14,16 @@
             </div>
         </div>
     </div>
+    <script>
+        function update_premiums() {
+            $.get('/premiums', (res) => {
+                $("#premiums_panel").replaceWith(res);
+            });
+        }
+
+        $(() => {
+            setInterval(update_premiums, 10000);
+        });
+
+    </script>
 @endsection

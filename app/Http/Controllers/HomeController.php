@@ -21,16 +21,13 @@ class HomeController extends Controller
             return redirect(url('admin'));
         }
         $offers = Offer::query();
-        $premiums = Offer::query();
 
         if ($request->has('query'))
             $offers = $offers->where('title', 'like', "%" . $request->get('query') . "%");
         if ($request->has('city') and $request->get('city') != 'all') {
             $offers = $offers->where('city_id', '=', $request->get('city'));
-            $premiums = $premiums->where('city_id', '=', $request->get('city'));
         }
         if ($request->has('district') and $request->get('district') != 'all') {
-            $premiums = $premiums->where('district_id', '=', $request->get('district'));
             $offers = $offers->where('district_id', '=', $request->get('district'));
         }
         if ($request->has('price') and $request->get('price') != 'all') {
@@ -79,6 +76,8 @@ class HomeController extends Controller
         }
         $offers = $offers->paginate(10);
 
+        $premiums = Offer::query();
+
         $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
         foreach ($premiums as $offer) {
             $offer->last_seen = Carbon::now();
@@ -86,5 +85,18 @@ class HomeController extends Controller
         }
 
         return view('home', ['offers' => $offers, 'premiums' => $premiums, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
+    }
+
+
+    public function get_premiums()
+    {
+        $premiums = Offer::query();
+
+        $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
+        foreach ($premiums as $offer) {
+            $offer->last_seen = Carbon::now();
+            $offer->save();
+        }
+        return view('offer.premiums', ['premiums' => $premiums]);
     }
 }

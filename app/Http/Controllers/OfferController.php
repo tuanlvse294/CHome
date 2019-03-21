@@ -96,11 +96,16 @@ class OfferController extends Controller
         return $this->process($request, $offer);
     }
 
+
     public function destroy(Offer $offer)
     {
         \Session::flash("message", "Đã xoá tin rao vặt " . $offer->title);
         $offer->delete();
-        return redirect(route('offers.manage'));
+        if (Auth::user()->has_role('admin'))
+            return redirect(route('offers.manage'));
+        else
+            return redirect(route('users.show', ['user' => Auth::user()]));
+
     }
 
 

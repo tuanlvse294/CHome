@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('offers')->as('offers.')->group(function () {
+        Route::get('{offer}/delete', 'OfferController@destroy')->name('delete');
         Route::get('{offer}/promote', 'OfferController@promote')->name('promote');
         Route::get('{offer}/promote/{pack}/pick', 'OfferController@pick_promote')->name('promote.pick');
         Route::get('{offer}/like', 'OfferController@like')->name('like');
@@ -53,7 +54,6 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     Route::prefix('offers')->as('offers.')->group(function () {
         Route::get('manage', 'OfferController@manage')->name('manage');
         Route::get('trash', 'OfferController@trash')->name('trash');
-        Route::get('{offer}/delete', 'OfferController@destroy')->name('delete');
         Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
         Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
     });
@@ -74,6 +74,7 @@ Route::get('/home', function () {
     return redirect('/');
 });
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/premiums', 'HomeController@get_premiums')->name('get_premiums');
 
 
 Route::get('/cities/{city}/districts', function ($city_id) {

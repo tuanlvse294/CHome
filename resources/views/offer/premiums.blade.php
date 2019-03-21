@@ -1,5 +1,5 @@
 @if($premiums->count()>0)
-    <div class="ui segment">
+    <div class="ui segment" id="premiums_panel">
         <h3>Tin đặc biệt</h3>
         <div class="ui stackable six column grid">
             @foreach($premiums as $item)
@@ -16,18 +16,3 @@
         </div>
     </div>
 @endif
-<style>
-    .max_2_lines {
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-
-    .max_1_lines {
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-</style>
