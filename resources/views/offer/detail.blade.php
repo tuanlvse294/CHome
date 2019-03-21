@@ -14,6 +14,7 @@
             <div class="active section">{{$title}}</div>
         </div>
         @include('ads.leaderboard')
+        @include('offer.premiums')
 
         <div class="ui huge header">{{$title}}</div>
         <div class="ui  modal">
@@ -72,6 +73,7 @@
                     </div>
                 @endif
             </div>
+
         </div>
 
 

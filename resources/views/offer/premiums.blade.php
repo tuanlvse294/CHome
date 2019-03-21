@@ -1,3 +1,6 @@
+<?php
+$premiums = \App\Offer::get_premiums()
+?>
 @if($premiums->count()>0)
     <div class="ui segment" id="premiums_panel">
         <h3>Tin đặc biệt</h3>

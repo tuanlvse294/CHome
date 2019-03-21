@@ -78,25 +78,13 @@ class HomeController extends Controller
 
         $premiums = Offer::query();
 
-        $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
-        foreach ($premiums as $offer) {
-            $offer->last_seen = Carbon::now();
-            $offer->save();
-        }
 
-        return view('home', ['offers' => $offers, 'premiums' => $premiums, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
+        return view('home', ['offers' => $offers, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
     }
 
 
     public function get_premiums()
     {
-        $premiums = Offer::query();
-
-        $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
-        foreach ($premiums as $offer) {
-            $offer->last_seen = Carbon::now();
-            $offer->save();
-        }
-        return view('offer.premiums', ['premiums' => $premiums]);
+        return view('offer.premiums');
     }
 }

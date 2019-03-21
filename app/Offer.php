@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,7 +12,7 @@ class Offer extends Model
 
     use \App\CanFillOld;
 
-    protected $fillable = ['title', 'address', 'area', 'price', 'content', 'images', 'city_id', 'district_id','front','video_url'];
+    protected $fillable = ['title', 'address', 'area', 'price', 'content', 'images', 'city_id', 'district_id', 'front', 'video_url'];
     protected $attributes = ['images' => '["no-thumbnail.png"]', 'views' => 0];
 
     public function city()
@@ -78,5 +79,17 @@ class Offer extends Model
     public function get_price_vnd()
     {
         return $this->jam_read_num_for_vietnamese($this->price);
+    }
+
+    public static function get_premiums()
+    {
+        $premiums = Offer::query();
+
+        $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
+        foreach ($premiums as $offer) {
+            $offer->last_seen = Carbon::now();
+            $offer->save();
+        }
+        return $premiums;
     }
 }

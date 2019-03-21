@@ -55,6 +55,15 @@
             $("#advanced-switch-hide").parent().parent().hide(1);
             $("#advanced-switch-open").parent().parent().show(1);
         });
+        function update_premiums() {
+            $.get('/premiums', (res) => {
+                $("#premiums_panel").replaceWith(res);
+            });
+        }
+
+        $(() => {
+            setInterval(update_premiums, 10000);
+        });
     });
 
 
