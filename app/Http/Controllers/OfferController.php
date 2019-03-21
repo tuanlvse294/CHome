@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Offer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,11 +16,6 @@ class OfferController extends Controller
         return view('offer.list', ['items' => Offer::all(), 'title' => 'Quản lý tin rao vặt']);
     }
 
-    public function mine()
-    {
-        return view('offer.list', ['items' => Auth::user()->offers, 'title' => 'Quản lý tin rao vặt']);
-    }
-
     public function trash()
     {
         return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã xoá', 'trash' => true]);
@@ -27,7 +23,26 @@ class OfferController extends Controller
 
     public function promote(Offer $offer)
     {
-        return view('offer.promote', ['offer' =>$offer,'title' => 'Bán nhanh hơn']);
+        return view('offer.promote', ['offer' => $offer, 'title' => 'Bán nhanh hơn']);
+    }
+
+    public function pick_promote(Offer $offer, $pack)
+    {
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        $premium_expire = Carbon::parse($offer->premium_expire);
+        if ($premium_expire < $now) {
+            $premium_expire = $now;
+        }
+
+        if ($pack == 'day') {
+            $premium_expire->addDays(1);
+        } elseif ($pack == 'week') {
+            $premium_expire->addDays(7);
+        }
+        $offer->premium_expire = $premium_expire;
+        $offer->save();
+
+        return redirect(route('users.show', ['user' => Auth::user()]));
     }
 
 

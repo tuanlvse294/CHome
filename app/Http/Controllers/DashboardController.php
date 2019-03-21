@@ -30,8 +30,8 @@ class DashboardController extends Controller
         }
 
         $end = new Carbon($end);
-        $end = $end->addDay(1);
-        $end = $end->addSecond(-1);
+        $end = $end->addDays(1);
+        $end = $end->addSeconds(-1);
 
         FlashToOld::flash_to_old($start->format('M d, Y'), 'start');
         FlashToOld::flash_to_old($end->format('M d, Y'), 'end');

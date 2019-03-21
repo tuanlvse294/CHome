@@ -11,52 +11,58 @@
         </div>
         <div class="ui huge header">{{$title}}</div>
         <div class='ui container codepen-margin'>
-            <div class="ui grid">
-                <div class="five wide column">
-                    <div class="ui raised segments">
+            <div class="ui three column grid">
+                <div class="column">
+                    <div class="ui segments">
                         <div class="ui center aligned secondary segment">
                             <div class="ui statistic">
                                 <div class="value">
-                                    $50
+                                    22.000
                                 </div>
                                 <div class="label">
-                                    per month
+                                    VND / ngày
                                 </div>
                             </div>
                         </div>
                         <div class="ui center aligned segment">
-                            <p> - Premium Feature One </p>
+                            <p> - Hiển thị tách biệt </p>
                         </div>
                         <div class="ui center aligned segment">
-                            <p> - Another great feature </p>
+                            <p> - Trong 24h từ khi bắt đầu dịch vụ </p>
                         </div>
                     </div>
-                    <div class="ui green fluid button">
-                        Select
-                    </div>
+                    <a class="ui green fluid button" href="{{route('offers.promote.pick',['offer'=>$offer,'pack'=>'day'])}}">
+                        Chọn mua
+                    </a>
                 </div>
-                <div class="five wide column">
+                <div class="column">
+
                     <div class="ui raised segments">
-                        <div class="ui center aligned secondary segment">
+
+                        <div class="ui center aligned orange secondary segment">
+
                             <div class="ui statistic">
                                 <div class="value">
-                                    $20
+                                    120.000
                                 </div>
+
                                 <div class="label">
-                                    per month
+                                    VND / 7 ngày
                                 </div>
                             </div>
                         </div>
                         <div class="ui center aligned segment">
-                            <p> - A basic feature </p>
+                            <p> - Hiển thị tách biệt </p>
                         </div>
                         <div class="ui center aligned segment">
-                            <p> - Look. No additional CSS or anything </p>
+                            <p> - Trong 1 tuần từ khi bắt đầu dịch vụ </p>
                         </div>
+                        <div class="ui top right attached red label" style="width: auto"> -20%</div>
+
                     </div>
-                    <div class="ui green fluid button">
-                        Select
-                    </div>
+                    <a class="ui orange fluid button" href="{{route('offers.promote.pick',['offer'=>$offer,'pack'=>'week'])}}">
+                        Chọn mua
+                    </a>
                 </div>
             </div>
         </div>

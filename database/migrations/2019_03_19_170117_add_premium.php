@@ -14,7 +14,7 @@ class AddPremium extends Migration
     public function up()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->date('premium_expire')->default('1970-01-01');
+            $table->dateTime('premium_expire')->default('1970-01-01');
             $table->dateTime('last_seen')->default('1970-01-01');
         });
     }

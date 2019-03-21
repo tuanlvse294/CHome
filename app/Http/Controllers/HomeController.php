@@ -61,6 +61,14 @@ class HomeController extends Controller
                 $offers = $offers->where('front', '<=', $upper);
             }
         }
+
+
+        $premiums = $offers->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
+        foreach ($premiums as $offer) {
+            $offer->last_seen = Carbon::now();
+            $offer->save();
+        }
+
         if ($request->has('sort') and $request->get('sort') != 'time') {
             if ($request->get('sort') == 'asc') {
                 $offers = $offers->orderBy('price');
@@ -72,11 +80,7 @@ class HomeController extends Controller
         }
         $offers = $offers->paginate(10);
 
-        $premiums = Offer::query()->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
-        foreach ($premiums as $offer) {
-            $offer->last_seen = Carbon::now();
-            $offer->save();
-        }
+
 
         return view('home', ['offers' => $offers, 'premiums' => $premiums, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
     }

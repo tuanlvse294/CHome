@@ -26,12 +26,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('info', 'UserController@edit_info')->name('info.edit');
         Route::post('info', 'UserController@save_info')->name('info.save');
         Route::get('password', 'UserController@edit_password')->name('password.edit');
+        Route::get('password/admin', 'UserController@edit_password_admin')->name('password.edit.admin');
         Route::post('password', 'UserController@save_password')->name('password.save');
 
     });
 
     Route::prefix('offers')->as('offers.')->group(function () {
         Route::get('{offer}/promote', 'OfferController@promote')->name('promote');
+        Route::get('{offer}/promote/{pack}/pick', 'OfferController@pick_promote')->name('promote.pick');
         Route::get('{offer}/like', 'OfferController@like')->name('like');
         Route::get('{offer}/unlike', 'OfferController@unlike')->name('unlike');
     });

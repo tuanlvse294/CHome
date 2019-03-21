@@ -27,12 +27,14 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('offer.mine', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name]);
+        return view('offer.mine', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
     }
+
     public function liked()
     {
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Danh sách yêu thích']);
     }
+
     public function notications()
     {
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Tất cả thông báo']);
@@ -80,10 +82,13 @@ class UserController extends Controller
     }
 
 //change password page
-    public
-    function edit_password(Request $request)
+    public function edit_password(Request $request)
     {
         return view('user.password');
+    }
+    public function edit_password_admin(Request $request)
+    {
+        return view('user.password_admin');
     }
 
 //save new password

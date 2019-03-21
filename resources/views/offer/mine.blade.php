@@ -16,8 +16,10 @@
                 <th>Hình ảnh</th>
                 <th>Nội dung</th>
                 <th>Giá</th>
-                <th>Thời gian</th>
-                <th>Hành động</th>
+                @if(Auth::check() && Auth::id()==$user->id)
+                    <th>Thời hạn gói VIP</th>
+                    <th>Hành động</th>
+                @endif
             </tr>
             </thead>
             <tbody>
@@ -31,14 +33,15 @@
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                     </td>
                     <td>{{$item->price}} VND</td>
-                    <td>{{$item->updated_at}}</td>
-                    <td>
-                        <div class="ui buttons">
+                    @if(Auth::check() && Auth::id()==$item->user_id)
+
+                        <td>{{$item->premium_expire}}</td>
+                        <td>
                             @if(isset($trash) )
                                 <a href="{{route('offers.restore',[$item->id])}}"
                                    class="ui icon green button"><i class="recycle icon"></i> Phục hồi</a>
-                            {{--<a href="{{route('offers.force_delete',[$item->id])}}"--}}
-                                   {{--class="ui icon red button"><i class="delete icon"></i> Xóa</a>--}}
+                                {{--<a href="{{route('offers.force_delete',[$item->id])}}"--}}
+                                {{--class="ui icon red button"><i class="delete icon"></i> Xóa</a>--}}
                             @else
                                 <a href="{{route('offers.delete',[$item->id])}}" class="ui icon red button"><i
                                             class="low vision icon"></i> Ẩn tin</a>
@@ -46,8 +49,8 @@
                                    class="ui icon green button"><i class="bullhorn icon"></i> Bán nhanh hơn</a>
 
                             @endif
-                        </div>
-                    </td>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
