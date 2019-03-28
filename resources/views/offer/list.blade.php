@@ -34,7 +34,8 @@
                             <!-- <a href="{{route('offers.force_delete',[$item->id])}}"
                                    class="ui icon red button"><i class="delete icon"></i> Xóa</a> -->
                             @else
-                                <a href="{{route('offers.delete',[$item->id])}}" class="ui icon yellow button"><i
+                                <a href="{{route('offers.delete',[$item->id])}}" onclick="java"
+                                   class="confirmed ui icon yellow button"><i
                                             class="low vision icon"></i> Ẩn</a>
                             @endif
                         </div>

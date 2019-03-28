@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\User;
 use Illuminate\Http\Request;
+use Response;
 
 //user's editing profile controller
 class UserController extends Controller
@@ -35,9 +37,45 @@ class UserController extends Controller
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Danh sách yêu thích']);
     }
 
+    public function show_notication($notification_id)
+    {
+        $notification = Notification::query()->findOrFail($notification_id);
+        $notification->seen = true;
+        $notification->save();
+        return redirect($notification->url);
+    }
+
     public function notications()
     {
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Tất cả thông báo']);
+    }
+
+
+    public function export_csv()
+    {
+        $headers = [
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0'
+            , 'Content-type' => 'text/csv'
+            , 'Content-Disposition' => 'attachment; filename=users.csv'
+            , 'Expires' => '0'
+            , 'Pragma' => 'public'
+        ];
+
+        $list = User::all()->toArray();
+
+        # add headers for each column in the CSV download
+        array_unshift($list, array_keys($list[0]));
+
+        $callback = function () use ($list) {
+            $FH = fopen('php://output', 'w');
+            foreach ($list as $row) {
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return Response::stream($callback, 200, $headers); //use Illuminate\Support\Facades\Response;
+
     }
 
     public function restore($user)
@@ -86,6 +124,7 @@ class UserController extends Controller
     {
         return view('user.password');
     }
+
     public function edit_password_admin(Request $request)
     {
         return view('user.password_admin');

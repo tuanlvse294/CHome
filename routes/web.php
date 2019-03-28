@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('profile')->group(function () {
         Route::get('notications', 'UserController@notications')->name('users.notications');
+        Route::get('show_notication/{notication}', 'UserController@show_notication')->name('users.show_notication');
         Route::get('liked', 'UserController@liked')->name('users.liked');
         Route::get('info', 'UserController@edit_info')->name('info.edit');
         Route::post('info', 'UserController@save_info')->name('info.save');
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
         Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
     });
     Route::prefix('users')->as('users.')->group(function () {
+        Route::get('export', 'UserController@export_csv')->name('export');
         Route::get('manage', 'UserController@manage')->name('manage');
         Route::get('trash', 'UserController@trash')->name('trash');
         Route::get('{user}/delete', 'UserController@delete')->name('delete');

@@ -76,8 +76,6 @@ class HomeController extends Controller
         }
         $offers = $offers->paginate(10);
 
-        $premiums = Offer::query();
-
 
         return view('home', ['offers' => $offers, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
     }

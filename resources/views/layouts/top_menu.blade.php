@@ -17,9 +17,18 @@
             @if(Auth::check())
 
                 <div class="ui dropdown item">
-                    <i class=" red bell icon"></i> Thông báo ({{Auth::user()->my_notifications()->count()}})
+                    <i class=" red bell icon"></i> Thông báo ({{Auth::user()->new_notifications()->count()}})
                     <i class="dropdown icon"></i>
                     <div class="menu">
+                        @foreach(Auth::user()->all_notifications()->limit(5)->get() as $notification)
+                            <a class="item" href="{{route('users.show_notication',['notication'=>$notification])}}"
+                               @if(!$notification->seen)
+                               style="color: red !important;"
+                                    @endif
+                            ><i
+                                        class="newspaper icon"></i>
+                                {{$notification->title}}</a>
+                        @endforeach
                         <a class="red item" href="{{route('users.notications')}}"><i
                                     class="list icon"></i>
                             Xem tất cả thông báo</a>

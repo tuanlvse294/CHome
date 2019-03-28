@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\Offer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -134,7 +135,7 @@ class OfferController extends Controller
             $offer->images = json_encode($urls);
         }
         $offer->save(); //save model to database
-
+        Notification::makeNotification("Đã đang tin mới thành công!!", route('offers.show', ['offer' => $offer]));
         return redirect('/');
     }
 
