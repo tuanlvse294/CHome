@@ -21,7 +21,7 @@
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         @foreach(Auth::user()->all_notifications()->limit(5)->get() as $notification)
-                            <a class="item" href="{{route('users.show_notication',['notication'=>$notification])}}"
+                            <a class="item" href="{{route('users.show_notification',['notification'=>$notification])}}"
                                @if(!$notification->seen)
                                style="color: red !important;"
                                     @endif
@@ -29,7 +29,7 @@
                                         class="newspaper icon"></i>
                                 {{$notification->title}}</a>
                         @endforeach
-                        <a class="red item" href="{{route('users.notications')}}"><i
+                        <a class="red item" href="{{route('users.notifications')}}"><i
                                     class="list icon"></i>
                             Xem tất cả thông báo</a>
                     </div>

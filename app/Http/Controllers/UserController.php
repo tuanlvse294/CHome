@@ -37,17 +37,16 @@ class UserController extends Controller
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Danh sách yêu thích']);
     }
 
-    public function show_notication($notification_id)
+    public function show_notification(Notification $notification)
     {
-        $notification = Notification::query()->findOrFail($notification_id);
         $notification->seen = true;
         $notification->save();
         return redirect($notification->url);
     }
 
-    public function notications()
+    public function notifications()
     {
-        return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Tất cả thông báo']);
+        return view('user.notifications', ['notifications' => \Auth::user()->all_notifications()->paginate(5), 'title' => 'Tất cả thông báo']);
     }
 
 
