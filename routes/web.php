@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
 
 //admin zone
 
+Route::prefix('users')->as('users.')->group(function () {
+    Route::get('export', 'UserController@export_csv')->name('export');
+});
 Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     Route::get('/', function () {
         return redirect(route('offers.manage'));
@@ -66,7 +69,6 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     });
     Route::get('transaction/manage', 'TransactionController@manage')->name('transaction.manage');
     Route::prefix('users')->as('users.')->group(function () {
-        Route::get('export', 'UserController@export_csv')->name('export');
         Route::get('manage', 'UserController@manage')->name('manage');
         Route::get('trash', 'UserController@trash')->name('trash');
         Route::get('{user}/delete', 'UserController@delete')->name('delete');

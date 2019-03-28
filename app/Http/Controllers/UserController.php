@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Notification;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Response;
 
 //user's editing profile controller
@@ -59,16 +61,7 @@ class UserController extends Controller
     public function export_csv()
     {
 
-        $list = User::all()->toArray();
-
-        # add headers for each column in the CSV download
-        array_unshift($list, array_keys($list[0]));
-
-        $FH = fopen('php://output', 'w');
-        foreach ($list as $row) {
-            fputcsv($FH, $row);
-        }
-        fclose($FH);
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 
     public function restore($user)
