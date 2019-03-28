@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('logout.get');
 
     Route::prefix('profile')->group(function () {
+        Route::get('transactions', 'UserController@my_transactions')->name('users.transactions');
         Route::get('notifications', 'UserController@notifications')->name('users.notifications');
         Route::get('show_notification/{notification}', 'UserController@show_notification')->name('users.show_notification');
         Route::get('liked', 'UserController@liked')->name('users.liked');
@@ -58,6 +59,12 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
         Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
         Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
     });
+    Route::prefix('premium')->group(function () {
+        Route::resource('premium', 'PremiumPackController');
+        Route::get('manage', 'PremiumPackController@manage')->name('premium.manage');
+        Route::get('delete', 'PremiumPackController@delete')->name('premium.delete');
+    });
+    Route::get('transaction/manage', 'TransactionController@manage')->name('transaction.manage');
     Route::prefix('users')->as('users.')->group(function () {
         Route::get('export', 'UserController@export_csv')->name('export');
         Route::get('manage', 'UserController@manage')->name('manage');

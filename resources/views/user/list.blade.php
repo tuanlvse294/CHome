@@ -3,7 +3,9 @@
 
     <div class="ui fluid container">
         <div class="ui huge header">{{$title}}</div>
-
+        <a href="{{route('users.export')}}" class="ui green button"><i class="download icon"></i> Download as CSV</a>
+        <br>
+        <br>
         <table class="ui celled table">
             <thead>
             <tr>

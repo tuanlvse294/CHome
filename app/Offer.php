@@ -28,7 +28,6 @@ class Offer extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-//        return User::query()->find($this->user_id);
     }
 
     public function likers()

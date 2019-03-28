@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Notification;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 //user's editing profile controller
@@ -50,31 +51,24 @@ class UserController extends Controller
     }
 
 
+    public function my_transactions()
+    {
+        return view('transaction.list', ['transactions' => Auth::user()->transactions, 'title' => 'Tất cả giao dịch']);
+    }
+
     public function export_csv()
     {
-        $headers = [
-            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0'
-            , 'Content-type' => 'text/csv'
-            , 'Content-Disposition' => 'attachment; filename=users.csv'
-            , 'Expires' => '0'
-            , 'Pragma' => 'public'
-        ];
 
         $list = User::all()->toArray();
 
         # add headers for each column in the CSV download
         array_unshift($list, array_keys($list[0]));
 
-        $callback = function () use ($list) {
-            $FH = fopen('php://output', 'w');
-            foreach ($list as $row) {
-                fputcsv($FH, $row);
-            }
-            fclose($FH);
-        };
-
-        return Response::stream($callback, 200, $headers); //use Illuminate\Support\Facades\Response;
-
+        $FH = fopen('php://output', 'w');
+        foreach ($list as $row) {
+            fputcsv($FH, $row);
+        }
+        fclose($FH);
     }
 
     public function restore($user)

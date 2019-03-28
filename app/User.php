@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->hasMany(Offer::class);
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
     public function all_notifications()
     {
         return $this->hasMany(Notification::class)->orderBy('updated_at', 'desc');

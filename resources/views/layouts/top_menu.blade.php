@@ -41,6 +41,8 @@
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     @if(Auth::check())
+                        <a class="item" href="{{route('users.transactions')}}"><i class="money icon"></i>
+                            Giao dịch của tôi</a>
                         <a class="item" href="{{route('users.show',['id'=>\Auth::id()])}}"><i class="building icon"></i>
                             Tin đăng của tôi</a>
                         <a class="item" href="{{route('users.liked')}}"><i class="star icon"></i> Danh sách yêu

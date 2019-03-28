@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    //TODO
     public function index()
     {
-        return 'not implemented';
+        return 'none';
     }
 }

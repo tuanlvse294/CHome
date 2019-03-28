@@ -26,6 +26,8 @@
                 <a class="item" href="{{route('users.manage')}}"><i class="inverted users icon"></i>Người
                     dùng</a>
                 <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã ẩn</a>
+                <a class="item" href="{{route('transaction.manage')}}"><i class="green money icon"></i>Giao dịch</a>
+                <a class="item" href="{{route('premium.manage')}}"><i class="yellow star icon"></i>Gói tin đặc biệt</a>
             </div>
         </div>
         <div class="item">

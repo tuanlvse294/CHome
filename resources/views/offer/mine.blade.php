@@ -32,7 +32,7 @@
                     <td style="width: 30%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                     </td>
-                    <td>{{$item->price}} VND</td>
+                    <td>{{money_format('%n', $item->price)}}</td>
                     @if(Auth::check() && Auth::id()==$item->user_id)
 
                         <td>{{$item->premium_expire}}</td>

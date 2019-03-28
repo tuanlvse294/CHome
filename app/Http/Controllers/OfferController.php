@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Notification;
 use App\Offer;
+use App\PremiumPack;
+use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,7 @@ class OfferController extends Controller
         return view('offer.promote', ['offer' => $offer, 'title' => 'Bán nhanh hơn']);
     }
 
-    public function pick_promote(Offer $offer, $pack)
+    public function pick_promote(Offer $offer, PremiumPack $pack)
     {
         $now = Carbon::now('Asia/Ho_Chi_Minh');
         $premium_expire = Carbon::parse($offer->premium_expire);
@@ -35,13 +37,15 @@ class OfferController extends Controller
             $premium_expire = $now;
         }
 
-        if ($pack == 'day') {
-            $premium_expire->addDays(1);
-        } elseif ($pack == 'week') {
-            $premium_expire->addDays(7);
-        }
+        $premium_expire->addDays($pack->days);
         $offer->premium_expire = $premium_expire;
         $offer->save();
+
+        $transaction = new Transaction();
+        $transaction->user_id = Auth::id();
+        $transaction->amount = $pack->price;
+        $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày.";
+        $transaction->save();
 
         return redirect(route('users.show', ['user' => Auth::user()]));
     }

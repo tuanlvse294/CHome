@@ -12,58 +12,32 @@
         <div class="ui huge header">{{$title}}</div>
         <div class='ui container codepen-margin'>
             <div class="ui three column grid">
-                <div class="column">
-                    <div class="ui segments">
-                        <div class="ui center aligned secondary segment">
-                            <div class="ui statistic">
-                                <div class="value">
-                                    22.000
-                                </div>
-                                <div class="label">
-                                    VND / ngày
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ui center aligned segment">
-                            <p> - Hiển thị tách biệt </p>
-                        </div>
-                        <div class="ui center aligned segment">
-                            <p> - Trong 24h từ khi bắt đầu dịch vụ </p>
-                        </div>
-                    </div>
-                    <a class="ui green fluid button" href="{{route('offers.promote.pick',['offer'=>$offer,'pack'=>'day'])}}">
-                        Chọn mua
-                    </a>
-                </div>
-                <div class="column">
-
-                    <div class="ui raised segments">
-
-                        <div class="ui center aligned orange secondary segment">
-
-                            <div class="ui statistic">
-                                <div class="value">
-                                    120.000
-                                </div>
-
-                                <div class="label">
-                                    VND / 7 ngày
+                @foreach(\App\PremiumPack::all() as $pack)
+                    <div class="column">
+                        <div class="ui segments">
+                            <div class="ui center aligned secondary segment">
+                                <div class="ui statistic">
+                                    <div class="value">
+                                        {{money_format('%n', $pack->price)}}
+                                    </div>
+                                    <div class="label">
+                                        / {{$pack->days}} ngày
+                                    </div>
                                 </div>
                             </div>
+                            <div class="ui center aligned segment">
+                                <p> {{$pack->type_str()}} </p>
+                            </div>
+                            <div class="ui center aligned segment">
+                                <p> {{$pack->info}} </p>
+                            </div>
                         </div>
-                        <div class="ui center aligned segment">
-                            <p> - Hiển thị tách biệt </p>
-                        </div>
-                        <div class="ui center aligned segment">
-                            <p> - Trong 1 tuần từ khi bắt đầu dịch vụ </p>
-                        </div>
-                        <div class="ui top right attached red label" style="width: auto"> -20%</div>
-
+                        <a class="ui green fluid button"
+                           href="{{route('offers.promote.pick',['offer'=>$offer,'pack'=>$pack])}}">
+                            Chọn mua
+                        </a>
                     </div>
-                    <a class="ui orange fluid button" href="{{route('offers.promote.pick',['offer'=>$offer,'pack'=>'week'])}}">
-                        Chọn mua
-                    </a>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

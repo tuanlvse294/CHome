@@ -21,6 +21,14 @@
 
     });
     $(function () {
+        $('.confirmed').click((e) => {
+            e.preventDefault();
+            bootbox.confirm('Bạn chắc chắn chứ?', (r) => {
+                if (r) {
+                    location.href = e.target.href;
+                }
+            })
+        });
         $('.ui.dropdown').dropdown({
             on: 'hover'
         });

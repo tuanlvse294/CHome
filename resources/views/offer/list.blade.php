@@ -24,7 +24,7 @@
                     <td style="width: 30%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                     </td>
-                    <td>{{$item->price}} VND</td>
+                    <td>{{money_format('%n', $item->price)}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td>
                         <div class="ui buttons">
