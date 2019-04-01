@@ -27,12 +27,17 @@ class UserController extends Controller
     {
         \Session::flash("message", "Đã xoá tài khoản " . $user->email);
         $user->delete();
-        return redirect(route('users.manage'));
+        return redirect()->back();
     }
 
     public function show(User $user)
     {
-        return view('offer.mine', ['items' => $user->offers, 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
+        return view('offer.mine', ['items' => $user->offers()->where('accepted', '=', true)->get(), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
+    }
+
+    public function show_pending(User $user)
+    {
+        return view('offer.mine', ['items' => $user->offers()->where('accepted', '=', false)->get(), 'title' => 'Tin đăng chờ duyệt của ' . $user->name, 'user' => $user]);
     }
 
     public function liked()
@@ -69,7 +74,7 @@ class UserController extends Controller
         $user = User::withTrashed()->find($user);
         $user->restore();
         \Session::flash("message", "Khôi phục tài khoản " . $user->email);
-        return redirect(route('users.manage'));
+        return redirect()->back();
     }
 
     public function force_delete($user)
@@ -77,7 +82,7 @@ class UserController extends Controller
         $user = User::withTrashed()->find($user);
         \Session::flash("message", "Đã xoá vĩnh viễn tài khoản " . $user->email);
         $user->forceDelete();
-        return redirect(route('users.trash'));
+        return redirect()->back();
     }
 
 //show all user's info

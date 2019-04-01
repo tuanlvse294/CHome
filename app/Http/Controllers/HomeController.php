@@ -20,7 +20,7 @@ class HomeController extends Controller
         if (\Auth::check() && \Auth::user()->has_role('admin')) {
             return redirect(url('admin'));
         }
-        $offers = Offer::query();
+        $offers = Offer::query()->where('accepted', '=', true);
 
         if ($request->has('query'))
             $offers = $offers->where('title', 'like', "%" . $request->get('query') . "%");

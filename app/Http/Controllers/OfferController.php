@@ -16,7 +16,20 @@ class OfferController extends Controller
 
     public function manage()
     {
-        return view('offer.list', ['items' => Offer::all(), 'title' => 'Quản lý tin rao vặt']);
+        return view('offer.list', ['items' => Offer::all()->where('accepted', '=', true), 'title' => 'Quản lý tin rao vặt']);
+    }
+
+    public function manage_accept()
+    {
+        return view('offer.list', ['items' => Offer::all()->where('accepted', '=', false), 'title' => 'Xét duyệt  tin rao vặt', 'accept' => true]);
+    }
+
+    public function accept(Offer $offer)
+    {
+        $offer->accepted = true;
+        $offer->save();
+        Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user);
+        return redirect()->back();
     }
 
     public function trash()
@@ -56,7 +69,8 @@ class OfferController extends Controller
         $offer = Offer::withTrashed()->find($offer);
         $offer->restore();
         \Session::flash("message", "Khôi phục tin rao vặt " . $offer->title);
-        return redirect(route('offers.manage'));
+        return redirect()->back();
+
     }
 
     public function force_delete($offer)
@@ -64,7 +78,7 @@ class OfferController extends Controller
         $offer = Offer::withTrashed()->find($offer);
         \Session::flash("message", "Đã xoá vĩnh viễn tin rao vặt " . $offer->title);
         $offer->forceDelete();
-        return redirect(route('offers.trash'));
+        return redirect()->back();
     }
 
     public function create()
@@ -81,11 +95,13 @@ class OfferController extends Controller
 
     public function show(Offer $offer)
     {
-        $offer->views += 1;
-        $offer->save();
-        return view('offer.detail', ['item' => $offer,
-            'title' => $offer->title,
-        ]);
+        if ($offer->accepted or (Auth::check() && Auth::user()->has_role('admin'))) {
+            $offer->views += 1;
+            $offer->save();
+            return view('offer.detail', ['item' => $offer,
+                'title' => $offer->title,
+            ]);
+        } else abort(404);
     }
 
     public function edit(Offer $offer)
@@ -106,11 +122,7 @@ class OfferController extends Controller
     {
         \Session::flash("message", "Đã xoá tin rao vặt " . $offer->title);
         $offer->delete();
-        if (Auth::user()->has_role('admin'))
-            return redirect(route('offers.manage'));
-        else
-            return redirect(route('users.show', ['user' => Auth::user()]));
-
+        return redirect()->back();
     }
 
 
@@ -139,7 +151,7 @@ class OfferController extends Controller
             $offer->images = json_encode($urls);
         }
         $offer->save(); //save model to database
-        Notification::makeNotification("Đã đang tin mới thành công!!", route('offers.show', ['offer' => $offer]));
+        Notification::makeNotification("Đã đăng tin mới thành công!!", route('offers.show', ['offer' => $offer]), Auth::user());
         return redirect('/');
     }
 

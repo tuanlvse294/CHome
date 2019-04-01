@@ -58,6 +58,8 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     });
     Route::prefix('offers')->as('offers.')->group(function () {
         Route::get('manage', 'OfferController@manage')->name('manage');
+        Route::get('manage_accept', 'OfferController@manage_accept')->name('manage_accept');
+        Route::get('{offer}/accept', 'OfferController@accept')->name('accept');
         Route::get('trash', 'OfferController@trash')->name('trash');
         Route::get('{offer}/force_delete', 'OfferController@force_delete')->name('force_delete');
         Route::get('{offer}/restore', 'OfferController@restore')->name('restore');
@@ -101,6 +103,7 @@ Route::get('/cities', function () {
 Auth::routes();
 
 Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
+Route::get('/users/{user}/show_pending', 'UserController@show_pending')->name('users.show_pending');
 
 
 Route::resource('offers', 'OfferController')->only([

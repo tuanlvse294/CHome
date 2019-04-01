@@ -19,6 +19,7 @@
         <div class="item">
             <div class="header">Manage</div>
             <div class="menu">
+                <a class="item" href="{{route('offers.manage_accept')}}"><i class="inverted check icon"></i>Xét duyệt  tin rao vặt</a>
                 <a class="item" href="{{route('offers.manage')}}"><i class="inverted building icon"></i>Tin rao
                     vặt</a>
                 <a class="item" href="{{route('offers.trash')}}"><i class="grey building icon"></i>Tin rao vặt

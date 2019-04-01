@@ -100,9 +100,9 @@ class PremiumPackController extends Controller
     {
     }
 
-    public function delete($id)
+    public function delete(PremiumPack $pack)
     {
-        PremiumPack::destroy($id);
-        return redirect(route('premium.manage'));
+        $pack->delete();
+        return redirect()->back();
     }
 }

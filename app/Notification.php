@@ -7,14 +7,20 @@ use Illuminate\Support\Facades\Auth;
 
 class Notification extends Model
 {
-    protected $fillable = ['title', 'url', 'seen'];
+    protected $fillable = ['title', 'url', 'seen', 'user_id'];
     protected $attributes = ['seen' => false];
 
-    public static function makeNotification($title, $url)
+    public static function makeNotification($title, $url, $user)
     {
         $notification = new Notification;
         $notification->title = $title;
         $notification->url = $url;
+        $notification->user_id = $user->id;
         $notification->save();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

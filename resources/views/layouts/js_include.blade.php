@@ -23,11 +23,9 @@
     $(function () {
         $('.confirmed').click((e) => {
             e.preventDefault();
-            bootbox.confirm('Bạn chắc chắn chứ?', (r) => {
-                if (r) {
-                    location.href = e.target.href;
-                }
-            })
+            if (confirm('Bạn chắc chắn chứ?')) {
+                location.href = e.target.href;
+            }
         });
         $('.ui.dropdown').dropdown({
             on: 'hover'
@@ -74,10 +72,6 @@
             setInterval(update_premiums, 10000);
         });
 
-        $('.comfirmed').on('click', (e) => {
-            e.preventDefault();
-            alert('fuck');
-        });
     });
 
 
