@@ -11,6 +11,7 @@
                 <th>Giá</th>
                 <th>Số ngày</th>
                 <th>Loại</th>
+                <th>Thông tin</th>
                 <th>Thời gian tạo</th>
                 <th>Hành động</th>
             </tr>
@@ -27,12 +28,13 @@
                     <td>
                         {{\App\PremiumPack::$TYPES[$item->type]}}
                     </td>
+                    <td>{{$item->info}}</td>
                     <td>
                         {{$item->updated_at}}
                     </td>
                     <td>
                         <div class="ui buttons">
-                            <a href="{{route('premium.edit',['pack'=>$item])}}" class="ui icon green button "><i
+                            <a href="{{route('premium.edit',['pack'=>$item])}}" class="ui icon blue button "><i
                                         class="pencil icon"></i> Sửa</a>
                             <a href="{{route('premium.delete',['pack'=>$item])}}"
                                class="ui icon green button confirmed"><i

@@ -25,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('notifications', 'UserController@notifications')->name('users.notifications');
         Route::get('show_notification/{notification}', 'UserController@show_notification')->name('users.show_notification');
         Route::get('liked', 'UserController@liked')->name('users.liked');
+        Route::get('mine', 'UserController@show_mine')->name('users.mine');
+        Route::get('pending', 'UserController@show_pending')->name('users.pending');
+        Route::get('premium', 'UserController@show_premium')->name('users.premiums');
         Route::get('info', 'UserController@edit_info')->name('info.edit');
         Route::post('info', 'UserController@save_info')->name('info.save');
         Route::get('password', 'UserController@edit_password')->name('password.edit');
@@ -103,7 +106,6 @@ Route::get('/cities', function () {
 Auth::routes();
 
 Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
-Route::get('/users/{user}/show_pending', 'UserController@show_pending')->name('users.show_pending');
 
 
 Route::resource('offers', 'OfferController')->only([

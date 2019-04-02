@@ -45,22 +45,41 @@ class OfferController extends Controller
     public function pick_promote(Offer $offer, PremiumPack $pack)
     {
         $now = Carbon::now('Asia/Ho_Chi_Minh');
-        $premium_expire = Carbon::parse($offer->premium_expire);
-        if ($premium_expire < $now) {
-            $premium_expire = $now;
-        }
+        if ($pack->type == 'premium') {
+            $premium_expire = Carbon::parse($offer->premium_expire);
+            if ($premium_expire < $now) {
+                $premium_expire = $now;
+            }
 
-        $premium_expire->addDays($pack->days);
-        $offer->premium_expire = $premium_expire;
+            $premium_expire->addDays($pack->days);
+            $offer->premium_expire = $premium_expire;
+        } elseif ($pack->type == 'top') {
+            $top_expire = Carbon::parse($offer->top_expire);
+            if ($top_expire < $now) {
+                $top_expire = $now;
+            }
+
+            $top_expire->addDays($pack->days);
+            $offer->top_expire = $top_expire;
+        } elseif ($pack->type == 'highlight') {
+            $highlight_expire = Carbon::parse($offer->highlight_expire);
+            if ($highlight_expire < $now) {
+                $highlight_expire = $now;
+            }
+
+            $highlight_expire->addDays($pack->days);
+            $offer->highlight_expire = $highlight_expire;
+        }
         $offer->save();
 
         $transaction = new Transaction();
         $transaction->user_id = Auth::id();
         $transaction->amount = $pack->price;
         $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày.";
+
         $transaction->save();
 
-        return redirect(route('users.show', ['user' => Auth::user()]));
+        return redirect(route('users.premiums'));
     }
 
 
@@ -93,9 +112,12 @@ class OfferController extends Controller
         return $this->process($request, $offer);
     }
 
-    public function show(Offer $offer)
+    public function show(Request $request, Offer $offer)
     {
         if ($offer->accepted or (Auth::check() && Auth::user()->has_role('admin'))) {
+            if ($request->has('click') && $request->get('click') == 'from_ads') {
+                $offer->ads_reach += 1;
+            }
             $offer->views += 1;
             $offer->save();
             return view('offer.detail', ['item' => $offer,
@@ -120,8 +142,9 @@ class OfferController extends Controller
 
     public function destroy(Offer $offer)
     {
-        \Session::flash("message", "Đã xoá tin rao vặt " . $offer->title);
+        \Session::flash("message", "Đã ẩn tin rao vặt " . $offer->title);
         $offer->delete();
+        Notification::makeNotification("Tin đăng của bạn đã bị ẩn!!!", route('offers.show', ['offer' => $offer]), $offer->user);
         return redirect()->back();
     }
 

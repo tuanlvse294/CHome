@@ -12,8 +12,8 @@ class Offer extends Model
 
     use \App\CanFillOld;
 
-    protected $fillable = ['title', 'address', 'area', 'price', 'content', 'images', 'city_id', 'district_id', 'front', 'video_url'];
-    protected $attributes = ['images' => '["no-thumbnail.png"]', 'views' => 0,''];
+    protected $fillable = ["title", "address", "area", "price", "content", "images", "city_id", "district_id", "front", "video_url"];
+    protected $attributes = ["images" => '["no-thumbnail.png"]', "views" => 0, ''];
 
     public function city()
     {
@@ -50,24 +50,24 @@ class Offer extends Model
         if ($count < 4) {
             $str = $num;
         } else {
-            $r = explode(',', $f);
+            $r = explode(",", $f);
             switch (count($r)) {
                 case 4:
-                    $str = $r[0] . ' tỉ';
+                    $str = $r[0] . " tỉ";
                     if ((int)$r[1]) {
-                        $str .= ' ' . (int)$r[1] . ' triệu';
+                        $str .= " " . (int)$r[1] . " triệu";
                     }
                     break;
                 case 3:
-                    $str = $r[0] . ' triệu';
+                    $str = $r[0] . " triệu";
                     if ((int)$r[1]) {
-                        $str .= ' ' . (int)$r[1] . ' ngàn';
+                        $str .= " " . (int)$r[1] . " ngàn";
                     }
                     break;
                 case 2:
-                    $str = $r[0] . ' ngàn';
+                    $str = $r[0] . " ngàn";
                     if ((int)$r[1]) {
-                        $str .= ' ' . (int)$r[1] . ' đồng';
+                        $str .= " " . (int)$r[1] . " đồng";
                     }
                     break;
             }
@@ -80,15 +80,79 @@ class Offer extends Model
         return $this->jam_read_num_for_vietnamese($this->price);
     }
 
-    public static function get_premiums()
+    public static function get_premiums($number = 6)
     {
         $premiums = Offer::query();
 
-        $premiums = $premiums->where('premium_expire', '>', Carbon::now())->orderBy('last_seen')->limit(6)->get();
+        $premiums = $premiums->where('accepted', '=', true)->where("premium_expire", ">", Carbon::now('Asia/Ho_Chi_Minh'))->orderBy("last_seen")->limit($number)->get();
         foreach ($premiums as $offer) {
-            $offer->last_seen = Carbon::now();
+            $offer->last_seen = Carbon::now('Asia/Ho_Chi_Minh');
             $offer->save();
         }
         return $premiums;
     }
+
+    public static function get_top($number = 2)
+    {
+        $tops = Offer::query();
+
+        $tops = $tops->where('accepted', '=', true)->where("top_expire", ">", Carbon::now('Asia/Ho_Chi_Minh'))->orderBy("last_seen")->limit($number)->get();
+        foreach ($tops as $offer) {
+            $offer->last_seen = Carbon::now('Asia/Ho_Chi_Minh');
+            $offer->save();
+        }
+        return $tops;
+    }
+
+    public function premium_expire_status()
+    {
+        $left = Carbon::parse($this->premium_expire);
+        if ($this->is_premium()) {
+            return $left->diffForHumans();
+        } else {
+            return "Hết hạn";
+        }
+    }
+
+    public function top_expire_status()
+    {
+        $left = Carbon::parse($this->top_expire);
+        if ($this->is_top()) {
+            return $left->diffForHumans();
+        } else {
+            return "Hết hạn";
+        }
+    }
+
+    public function highlight_expire_status()
+    {
+        $left = Carbon::parse($this->highlight_expire);
+        if ($this->is_highlight()) {
+            return $left->diffForHumans();
+        } else {
+            return "Hết hạn";
+        }
+    }
+
+    public function is_highlight()
+    {
+        return (Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->highlight_expire, false) > 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function is_top(): bool
+    {
+        return Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->top_expire, false) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function is_premium(): bool
+    {
+        return Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->premium_expire, false) > 0;
+    }
+
 }

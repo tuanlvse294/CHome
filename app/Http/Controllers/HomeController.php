@@ -74,10 +74,11 @@ class HomeController extends Controller
         } else {
             $offers = $offers->orderByDesc('created_at');
         }
-        $offers = $offers->paginate(10);
+        $tops = Offer::get_top(2);
+        $offers = $offers->paginate(8);
 
 
-        return view('home', ['offers' => $offers, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
+        return view('home', ['offers' => $offers, 'tops' => $tops, 'areas' => HomeController::AREAS, 'prices' => HomeController::PRICES, 'sorts' => HomeController::SORTS, 'fronts' => HomeController::FRONTS]);
     }
 
 

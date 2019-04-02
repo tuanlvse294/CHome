@@ -1,7 +1,12 @@
 @extends('layouts.default')
 @section('content')
-
-    <div class="ui container">
+    <style>
+        .some-padding {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+    </style>
+    <div class="ui  fluid some-padding container">
         <div class="ui breadcrumb">
             <a class="section" href="/">Trang chủ</a>
             <i class="right angle icon divider"></i>
@@ -16,10 +21,12 @@
                 <th>Hình ảnh</th>
                 <th>Nội dung</th>
                 <th>Giá</th>
-                @if(Auth::check() && Auth::id()==$user->id)
-                    <th>Thời hạn gói VIP</th>
-                    <th>Hành động</th>
-                @endif
+                <th>Lượt xem</th>
+                <th>Lượt tiếp cận qua QC</th>
+                <th>Thời hạn gói tin đặc biệt</th>
+                <th>Thời hạn gói tin top</th>
+                <th>Thời hạn gói tin nổi bật</th>
+                <th>Hành động</th>
             </tr>
             </thead>
             <tbody>
@@ -33,22 +40,18 @@
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                     </td>
                     <td>{{money_format('%n', $item->price)}}</td>
-                    @if(Auth::check() && Auth::id()==$item->user_id)
 
-                        <td>{{$item->premium_expire}}</td>
-                        <td>
-                            @if(isset($trash) )
-                                <a href="{{route('offers.restore',[$item->id])}}"
-                                   class="ui icon green button"><i class="recycle icon"></i> Phục hồi</a>
-                            @else
-                                <a href="{{route('offers.delete',[$item->id])}}" class="ui icon red button"><i
-                                            class="low vision icon"></i> Ẩn tin</a>
-                                <a href="{{route('offers.promote',[$item->id])}}"
-                                   class="ui icon green button"><i class="bullhorn icon"></i> Bán nhanh hơn</a>
-
-                            @endif
-                        </td>
-                    @endif
+                    <td>{{$item->views}}</td>
+                    <td>{{$item->ads_reach}}</td>
+                    <td>{{$item->premium_expire_status()}}</td>
+                    <td>{{$item->top_expire_status()}}</td>
+                    <td>{{$item->highlight_expire_status()}}</td>
+                    <td>
+                        <a href="{{route('offers.delete',[$item->id])}}" class="ui icon red button"><i
+                                    class="low vision icon"></i> Ẩn tin</a>
+                        <a href="{{route('offers.promote',[$item->id])}}"
+                           class="ui icon green button"><i class="bullhorn icon"></i> Bán nhanh hơn</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

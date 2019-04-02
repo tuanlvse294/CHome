@@ -10,7 +10,9 @@ $premiums = \App\Offer::get_premiums()
                     <img src="/uploads/{{json_decode($item->images)[0]}}"
                          style="width: 100% !important;height: 140px;object-fit: cover;">
 
-                    <p class="max_2_lines"><b> <a href="/offers/{{$item->id}}">{{$item->title}}</a></b></p>
+                    <p class="max_2_lines"><b> <a
+                                    href="{{route('offers.show',['offer'=>$item,'click'=>'from_ads'])}}">{{$item->title}}</a></b>
+                    </p>
                     <h3 style="color: red;text-align: center;margin: 0px"
                         class="max_1_lines">{{$item->get_price_vnd()}}</h3>
                 </div>

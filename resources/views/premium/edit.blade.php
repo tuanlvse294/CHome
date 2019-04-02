@@ -16,7 +16,7 @@
                         {{isset($item)?method_field('put'):method_field('post')}}
                         @include('ui.form.input',['name'=>'price','label'=>'Giá *','type'=>'number'])
                         @include('ui.form.input',['name'=>'days','label'=>'Thời hạn (ngày) *','type'=>'number'])
-                        @include('ui.form.select2',['name'=>'type','label'=>'Kiểu giảm giá *','options'=>\App\PremiumPack::$TYPES])
+                        @include('ui.form.select2',['name'=>'type','label'=>'Loại gói tin *','options'=>\App\PremiumPack::$TYPES])
                         @include('ui.form.textarea',['name'=>'info','label'=>'Thông tin *'])
                         <button class="ui primary button" type="submit">Lưu</button>
                     </form>

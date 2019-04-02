@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -43,7 +46,29 @@ class User extends Authenticatable
 
     public function offers()
     {
-        return $this->hasMany(Offer::class);
+        return $this->hasMany(Offer::class)->where('accepted', '=', true);
+    }
+
+    public function pending_offers()
+    {
+        return $this->hasMany(Offer::class)->where('accepted', '=', false);
+    }
+
+    public function premium_offers()
+    {
+        return $this->hasMany(Offer::class)->where('accepted', '=', true)->where(function (Builder $q) {
+            $q
+                ->orwhere('premium_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'))
+                ->orwhere('top_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'))
+                ->orwhere('top_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'));
+        });
+    }
+
+    public function non_premium_offers()
+    {
+        return $this->hasMany(Offer::class)->where('accepted', '=', true)->where('premium_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'))
+            ->where('top_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'))
+            ->where('top_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'));
     }
 
     public function transactions()

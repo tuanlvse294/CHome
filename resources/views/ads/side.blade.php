@@ -1,1 +1,1 @@
-<img src="/uploads/side_ads.gif" alt="" style="width: 100%">
+<img src="/images/side_ads.gif" alt="" style="width: 100%;margin-bottom: 10px;margin-top: 10px;">

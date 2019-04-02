@@ -8,7 +8,7 @@ class PremiumPack extends Model
 {
     use \App\CanFillOld;
 
-    public static $TYPES = ["special" => "Tin đặc biệt", "top" => "Tin top", "highlight" => "Tin nổi bật"];
+    public static $TYPES = ["premium" => "Tin đặc biệt", "top" => "Tin top", "highlight" => "Tin nổi bật"];
     protected $fillable = ["price", "days", "info", "type"];
 
     public function type_str()

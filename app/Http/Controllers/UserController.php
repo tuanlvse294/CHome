@@ -32,12 +32,23 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('offer.mine', ['items' => $user->offers()->where('accepted', '=', true)->get(), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
+        return view('offer.show', ['items' => $user->offers()->paginate(10), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
     }
 
-    public function show_pending(User $user)
+    public function show_mine()
     {
-        return view('offer.mine', ['items' => $user->offers()->where('accepted', '=', false)->get(), 'title' => 'Tin đăng chờ duyệt của ' . $user->name, 'user' => $user]);
+        return view('offer.mine', ['items' => \Auth::user()->non_premium_offers()->get(), 'title' => 'Tin đăng của tôi', 'user' => \Auth::user()]);
+    }
+
+
+    public function show_pending()
+    {
+        return view('offer.mine', ['items' => \Auth::user()->offers()->get(), 'title' => 'Tin đăng chờ duyệt của ' . \Auth::user()->name, 'user' => \Auth::user()]);
+    }
+
+    public function show_premium()
+    {
+        return view('offer.mine', ['items' => \Auth::user()->premium_offers()->get(), 'title' => 'Tin đặc biệt của tôi', 'user' => \Auth::user()]);
     }
 
     public function liked()
