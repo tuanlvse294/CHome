@@ -7,6 +7,7 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>Người đăng</th>
                 <th>Hình ảnh</th>
                 <th>Nội dung</th>
                 <th>Giá</th>
@@ -18,6 +19,7 @@
             @foreach($items as $item)
                 <tr>
                     <td>{{$loop->index	+1}}</td>
+                    <td><a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a></td>
                     <td style="text-align: center;width: 20%">
                         <img src="/uploads/{{$item->get_icon()}}" style="width:90%;">
                     </td>
