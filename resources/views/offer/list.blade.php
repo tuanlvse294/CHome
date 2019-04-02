@@ -19,7 +19,12 @@
             @foreach($items as $item)
                 <tr>
                     <td>{{$loop->index	+1}}</td>
-                    <td><a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a></td>
+
+                    <td>
+                        @if($item->user != null)
+                            <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a>
+                        @endif
+                    </td>
                     <td style="text-align: center;width: 20%">
                         <img src="/uploads/{{$item->get_icon()}}" style="width:90%;">
                     </td>
