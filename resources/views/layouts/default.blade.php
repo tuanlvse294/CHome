@@ -1,22 +1,8 @@
 @extends('layouts.blank')
 @section('body_content')
-    <body>
+    <body style="background: #F4F4F4">
     @include('layouts.top_menu')
-    @if(Session::has('error'))
-        <div class="ui error message container">
-            <div class="header">
-                {{Session::get('error')}}
-            </div>
-        </div>
-    @endif
-    @if(Session::has('message'))
-        <div class="ui green message container">
-            <div class="header">
-                {{Session::get('message')}}
-            </div>
-        </div>
-
-    @endif
+    @include('layouts.messages')
     @yield('content')
     @include('layouts.footer')
     </body>

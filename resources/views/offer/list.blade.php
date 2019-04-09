@@ -3,6 +3,8 @@
 
     <div class="ui fluid container">
         <div class="ui huge header">{{$title}}</div>
+        @include('layouts.messages')
+
         <table class="ui celled table">
             <thead>
             <tr>
@@ -26,7 +28,7 @@
                         @endif
                     </td>
                     <td style="text-align: center;width: 20%">
-                        <img src="/uploads/{{$item->get_icon()}}" style="width:90%;">
+                        <img src="/uploads/{{$item->get_icon()}}" style="width:90%">
                     </td>
                     <td style="width: 30%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>

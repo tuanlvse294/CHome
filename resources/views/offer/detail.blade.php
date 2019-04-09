@@ -16,6 +16,7 @@
         @include('ads.leaderboard')
         @include('offer.premiums')
 
+
         <div class="ui huge header">{{$title}}</div>
         <div class="ui  modal">
             <img src="/apple-icon.png" id="modal_img" style="width: 100%;">

@@ -6,7 +6,7 @@
             padding-left: 10px;
         }
     </style>
-    <div class="ui  fluid some-padding container">
+    <div class="ui  some-padding container">
         <div class="ui breadcrumb">
             <a class="section" href="/">Trang chủ</a>
             <i class="right angle icon divider"></i>
@@ -22,7 +22,7 @@
                 <th>Nội dung</th>
                 <th>Giá</th>
                 <th>Lượt xem</th>
-                <th>Lượt tiếp cận qua QC</th>
+                <th>TC QC</th>
                 <th>Thời hạn gói tin đặc biệt</th>
                 <th>Thời hạn gói tin top</th>
                 <th>Thời hạn gói tin nổi bật</th>
@@ -34,7 +34,7 @@
                 <tr>
                     <td>{{$loop->index	+1}}</td>
                     <td style="text-align: center;width: 20%">
-                        <img src="/uploads/{{$item->get_icon()}}" style="width:90%;">
+                        <img src="/uploads/{{$item->get_icon()}}" style="width:90%;height: 200px">
                     </td>
                     <td style="width: 30%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
@@ -42,7 +42,7 @@
                     <td>{{money_format('%n', $item->price)}}</td>
 
                     <td>{{$item->views}}</td>
-                    <td>{{$item->ads_reach}}</td>
+                    <td data-tooltip="Lượt tiếp cận qua QC" data-position="top center">{{$item->ads_reach}}</td>
                     <td>{{$item->premium_expire_status()}}</td>
                     <td>{{$item->top_expire_status()}}</td>
                     <td>{{$item->highlight_expire_status()}}</td>

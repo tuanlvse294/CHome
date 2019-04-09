@@ -132,7 +132,7 @@ return [
         'title' => 'tiêu đề',
         'content' => 'nội dung',
         'old_pw' => 'mật khẩu cũ',
-        'new_pw' => 'mật khẩu mới'
+        'new_pw' => 'mật khẩu mới',
     ],
 
 ];

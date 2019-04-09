@@ -29,6 +29,8 @@ class OfferController extends Controller
         $offer->accepted = true;
         $offer->save();
         Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user);
+        \Session::flash('message', 'Tin đăng của đã được duyệt!!!');
+
         return redirect()->back();
     }
 
