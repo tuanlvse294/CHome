@@ -179,9 +179,6 @@ class Offer extends Model
         $offers = Offer::all()->where('accepted', '=', true)->except($this->id)->sortBy(function (Offer $offer, $key) {
             return $offer->distance($this);
         })->take($number);
-        foreach ($offers as $offer) {
-            var_dump($offer->distance($this));
-        }
         return $offers;
     }
 
