@@ -176,7 +176,7 @@ class OfferController extends Controller
             $offer->images = json_encode($urls);
         }
         $offer->save(); //save model to database
-        Notification::makeNotification("Đã đăng tin mới thành công!!", route('offers.show', ['offer' => $offer]), Auth::user());
+        Notification::makeNotification("Tin đăng của bạn đang được duyệt.", route('users.pending'), Auth::user());
         return redirect('/');
     }
 

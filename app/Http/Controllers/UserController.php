@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function show_pending()
     {
-        return view('offer.mine', ['items' => \Auth::user()->offers()->get(), 'title' => 'Tin đăng chờ duyệt của ' . \Auth::user()->name, 'user' => \Auth::user()]);
+        return view('offer.mine', ['items' => \Auth::user()->pending_offers()->get(), 'title' => 'Tin đăng chờ duyệt của ' . \Auth::user()->name, 'user' => \Auth::user()]);
     }
 
     public function show_premium()

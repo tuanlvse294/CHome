@@ -3,7 +3,7 @@
     <div class="image">
         <span class="ui red left ribbon label">Hot * *</span>
         <img src="/uploads/{{json_decode($item->images)[0]}}"
-             style="width: 100% !important;height: 140px;object-fit: cover;">
+             class="image_4_3">
     </div>
     <div class="content">
 

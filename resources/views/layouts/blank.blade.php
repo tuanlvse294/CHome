@@ -95,6 +95,9 @@
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
         }
+        .image_4_3{
+            width: 90%;
+        }
     </style>
 </head>
 @yield('body_content')

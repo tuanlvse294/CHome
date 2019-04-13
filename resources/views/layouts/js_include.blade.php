@@ -19,8 +19,11 @@
             ;
         });
 
+        $('.image_4_3').each(function () {
+            $(this).height($(this).width() * 3 / 4);
+        });
     });
-    $(function () {
+    $(() => {
         $('.confirmed').click((e) => {
             e.preventDefault();
             if (confirm('Bạn chắc chắn chứ?')) {
@@ -68,9 +71,7 @@
             });
         }
 
-        $(() => {
-            setInterval(update_premiums, 10000);
-        });
+        setInterval(update_premiums, 10000);
 
     });
 

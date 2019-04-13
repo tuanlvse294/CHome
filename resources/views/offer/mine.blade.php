@@ -34,7 +34,7 @@
                 <tr>
                     <td>{{$loop->index	+1}}</td>
                     <td style="text-align: center;width: 20%">
-                        <img src="/uploads/{{$item->get_icon()}}" style="width:90%;height: 200px">
+                        <img src="/uploads/{{$item->get_icon()}}" class="image_4_3">
                     </td>
                     <td style="width: 30%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
