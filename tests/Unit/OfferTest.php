@@ -22,6 +22,5 @@ class OfferTest extends TestCase
         $this->assertNull($offer->user());
         $offer->user_id=User::query()->first()->id;
         $this->assertNotNull($offer->user());
-        print_r($offer->user());
     }
 }

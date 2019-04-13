@@ -15,7 +15,7 @@ class NofTest extends TestCase
      */
     public function testUserRole()
     {
-        $user = User::query()->findOrFail(5);
-        var_dump($user->my_notifications());
+        $user = User::query()->first();
+        $this->assertNotNull($user->all_notifications);
     }
 }

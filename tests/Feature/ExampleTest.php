@@ -15,7 +15,14 @@ class ExampleTest extends TestCase
     public function testBasicTest()
     {
         $response = $this->get('/');
-
+        $response->assertSeeText('Tin đặc biệt');
+        $response->assertSeeText('Tìm kiếm nâng cao');
         $response->assertStatus(200);
+    }
+
+    public function test404()
+    {
+        $response = $this->get('/adawdawdaw');
+        $response->assertSeeText('Không tìm thấy kết quả phù hợp!!');
     }
 }

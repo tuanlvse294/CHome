@@ -155,4 +155,34 @@ class Offer extends Model
         return Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->premium_expire, false) > 0;
     }
 
+    public function distance(Offer $other)
+    {
+        $district_distance = $this->district_id == $other->district_id ? 1 : 0;
+        $city_distance = $this->city_id == $other->city_id ? 1 : 0;
+
+        $price_ratio = ($this->price + 0.001) / ($other->price + 0.001);
+        $price_distance = max($price_ratio, 1 / $price_ratio) - 1;
+
+        $area_ratio = ($this->area + 0.001) / ($other->area + 0.001);
+        $area_distance = max($area_ratio, 1 / $area_ratio) - 1;
+
+        $front_ratio = ($this->front + 0.001) / ($other->front + 0.001);
+        $front_distance = max($front_ratio, 1 / $front_ratio) - 1;
+
+        $distance = $district_distance * 10 + $city_distance * 20 + $price_distance * 5 + $area_distance + $front_distance * 2;
+        $distance *= 1 + rand(-200, 200) / 1000;
+        return $distance;
+    }
+
+    public function similars($number = 6)
+    {
+        $offers = Offer::all()->where('accepted', '=', true)->except($this->id)->sortBy(function (Offer $offer, $key) {
+            return $offer->distance($this);
+        })->take($number);
+        foreach ($offers as $offer) {
+            var_dump($offer->distance($this));
+        }
+        return $offers;
+    }
+
 }

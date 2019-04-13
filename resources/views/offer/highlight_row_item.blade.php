@@ -13,7 +13,7 @@
             <b><p><i class="grey eye icon"></i> Lượt xem: {{$item->views}}</p>
                 <p><i class="grey marker icon"></i> Địa chỉ: {{$item->address}}</p>
                 <p><i class="grey map icon"></i> Diện tích: {{$item->area}} m<sup>2</sup> | <i class="grey warehouse icon"></i> Mặt tiền: {{$item->front}} m</p>
-                <p><i class="grey clock icon"></i> Ngày đăng: {{$item->updated_at->format('d/m/y')}}</p>
+                <p><i class="grey clock icon"></i> Ngày đăng: {{$item->created_at->format('d/m/y')}}</p>
             </b>
         </div>
         <div class="right floated" style="margin-top:-36px">

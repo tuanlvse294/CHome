@@ -73,10 +73,12 @@
                         </script>
                     </div>
                 @endif
+
             </div>
 
         </div>
 
+        @include('offer.similars',['similars'=>$item->similars()])
 
     </div>
 @endsection
