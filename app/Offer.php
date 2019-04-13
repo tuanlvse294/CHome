@@ -169,16 +169,19 @@ class Offer extends Model
         $front_ratio = ($this->front + 0.001) / ($other->front + 0.001);
         $front_distance = max($front_ratio, 1 / $front_ratio) - 1;
 
-        $distance = $city_distance * 5 +$district_distance * 5 + $price_distance * 2 + $area_distance + $front_distance ;
-        $distance *= 1 + rand(-200, 200) / 1000;
+        $distance = $city_distance * 40 + $district_distance * 20 + $price_distance * 10 + $area_distance + $front_distance;
+        $distance *= 1 + rand(-100, 100) / 1000;
         return $distance;
     }
 
     public function similars($number = 6)
     {
-        $offers = Offer::all()->where('accepted', '=', true)->except($this->id)->sortBy(function (Offer $offer, $key) {
+        $offers = Offer::all()->where('accepted', '=', true)->sortBy(function (Offer $offer, $key) {
             return $offer->distance($this);
         })->take($number);
+        foreach ($offers as $offer) {
+            var_dump($offer->distance($this));
+        }
         return $offers;
     }
 
