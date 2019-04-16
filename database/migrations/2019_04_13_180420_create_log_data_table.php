@@ -15,7 +15,6 @@ class CreateLogDataTable extends Migration
     {
         Schema::create('log_data', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type');
             $table->json('value');
             $table->timestamps();
         });

@@ -37,7 +37,7 @@ class UserController extends Controller
 
     public function show_mine()
     {
-        return view('offer.mine', ['items' => \Auth::user()->non_premium_offers()->get(), 'title' => 'Tin đăng của tôi', 'user' => \Auth::user()]);
+        return view('offer.mine', ['items' => \Auth::user()->non_premium_offers()->get(), 'title' => 'Tin đăng thường của tôi', 'user' => \Auth::user()]);
     }
 
 
@@ -65,7 +65,7 @@ class UserController extends Controller
 
     public function notifications()
     {
-        return view('user.notifications', ['notifications' => \Auth::user()->all_notifications()->paginate(5), 'title' => 'Tất cả thông báo']);
+        return view('user.notifications', ['notifications' => \Auth::user()->all_notifications()->paginate(10), 'title' => 'Tất cả thông báo']);
     }
 
 

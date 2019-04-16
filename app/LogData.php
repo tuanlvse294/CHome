@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class LogData extends Model
 {
-    protected $fillable = ['type', 'value'];
+    protected $fillable = ['value'];
     const REVENUE = 'revenue';
 
-    public static function log($type, $value)
+    public static function log($value)
     {
-        LogData::query()->create(['type' => $type, 'value' => json_encode($value)]);
+        LogData::query()->create(['value' => json_encode($value)]);
     }
 
 }

@@ -30,6 +30,11 @@
 @include('layouts.js_include')
 <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135879890-1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    <script src="/bower_components/moment/min/moment.min.js"></script>
+    <script src="/bower_components/semantic-ui-daterangepicker-master/daterangepicker.js"></script>
+    <link rel="stylesheet" href="/bower_components/semantic-ui-daterangepicker-master/daterangepicker.css"/>
+
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -95,7 +100,8 @@
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
         }
-        .image_4_3{
+
+        .image_4_3 {
             width: 90%;
         }
     </style>

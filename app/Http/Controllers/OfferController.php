@@ -9,6 +9,7 @@ use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class OfferController extends Controller
 {
@@ -116,12 +117,25 @@ class OfferController extends Controller
 
     public function show(Request $request, Offer $offer)
     {
-        if ($offer->accepted or (Auth::check() && Auth::user()->has_role('admin'))) {
+        if ($offer->accepted or (Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
             if ($request->has('click') && $request->get('click') == 'from_ads') {
                 $offer->ads_reach += 1;
             }
-            $offer->views += 1;
+            if (!Auth::check() || Auth::id() != $offer->user_id)
+                $offer->views += 1;
             $offer->save();
+            return view('offer.detail', ['item' => $offer,
+                'title' => $offer->title,
+            ]);
+        } else abort(404);
+    }
+
+    public function show_hidden(Request $request, $offer_id)
+    {
+        $offer = Offer::withTrashed()->find($offer_id);
+
+        if ((Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
+            Session::flash('error', "Tin này đã bị ẩn - Liên hệ admin bằng chatbox hoặc hotline");
             return view('offer.detail', ['item' => $offer,
                 'title' => $offer->title,
             ]);
@@ -146,7 +160,7 @@ class OfferController extends Controller
     {
         \Session::flash("message", "Đã ẩn tin rao vặt " . $offer->title);
         $offer->delete();
-        Notification::makeNotification("Tin đăng của bạn đã bị ẩn!!!", route('offers.show', ['offer' => $offer]), $offer->user);
+        Notification::makeNotification("Tin đăng của bạn đã bị ẩn!!!", route('offers.show_hidden', ['offer' => $offer]), $offer->user);
         return redirect()->back();
     }
 
@@ -156,10 +170,10 @@ class OfferController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'city_id' => 'required',
-            'district_id' => 'required',
-            'area' => 'required',
-            'front' => 'required|numeric|min:1|max:10000',
+            'city_id' => 'required|numeric',
+            'district_id' => 'required|numeric',
+            'area' => 'required|numeric|min:1|max:10000',
+            'front' => 'required|numeric|min:1|max:1000',
             'address' => 'required',
             'content' => 'required',
             'price' => 'required|numeric|min:0'

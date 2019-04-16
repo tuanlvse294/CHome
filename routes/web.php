@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('offers', 'OfferController')->except([
         'show'
     ]);;
+    Route::get('show_hidden/{offer_id}', 'OfferController@show_hidden')->name('offers.show_hidden');
 
 });
 
