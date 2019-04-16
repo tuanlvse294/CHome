@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Offer;
+use App\Transaction;
 use Carbon\Carbon;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 use Illuminate\Http\Request;
@@ -53,78 +54,74 @@ class DashboardController extends Controller
     private static function getYears(Carbon $start, Carbon $end)
     {
         $years = $end->diffInYears($start);
-        $result = collect();
+        $labels = [];
+        $values = [];
 
-        $log = new Log();
-        $list = collect($log->getFillable())->except('date');
         for ($i = 0; $i <= $years; $i++) {
             $nextYear = $start->copy();
             $nextYear->addYear(1);
-            $item = collect();
-            $logs = Log::query()->whereBetween('date', [$start->timestamp, $nextYear->timestamp])->get();
-            foreach ($list as $key) {
-                $item[$key] = $logs->pluck($key)->sum();
-            }
-            $item->label = $start->year;
-            $result[$i] = $item;
+            $transactions = Transaction::query()->whereBetween('created_at', [$start, $nextYear])->get();
+            $labels[] = $start->year;
+            $values[] = $transactions->pluck('amount')->sum();
             $start = $nextYear;
         }
-        return $result;
+        return [$labels, $values];
     }
 
     private static function getMonths(Carbon $start, Carbon $end)
     {
         $months = $end->diffInMonths($start);
+        $labels = [];
+        $values = [];
 
-        $result = collect();
-
-        $log = new Log();
-        $list = collect($log->getFillable())->except('date');
         for ($i = 0; $i <= $months; $i++) {
             $nextMonth = $start->copy();
             $nextMonth->addMonth(1);
-            $item = collect();
-            $logs = Log::query()->whereBetween('date', [$start->timestamp, $nextMonth->timestamp])->get();
-            foreach ($list as $key) {
-                $item[$key] = $logs->pluck($key)->sum();
-            }
-            $item->label = $start->year . '/' . $start->month;
-            $result[$i] = $item;
+            $transactions = Transaction::query()->whereBetween('created_at', [$start, $nextMonth])->get();
+            $labels[] = $start->year . '/' . $start->month;
+            $values[] = $transactions->pluck('amount')->sum();
             $start = $nextMonth;
         }
-        return $result;
+        return [$labels, $values];
     }
 
     private function getDays(Carbon $start, Carbon $end)
     {
         $days = $end->diffInDays($start);
-
-        $result = collect();
+        $labels = [];
+        $values = [];
 
         for ($i = 0; $i <= $days; $i++) {
-            $result[$i] = Log::firstOrNew(['date' => $start->timestamp]);
-            $result[$i]->label = $start->toDateString();
-            $start->addDay(1);
+            $nextDay = $start->copy();
+            $nextDay->addDay(1);
+            $transactions = Transaction::query()->whereBetween('created_at', [$start, $nextDay])->get();
+            $labels[] = $start->year . '/' . $start->month . '/' . $start->day;
+            $values[] = $transactions->pluck('amount')->sum();
+            $start = $nextDay;
         }
-        return $result;
+        return [$labels, $values];
     }
 
     public function revenue(Request $request)
     {
         list($start, $end) = $this->get_time($request);
 
-        $period = Period::create($start, $end);
-        $totalVisitorsAndPageViews = \Analytics::fetchTotalVisitorsAndPageViews($period);
-
+        if ($end->diffInYears($start) > 2) {
+            [$labels, $values] = $this::getYears($start, $end);
+        } else if ($end->diffInMonths($start) > 3) {
+            [$labels, $values] = $this::getMonths($start, $end);
+        } else {
+            [$labels, $values] = $this::getDays($start, $end);
+        }
         $revenueChart = new Chart;
         $revenueChart->title("Thống kê doanh thu", 40);
-        $revenueChart->labels($totalVisitorsAndPageViews->pluck('date')->map(function ($item, $key) {
-            return $item->format('d/m/y');
-        }));
 
-        $revenueChart->dataset('Số khách', 'line', $totalVisitorsAndPageViews->pluck('visitors'))->color('#32ff7e');
+        $revenueChart->labels($labels);
 
-        return view('dashboard.index', ['title' => 'Thống kê doanh thu', 'revenueChart' => $revenueChart]);
+        $revenueChart->dataset('Doanh thu', 'line', $values)->color('#32ff7e');
+        $total = array_sum($values);
+        $title = 'Thống kê doanh thu';
+        return view('dashboard.revenue', compact('title', 'revenueChart', 'total'));
     }
 
     /**

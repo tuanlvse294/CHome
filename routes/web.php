@@ -83,6 +83,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     });
     Route::get('setting', 'SettingController@index')->name('setting');
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('revenue', 'DashboardController@revenue')->name('revenue');
 });
 
 
