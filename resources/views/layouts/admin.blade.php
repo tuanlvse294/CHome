@@ -42,14 +42,7 @@
                     <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
                 </div>
             </div>
-            <div class="item">
-                <div class="header">Profile</div>
-                <div class="menu">
-                    <a class="item" href="{{route('password.edit.admin')}}"><i class="grey user secret icon"></i>Đổi mật
-                        khẩu</a>
-                    <a class="item" href="{{route('logout.get')}}"><i class="red sign out icon"></i>Đăng xuất</a>
-                </div>
-            </div>
+
         @elseif(Auth::user()->has_role('mod'))
             <div class="item">
                 <div class="header">Manage</div>
@@ -65,7 +58,14 @@
                 </div>
             </div>
         @endif
-
+        <div class="item">
+            <div class="header">Profile</div>
+            <div class="menu">
+                <a class="item" href="{{route('password.edit.admin')}}"><i class="grey user secret icon"></i>Đổi mật
+                    khẩu</a>
+                <a class="item" href="{{route('logout.get')}}"><i class="red sign out icon"></i>Đăng xuất</a>
+            </div>
+        </div>
 
     </div>
 
