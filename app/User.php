@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 
 class User extends Authenticatable
@@ -15,13 +16,18 @@ class User extends Authenticatable
     use Notifiable;
     use \App\CanFillOld;
     use SoftDeletes;
+    const ROLES = [
+        'admin' => 'Admin',
+        'mod' => 'Moderator',
+        'user' => 'Người dùng'
+    ];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar_url', 'phone', 'address'
+        'name', 'email', 'password', 'avatar_url', 'phone', 'address', 'roles'
     ];
     protected $attributes = [
         'avatar_url' => 'no_avatar.png',
@@ -38,6 +44,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 
     public function liked_offers()
     {
@@ -97,5 +104,14 @@ class User extends Authenticatable
         $roles_arr = json_decode($this->roles);
         $roles_arr[] = $role;
         $this->roles = json_encode($roles_arr);
+    }
+
+    public function roles_str()
+    {
+        $res = '';
+        foreach (json_decode($this->roles) as $role) {
+            $res = $res . User::ROLES[$role] . ", ";
+        }
+        return $res;
     }
 }

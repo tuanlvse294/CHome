@@ -9,45 +9,66 @@
             </a>
             <a href="/"><b>Admin panel</b></a>
         </div>
-        <div class="item">
-            <div class="header">Analytics</div>
-            <div class="menu">
-                <a class="item" href="{{route('dashboard')}}"><i class="inverted chart line icon"></i>Thống
-                    kê</a>
+
+        @if(Auth::user()->has_role('admin'))
+            <div class="item">
+                <div class="header">Analytics</div>
+                <div class="menu">
+                    <a class="item" href="{{route('dashboard')}}"><i class="inverted chart line icon"></i>Thống
+                        kê</a>
+                </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="header">Manage</div>
-            <div class="menu">
-                <a class="item" href="{{route('offers.manage_accept')}}"><i class="inverted check icon"></i>Xét duyệt
-                    tin rao vặt</a>
-                <a class="item" href="{{route('offers.manage')}}"><i class="inverted building icon"></i>Tin rao
-                    vặt</a>
-                <a class="item" href="{{route('offers.trash')}}"><i class="grey building icon"></i>Tin rao vặt
-                    đã ẩn</a>
-                <a class="item" href="{{route('users.manage')}}"><i class="inverted users icon"></i>Người
-                    dùng</a>
-                <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã ẩn</a>
-                <a class="item" href="{{route('revenue')}}"><i class="green money icon"></i>Doanh thu</a>
-                <a class="item" href="{{route('transaction.manage')}}"><i class="green exchange icon"></i>Giao dịch</a>
-                <a class="item" href="{{route('premium.manage')}}"><i class="yellow star icon"></i>Gói tin đặc biệt</a>
+            <div class="item">
+                <div class="header">Manage</div>
+                <div class="menu">
+                    <a class="item" href="{{route('offers.manage_accept')}}"><i class="inverted check icon"></i>Xét
+                        duyệt
+                        tin rao vặt</a>
+                    <a class="item" href="{{route('offers.manage')}}"><i class="inverted building icon"></i>Tin rao
+                        vặt</a>
+                    <a class="item" href="{{route('offers.trash')}}"><i class="grey building icon"></i>Tin rao vặt
+                        đã ẩn</a>
+                    <a class="item" href="{{route('users.manage')}}"><i class="inverted users icon"></i>Người
+                        dùng</a>
+                    <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã ẩn</a>
+                    <a class="item" href="{{route('revenue')}}"><i class="green money icon"></i>Doanh thu</a>
+                    <a class="item" href="{{route('transaction.manage')}}"><i class="green exchange icon"></i>Giao dịch</a>
+                    <a class="item" href="{{route('premium.manage')}}"><i class="yellow star icon"></i>Gói tin đặc biệt</a>
+                </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="header">Settings</div>
-            <div class="menu">
-                <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
+            <div class="item">
+                <div class="header">Settings</div>
+                <div class="menu">
+                    <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
+                </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="header">Profile</div>
-            <div class="menu">
-                <a class="item" href="{{route('password.edit.admin')}}"><i class="grey user secret icon"></i>Đổi mật
-                    khẩu</a>
-                <a class="item" href="{{route('logout.get')}}"><i class="red sign out icon"></i>Đăng xuất</a>
+            <div class="item">
+                <div class="header">Profile</div>
+                <div class="menu">
+                    <a class="item" href="{{route('password.edit.admin')}}"><i class="grey user secret icon"></i>Đổi mật
+                        khẩu</a>
+                    <a class="item" href="{{route('logout.get')}}"><i class="red sign out icon"></i>Đăng xuất</a>
+                </div>
             </div>
-        </div>
+        @elseif(Auth::user()->has_role('mod'))
+            <div class="item">
+                <div class="header">Manage</div>
+                <div class="menu">
+                    <a class="item" href="{{route('offers.manage_accept')}}"><i class="inverted check icon"></i>Xét
+                        duyệt
+                        tin rao vặt</a>
+                    <a class="item" href="{{route('offers.manage')}}"><i class="inverted building icon"></i>Tin rao
+                        vặt</a>
+                    <a class="item" href="{{route('offers.trash')}}"><i class="grey building icon"></i>Tin rao vặt
+                        đã ẩn</a>
+                    <a class="item" href="{{route('premium.manage')}}"><i class="yellow star icon"></i>Gói tin đặc biệt</a>
+                </div>
+            </div>
+        @endif
+
+
     </div>
+
     <div style="padding-right: 28px;margin-left:280px">
         <br>
         @yield('content')

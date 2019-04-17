@@ -78,6 +78,8 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
         Route::get('manage', 'UserController@manage')->name('manage');
         Route::get('trash', 'UserController@trash')->name('trash');
         Route::get('{user}/delete', 'UserController@delete')->name('delete');
+        Route::get('{user}/edit_permission', 'UserController@edit_permission')->name('edit_permission');
+        Route::post('{user}/edit_permission', 'UserController@save_permission')->name('save_permission');
         Route::get('{user}/force_delete', 'UserController@force_delete')->name('force_delete');
         Route::get('{user}/restore', 'UserController@restore')->name('restore');
     });

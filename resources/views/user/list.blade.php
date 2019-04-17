@@ -11,6 +11,7 @@
             <tr>
                 <th>#</th>
                 <th>Email</th>
+                <th>Quyền hạn</th>
                 <th>Thời gian</th>
                 <th>Hành động</th>
             </tr>
@@ -21,6 +22,9 @@
                     <td>{{$loop->index	+1}}</td>
                     <td style="width: 40%">
                         <b><a href="{{route('users.show',[$item->id])}}">{{$item->email}}</a></b>
+                    </td>
+                    <td>
+                        {{$item->roles_str()}}
                     </td>
                     <td>{{$item->updated_at}}</td>
                     <td>
@@ -34,6 +38,8 @@
                                 @if(Auth::id()!=$item->id)
                                     <a href="{{route('users.delete',[$item->id])}}"
                                        class="ui icon yellow button"><i class="low vision icon"></i> Ẩn</a>
+                                    <a href="{{route('users.edit_permission',[$item->id])}}"
+                                       class="ui icon green button"><i class="lock icon"></i> Quyền hạn</a>
                                 @endif
                             @endif
                         </div>

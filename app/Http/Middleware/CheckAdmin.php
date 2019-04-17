@@ -17,7 +17,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->has_role('admin')) { //if the user is admin then keep going
+        if (Auth::check() && (Auth::user()->has_role('admin') || Auth::user()->has_role('mod'))) { //if the user is admin then keep going
             return $next($request);
         }
 

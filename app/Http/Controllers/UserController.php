@@ -97,16 +97,14 @@ class UserController extends Controller
     }
 
 //show all user's info
-    public
-    function edit_info(Request $request)
+    public function edit_info(Request $request)
     {
         \Auth::user()->fill_olds();
         return view('user.info');
     }
 
 //save edited info
-    public
-    function save_info(Request $request)
+    public function save_info(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -119,6 +117,22 @@ class UserController extends Controller
         \Session::flash('message', 'Đã đổi thông tin cá nhân!');
 
         return redirect(route('info.edit'));
+    }
+
+//show all user's info
+    public function edit_permission(Request $request, User $user)
+    {
+        $title = 'Chỉnh sửa quyền hạn';
+        return view('user.permission', compact('title', 'user'));
+    }
+
+//save edited info
+    public function save_permission(Request $request, User $user)
+    {
+        $user->roles = json_encode($request->get('roles'));
+        $user->save();
+        \Session::flash('message', 'Đã lưu quyền hạn!');
+        return redirect(route('users.edit_permission', compact('user')));
     }
 
 //change password page
