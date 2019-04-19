@@ -109,7 +109,7 @@ class User extends Authenticatable
     public function roles_str()
     {
         $res = '';
-        if ($this->roles != null) {
+        if ($this->roles != null && $this->roles != 'null') {
             foreach (json_decode($this->roles) as $role) {
                 $res = $res . User::ROLES[$role] . ", ";
             }
