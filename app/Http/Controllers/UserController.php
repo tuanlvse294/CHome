@@ -129,6 +129,9 @@ class UserController extends Controller
 //save edited info
     public function save_permission(Request $request, User $user)
     {
+        $request->validate([
+            'roles' => 'required',
+        ]);
         $user->roles = json_encode($request->get('roles'));
         $user->save();
         \Session::flash('message', 'Đã lưu quyền hạn!');

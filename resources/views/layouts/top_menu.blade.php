@@ -45,7 +45,7 @@
                         <a class="item" href="{{route('users.transactions')}}"><i class="money icon"></i>
                             Giao dịch của tôi</a>
                         <a class="item" href="{{route('users.mine')}}"><i class="building icon"></i>
-                            Tin đã đăng của tôi</a>
+                            Tin đăng thường của tôi</a>
                         <a class="item" href="{{route('users.premiums')}}"><i class="star icon"></i>
                             Tin đặc biệt của tôi</a>
                         <a class="item" href="{{route('users.pending')}}"><i class="green check icon"></i>

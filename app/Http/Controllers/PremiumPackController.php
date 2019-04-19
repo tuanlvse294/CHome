@@ -63,11 +63,11 @@ class PremiumPackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(PremiumPack $pack)
+    public function edit(PremiumPack $premium)
     {
-        $pack->fill_olds();
+        $premium->fill_olds();
 
-        return view('premium.edit', ['item' => $pack, 'title' => 'Chỉnh sửa gói tin đặc biệt']);
+        return view('premium.edit', ['item' => $premium, 'title' => 'Chỉnh sửa gói tin đặc biệt']);
     }
 
     /**
@@ -78,13 +78,13 @@ class PremiumPackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PremiumPack $pack)
+    public function update(Request $request, PremiumPack $premium)
     {
         $request->validate(
             $this->validator_rule
         );
-        $pack->fill($request->all());
-        $pack->save();
+        $premium->fill($request->all());
+        $premium->save();
 
         return redirect(route('premium.manage'));
     }
@@ -100,9 +100,9 @@ class PremiumPackController extends Controller
     {
     }
 
-    public function delete(PremiumPack $pack)
+    public function delete(PremiumPack $premium)
     {
-        $pack->delete();
+        $premium->delete();
         return redirect()->back();
     }
 }

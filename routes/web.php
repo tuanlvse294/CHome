@@ -71,7 +71,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin")->group(function () {
     Route::prefix('premium')->group(function () {
         Route::resource('premium', 'PremiumPackController');
         Route::get('manage', 'PremiumPackController@manage')->name('premium.manage');
-        Route::get('delete', 'PremiumPackController@delete')->name('premium.delete');
+        Route::get('delete/{premium}', 'PremiumPackController@delete')->name('premium.delete');
     });
     Route::get('transaction/manage', 'TransactionController@manage')->name('transaction.manage');
     Route::prefix('users')->as('users.')->group(function () {

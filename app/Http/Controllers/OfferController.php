@@ -118,11 +118,13 @@ class OfferController extends Controller
     public function show(Request $request, Offer $offer)
     {
         if ($offer->accepted or (Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
-            if ($request->has('click') && $request->get('click') == 'from_ads') {
-                $offer->ads_reach += 1;
-            }
-            if (!Auth::check() || Auth::id() != $offer->user_id)
+
+            if (!Auth::check() || Auth::id() != $offer->user_id) {
+                if ($request->has('click') && $request->get('click') == 'from_ads') {
+                    $offer->ads_reach += 1;
+                }
                 $offer->views += 1;
+            }
             $offer->save();
             return view('offer.detail', ['item' => $offer,
                 'title' => $offer->title,
@@ -172,8 +174,8 @@ class OfferController extends Controller
             'title' => 'required|string',
             'city_id' => 'required|numeric',
             'district_id' => 'required|numeric',
-            'area' => 'required|numeric|min:1|max:10000',
-            'front' => 'required|numeric|min:1|max:1000',
+            'area' => 'required|numeric|min:1',
+            'front' => 'required|numeric|min:1',
             'address' => 'required',
             'content' => 'required',
             'price' => 'required|numeric|min:0'

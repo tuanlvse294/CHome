@@ -1,24 +1,29 @@
 @startuml
-actor User
-boundary login_view
-control LoginController
-entity UserModel
+actor Admin
+boundary list_offer_view
+control OfferController
+entity OfferModel
 
-User -> login_view : input email, password
-deactivate User
-activate login_view
-login_view -> LoginController: email, password
-deactivate login_view
-activate LoginController
-LoginController -> LoginController : validation
-LoginController -> UserModel : get user's data
-activate UserModel
-UserModel --> LoginController : user's data
-deactivate UserModel
-LoginController --> login_view: successful login
-deactivate LoginController
-activate login_view
-login_view --> User: Login success alert, redirect to home
-deactivate login_view
+Admin -> list_offer_view : view pending offers
+activate Admin
+activate list_offer_view
+list_offer_view --> Admin : pending offers list
+deactivate list_offer_view
+Admin -> list_offer_view : click accept
+deactivate Admin
+activate list_offer_view
+list_offer_view -> OfferController: accept
+deactivate list_offer_view
+activate OfferController
+OfferController -> OfferController : validation
+OfferController -> OfferModel : save accept
+activate OfferModel
+OfferModel --> OfferController : saved
+deactivate OfferModel
+OfferController --> list_offer_view: return ok
+deactivate OfferController
+activate list_offer_view
+list_offer_view --> Admin: alert saved, return to list
+deactivate list_offer_view
 
 @enduml

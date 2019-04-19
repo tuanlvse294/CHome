@@ -36,13 +36,6 @@
                     <a class="item" href="{{route('premium.manage')}}"><i class="yellow star icon"></i>Gói tin đặc biệt</a>
                 </div>
             </div>
-            <div class="item">
-                <div class="header">Settings</div>
-                <div class="menu">
-                    <a class="item" href="{{route('setting')}}"><i class="yellow settings icon"></i>Cài đặt</a>
-                </div>
-            </div>
-
         @elseif(Auth::user()->has_role('mod'))
             <div class="item">
                 <div class="header">Manage</div>
