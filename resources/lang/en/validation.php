@@ -134,7 +134,7 @@ return [
         'old_pw' => 'mật khẩu cũ',
         'new_pw' => 'mật khẩu mới',
         "area" => "diện tích", "price" => "giá", "images" => "hình ảnh", "city_id" => "thông tin thành phố", "district_id" => "thông tin huyện", "front" => "mặt tiền", "video_url" => "địa chỉ video",
-        'days'=>'thời hạn','info'=>'thông tin','type'=>'loại','new_password'=>'mật khẩu mới'
+        'days'=>'thời hạn','info'=>'thông tin','type'=>'loại','new_password'=>'mật khẩu mới','roles'=>'quyền hạn'
     ],
 
 ];
