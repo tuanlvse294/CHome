@@ -85,12 +85,12 @@ class User extends Authenticatable
 
     public function all_notifications()
     {
-        return $this->hasMany(Notification::class)->orderBy('updated_at', 'desc');
+        return $this->hasMany(Notification::class)->orderBy('created_at', 'desc');
     }
 
     public function new_notifications()
     {
-        return $this->all_notifications()->where('seen', '=', false);
+        return $this->all_notifications()->where('seen', '=', false)->orderBy('created_at', 'desc');
     }
 
     public function has_role($role)
