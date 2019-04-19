@@ -43,7 +43,7 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
-        $user = User::onlyTrashed()->firstOr(['email' => $request->input('email')]);
+        $user = User::onlyTrashed()->where('email' ,'=', $request->input('email'))->first();
         if ($user != null) {
             \Session::flash('message', 'Bạn đã bị chặn liên hệ admin bằng hotline hoặc chatbox');
             return $this->sendFailedLoginResponse($request);
