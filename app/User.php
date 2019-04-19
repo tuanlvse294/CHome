@@ -96,7 +96,7 @@ class User extends Authenticatable
     public function has_role($role)
     {
         $roles_arr = json_decode($this->roles);
-        return in_array($role, $roles_arr);
+        return $roles_arr != null && in_array($role, $roles_arr);
     }
 
     public function add_role($role)

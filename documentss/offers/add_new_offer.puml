@@ -1,0 +1,29 @@
+@startuml
+actor User
+boundary edit_offer_view
+control offerController
+entity offerModel
+
+User -> edit_offer_view : click add new offer
+activate User
+activate edit_offer_view
+edit_offer_view --> User : new offer form
+deactivate edit_offer_view
+User -> edit_offer_view : nhập dữ liệu sản phẩm mới, bấm nút lưu
+deactivate User
+activate edit_offer_view
+edit_offer_view -> offerController: gửi thông tin 
+deactivate edit_offer_view
+activate offerController
+offerController -> offerController : kiểm tra dữ liệu
+offerController -> offerModel : lưu dữ liệu
+activate offerModel
+offerModel --> offerController : trả dữ liệu đã lưu
+deactivate offerModel
+offerController --> edit_offer_view: trả kết qủa tạo sản phẩm mới
+deactivate offerController
+activate edit_offer_view
+edit_offer_view --> User: Hiển thị sản phẩm mới
+deactivate edit_offer_view
+
+@enduml

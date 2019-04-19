@@ -13,6 +13,18 @@ class UserTest extends TestCase
      *
      * @return void
      */
+    public function testCreateUser()
+    {
+        $user = new User();
+        $user->name = 'xxx';
+        $user->email = 'aaa@fmail.com';
+        $user->password = 'xxx';
+        $this->assertNull($user->id);
+        $user->save();
+        $this->assertNotNull($user->id);
+        $user->delete();
+    }
+
     public function testUserRole()
     {
         $user = new User();
