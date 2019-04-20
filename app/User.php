@@ -29,7 +29,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'avatar_url', 'phone', 'address', 'roles'
     ];
-    protected $attributes = [
+    protected $attributes = [ //default value if not set
         'avatar_url' => 'no_avatar.png',
         'phone' => '',
         'address' => '',
@@ -61,6 +61,7 @@ class User extends Authenticatable
         return $this->hasMany(Offer::class)->where('accepted', '=', false);
     }
 
+    //get list of premium offers
     public function premium_offers()
     {
         return $this->hasMany(Offer::class)->where('accepted', '=', true)->where(function (Builder $q) {
@@ -106,6 +107,7 @@ class User extends Authenticatable
         $this->roles = json_encode($roles_arr);
     }
 
+    //show role in human readable format
     public function roles_str()
     {
         $res = '';

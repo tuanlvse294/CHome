@@ -40,6 +40,7 @@ class Offer extends Model
         return json_decode($this->images)[0];
     }
 
+    //helper function to convert currency to string
     function jam_read_num_for_vietnamese($num = false)
     {
         $str = '';
@@ -80,18 +81,20 @@ class Offer extends Model
         return $this->jam_read_num_for_vietnamese($this->price);
     }
 
+    //get some premiums to show
     public static function get_premiums($number = 6)
     {
         $premiums = Offer::query();
 
         $premiums = $premiums->where('accepted', '=', true)->where("premium_expire", ">", Carbon::now('Asia/Ho_Chi_Minh'))->orderBy("last_seen")->limit($number)->get();
         foreach ($premiums as $offer) {
-            $offer->last_seen = Carbon::now('Asia/Ho_Chi_Minh');
+            $offer->last_seen = Carbon::now('Asia/Ho_Chi_Minh'); //save to last seen date
             $offer->save();
         }
         return $premiums;
     }
 
+    //get some top offers to show
     public static function get_top($number = 2)
     {
         $tops = Offer::query();
@@ -155,12 +158,13 @@ class Offer extends Model
         return Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->premium_expire, false) > 0;
     }
 
+    //compare two offer, the smaller distance, more similar they are,
     public function distance(Offer $other)
     {
         $district_distance = $this->district_id == $other->district_id ? 0 : 1;
         $city_distance = $this->city_id == $other->city_id ? 0 : 1;
 
-        $price_ratio = ($this->price + 0.001) / ($other->price + 0.001);
+        $price_ratio = ($this->price + 0.001) / ($other->price + 0.001); //avoid zero division
         $price_distance = max($price_ratio, 1 / $price_ratio) - 1;
 
         $area_ratio = ($this->area + 0.001) / ($other->area + 0.001);
@@ -170,10 +174,11 @@ class Offer extends Model
         $front_distance = max($front_ratio, 1 / $front_ratio) - 1;
 
         $distance = $city_distance * 40 + $district_distance * 20 + $price_distance * 10 + $area_distance + $front_distance;
-        $distance *= 1 + rand(-100, 100) / 1000;
+        $distance *= 1 + rand(-100, 100) / 1000; //add some noise to make the result more interesting
         return $distance;
     }
 
+    //get recommended offers
     public function similars($number = 6)
     {
         $offers = Offer::all()->where('accepted', '=', true)->sortBy(function (Offer $offer, $key) {

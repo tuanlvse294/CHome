@@ -39,14 +39,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    //login processing
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $this->validateLogin($request); //validatte email, password
 
-        $user = User::onlyTrashed()->where('email' ,'=', $request->input('email'))->first();
-        if ($user != null) {
-            \Session::flash('message', 'Bạn đã bị chặn liên hệ admin bằng hotline hoặc chatbox');
-            return $this->sendFailedLoginResponse($request);
+        $user = User::onlyTrashed()->where('email' ,'=', $request->input('email'))->first(); //has this user been banned?
+        if ($user != null) { //yes, banned
+            \Session::flash('message', 'Bạn đã bị chặn liên hệ admin bằng hotline hoặc chatbox'); //show some nag
+            return $this->sendFailedLoginResponse($request); //failed to login
         }
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -57,8 +58,8 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+        if ($this->attemptLogin($request)) { //ok, try to login
+            return $this->sendLoginResponse($request); //good, logged in, here we go
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts

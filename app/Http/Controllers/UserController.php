@@ -13,16 +13,19 @@ use Response;
 //user's editing profile controller
 class UserController extends Controller
 {
+    //admin see all the users
     public function manage()
     {
         return view('user.list', ['items' => User::all(), 'title' => 'Quản lý người dùng']);
     }
 
+    //admin see all the banned users
     public function trash()
     {
         return view('user.list', ['items' => User::onlyTrashed()->get(), 'title' => 'Quản lý người dùng đã xoá', 'trash' => true]);
     }
 
+    //admin ban a  user
     public function delete(User $user)
     {
         \Session::flash("message", "Đã xoá tài khoản " . $user->email);
@@ -30,16 +33,20 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    //show offers of any user
     public function show(User $user)
     {
         return view('offer.show', ['items' => $user->offers()->paginate(10), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
     }
 
+
+    //show my offers
     public function show_mine()
     {
         return view('offer.mine', ['items' => \Auth::user()->non_premium_offers()->get(), 'title' => 'Tin đăng thường của tôi', 'user' => \Auth::user()]);
     }
 
+    //show my pending offers
 
     public function show_pending()
     {
@@ -50,6 +57,7 @@ class UserController extends Controller
     {
         return view('offer.mine', ['items' => \Auth::user()->premium_offers()->get(), 'title' => 'Tin đặc biệt của tôi', 'user' => \Auth::user()]);
     }
+    //show my liked offers
 
     public function liked()
     {
@@ -74,12 +82,13 @@ class UserController extends Controller
         return view('transaction.list', ['transactions' => Auth::user()->transactions, 'title' => 'Tất cả giao dịch']);
     }
 
+    //admin export all users data
     public function export_csv()
     {
-
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 
+    //admin unban a user
     public function restore($user)
     {
         $user = User::withTrashed()->find($user);
@@ -88,6 +97,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    //admin permanently delete a user
     public function force_delete($user)
     {
         $user = User::withTrashed()->find($user);
@@ -119,20 +129,18 @@ class UserController extends Controller
         return redirect(route('info.edit'));
     }
 
-//show all user's info
     public function edit_permission(Request $request, User $user)
     {
         $title = 'Chỉnh sửa quyền hạn';
         return view('user.permission', compact('title', 'user'));
     }
 
-//save edited info
     public function save_permission(Request $request, User $user)
     {
         $request->validate([
             'roles' => 'required',
         ]);
-        $user->roles = json_encode($request->get('roles'));
+        $user->roles = json_encode($request->get('roles')); //roles come in as a array of selected roles
         $user->save();
         \Session::flash('message', 'Đã lưu quyền hạn!');
         return redirect(route('users.edit_permission', compact('user')));

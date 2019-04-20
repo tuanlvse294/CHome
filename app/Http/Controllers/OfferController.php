@@ -15,48 +15,58 @@ class OfferController extends Controller
 {
     use ProcessImage;
 
+    //amdin panel to see all accepted offers
     public function manage()
     {
         return view('offer.list', ['items' => Offer::all()->where('accepted', '=', true), 'title' => 'Quản lý tin rao vặt']);
     }
+
+    //amdin panel to see all unaccepted offers
 
     public function manage_accept()
     {
         return view('offer.list', ['items' => Offer::all()->where('accepted', '=', false), 'title' => 'Xét duyệt  tin rao vặt', 'accept' => true]);
     }
 
+    //accept a offer
     public function accept(Offer $offer)
     {
         $offer->accepted = true;
         $offer->save();
-        Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user);
-        \Session::flash('message', 'Tin đăng của đã được duyệt!!!');
+        Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user); //notify the offer's ownser
+        \Session::flash('message', 'Tin đăng của đã được duyệt!!!'); //alert to admin
 
-        return redirect()->back();
+        return redirect()->back(); //back to manage panel
     }
+
+    //amdin panel to see all hidden offers
 
     public function trash()
     {
         return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã xoá', 'trash' => true]);
     }
 
+    //show user premium packs
+
     public function promote(Offer $offer)
     {
         return view('offer.promote', ['offer' => $offer, 'title' => 'Bán nhanh hơn']);
     }
 
+    //user choosed premium packs
+
     public function pick_promote(Offer $offer, PremiumPack $pack)
     {
-        $now = Carbon::now('Asia/Ho_Chi_Minh');
-        if ($pack->type == 'premium') {
-            $premium_expire = Carbon::parse($offer->premium_expire);
-            if ($premium_expire < $now) {
-                $premium_expire = $now;
+        $now = Carbon::now('Asia/Ho_Chi_Minh'); //what time is it now?
+        if ($pack->type == 'premium') { //premium then, you are special
+            $premium_expire = Carbon::parse($offer->premium_expire); //when will it expire?
+            if ($premium_expire < $now) { //if it's expired
+                $premium_expire = $now; //then start is now
             }
 
-            $premium_expire->addDays($pack->days);
+            $premium_expire->addDays($pack->days); //add premium pack's days to start
             $offer->premium_expire = $premium_expire;
-        } elseif ($pack->type == 'top') {
+        } elseif ($pack->type == 'top') { //so so
             $top_expire = Carbon::parse($offer->top_expire);
             if ($top_expire < $now) {
                 $top_expire = $now;
@@ -73,19 +83,19 @@ class OfferController extends Controller
             $highlight_expire->addDays($pack->days);
             $offer->highlight_expire = $highlight_expire;
         }
-        $offer->save();
+        $offer->save(); //saved new expired date
 
-        $transaction = new Transaction();
-        $transaction->user_id = Auth::id();
-        $transaction->amount = $pack->price;
-        $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày.";
+        $transaction = new Transaction(); //make new transaction
+        $transaction->user_id = Auth::id(); //of current user
+        $transaction->amount = $pack->price; //how much he paid
+        $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày."; //some info
 
-        $transaction->save();
+        $transaction->save(); //save then
 
-        return redirect(route('users.premiums'));
+        return redirect(route('users.premiums')); //go back to premium offers panel
     }
 
-
+    //admin restore hidden offer
     public function restore($offer)
     {
         $offer = Offer::withTrashed()->find($offer);
@@ -95,6 +105,7 @@ class OfferController extends Controller
 
     }
 
+    //admin permanently delete offer
     public function force_delete($offer)
     {
         $offer = Offer::withTrashed()->find($offer);
@@ -103,11 +114,13 @@ class OfferController extends Controller
         return redirect()->back();
     }
 
+    //user make new offer
     public function create()
     {
         return view('offer.edit', ['title' => "Đăng tin rao vặt mới"]);
     }
 
+    //save new offer
     public function store(Request $request)
     {
         $offer = new Offer();
@@ -115,41 +128,47 @@ class OfferController extends Controller
         return $this->process($request, $offer);
     }
 
+    //view the offer in detail
     public function show(Request $request, Offer $offer)
     {
         if ($offer->accepted or (Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
-
+            //if it's not accepted then only admin and the owner can see
             if (!Auth::check() || Auth::id() != $offer->user_id) {
-                if ($request->has('click') && $request->get('click') == 'from_ads') {
+                //if the owner see then views and ads reach will not increase
+                if ($request->has('click') && $request->get('click') == 'from_ads') { //link from ads places
                     $offer->ads_reach += 1;
                 }
                 $offer->views += 1;
+                $offer->save();
             }
-            $offer->save();
             return view('offer.detail', ['item' => $offer,
                 'title' => $offer->title,
             ]);
         } else abort(404);
     }
 
+    //the owner see his hidden offer
     public function show_hidden(Request $request, $offer_id)
     {
         $offer = Offer::withTrashed()->find($offer_id);
 
         if ((Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
-            Session::flash('error', "Tin này đã bị ẩn - Liên hệ admin bằng chatbox hoặc hotline");
+            //if it's not accepted then only admin and the owner can see
+            Session::flash('error', "Tin này đã bị ẩn - Liên hệ admin bằng chatbox hoặc hotline"); //show the nag after the header
             return view('offer.detail', ['item' => $offer,
                 'title' => $offer->title,
             ]);
         } else abort(404);
     }
 
+    //not used
     public function edit(Offer $offer)
     {
         $offer->fill_olds();
         return view('offer.edit', ['item' => $offer, 'title' => "Chỉnh sửa tin rao vặt"]);
     }
 
+    //not used
     public function update(Request $request, $id)
     {
         $offer = Offer::query()->findOrFail($id);
@@ -157,7 +176,7 @@ class OfferController extends Controller
         return $this->process($request, $offer);
     }
 
-
+    //admin hide the offer
     public function destroy(Offer $offer)
     {
         \Session::flash("message", "Đã ẩn tin rao vặt " . $offer->title);
@@ -196,12 +215,12 @@ class OfferController extends Controller
         return redirect('/');
     }
 
-
+    //user like a offer
     public function like(Offer $offer)
     {
-        if (!\Auth::user()->liked_offers->contains($offer))
-            \Auth::user()->liked_offers()->attach($offer);
-        $offer->refresh();
+        if (!\Auth::user()->liked_offers->contains($offer)) //if not liked
+            \Auth::user()->liked_offers()->attach($offer);  //then like it
+        $offer->refresh(); //update the model, very important
         return view('offer.like_button', ['item' => $offer]);
     }
 

@@ -15,7 +15,7 @@ class PremiumPackController extends Controller
     ];
 
     /**
-     * Display a listing of the code.
+     * Display a listing of the pack.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,7 +25,7 @@ class PremiumPackController extends Controller
     }
 
     /**
-     * Show the form for creating a new code.
+     * Show the form for creating a new pack.
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,7 +36,7 @@ class PremiumPackController extends Controller
     }
 
     /**
-     * Store a newly created code in storage.
+     * Store a newly created pack in storage.
      *
      * @param  \Illuminate\Http\Request $request
      *
@@ -57,7 +57,7 @@ class PremiumPackController extends Controller
 
 
     /**
-     * Show the form for editing the specified code.
+     * Show the form for editing the specified pack.
      *
      * @param  int $id
      *
@@ -71,7 +71,7 @@ class PremiumPackController extends Controller
     }
 
     /**
-     * Update the specified code in storage.
+     * Update the specified pack in storage.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -90,7 +90,7 @@ class PremiumPackController extends Controller
     }
 
     /**
-     * Remove the specified code from storage.
+     * Remove the specified pack from storage.
      *
      * @param  int $id
      *

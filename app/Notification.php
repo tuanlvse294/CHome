@@ -10,7 +10,7 @@ class Notification extends Model
     protected $fillable = ['title', 'url', 'seen', 'user_id'];
     protected $attributes = ['seen' => false];
 
-    public static function makeNotification($title, $url, $user)
+    public static function makeNotification($title, $url, $user) //shortcut to make a notification
     {
         $notification = new Notification;
         $notification->title = $title;
