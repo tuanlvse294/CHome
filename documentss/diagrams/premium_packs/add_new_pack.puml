@@ -1,0 +1,26 @@
+@startuml
+actor Admin
+boundary edit_premium_pack_view
+control PremiumPackController
+entity PremiumPackModel
+
+Admin -> edit_premium_pack_view : click to add new pack
+activate Admin
+activate edit_premium_pack_view
+edit_premium_pack_view --> Admin :new pack form input
+deactivate edit_premium_pack_view
+Admin -> edit_premium_pack_view : input pack's info
+deactivate Admin
+activate edit_premium_pack_view
+edit_premium_pack_view -> PremiumPackController: pack's info
+deactivate edit_premium_pack_view
+activate PremiumPackController
+PremiumPackController -> PremiumPackController : validate
+PremiumPackController -> PremiumPackModel : save
+activate PremiumPackModel
+PremiumPackModel --> PremiumPackController : saved ok
+deactivate PremiumPackModel
+PremiumPackController --> Admin: return to pack list
+deactivate PremiumPackController
+
+@enduml

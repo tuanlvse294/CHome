@@ -1,0 +1,31 @@
+@startuml
+actor Admin
+boundary list_products_view
+boundary detail_products_view
+control ProductController
+entity ProductModel
+
+activate Admin
+Admin -> list_products_view: yêu cầu xem danh sách sản phẩm
+activate list_products_view
+Admin <-- list_products_view: Hiển thị danh sách sản phẩm
+Admin -> list_products_view: Bấm vào sản phẩm
+deactivate Admin
+list_products_view-> detail_products_view: chuyển tới trang chi tiết sản phẩm
+deactivate list_products_view
+activate detail_products_view
+detail_products_view ->ProductController:yêu cầu lấy dữ liệu
+activate ProductController
+ProductController -> ProductController : validate
+ProductController -> ProductModel : lấy dữ liệu
+activate ProductModel
+ProductModel --> ProductController : trả dữ liệu sản phẩm
+deactivate ProductModel
+detail_products_view<-- ProductController : trả kết qủa xóa sản phẩm
+deactivate ProductController
+Admin <-- detail_products_view:hiển thị chi tiết sản phẩm
+activate Admin
+deactivate detail_products_view
+deactivate Admin
+
+@enduml

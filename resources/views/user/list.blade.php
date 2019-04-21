@@ -31,15 +31,15 @@
                         <div class="ui buttons">
                             @if(isset($trash))
                                 <a href="{{route('users.restore',[$item->id])}}"
-                                   class="ui icon green button"><i class="recycle icon"></i> Phục hồi</a>
+                                   class="ui icon confirmed green button"><i class="recycle icon"></i> Phục hồi</a>
                             <!-- <a href="{{route('users.force_delete',[$item->id])}}"
                                    class="ui icon red button"><i class="delete icon"></i> Xóa</a> -->
                             @else
                                 @if(Auth::id()!=$item->id)
                                     <a href="{{route('users.delete',[$item->id])}}"
-                                       class="ui icon yellow button"><i class="low vision icon"></i> Ẩn</a>
+                                       class="ui confirmed icon yellow button"><i class="low vision icon"></i> Ẩn</a>
                                     <a href="{{route('users.edit_permission',[$item->id])}}"
-                                       class="ui icon green button"><i class="lock icon"></i> Quyền hạn</a>
+                                       class="ui confirmed icon green button"><i class="lock icon"></i> Quyền hạn</a>
                                 @endif
                             @endif
                         </div>

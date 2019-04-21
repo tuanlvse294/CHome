@@ -1,0 +1,29 @@
+@startuml
+actor Admin
+boundary edit_product_view
+control ProductController
+entity ProductModel
+
+Admin -> edit_product_view : yêu cầu thêm sản phẩm
+activate Admin
+activate edit_product_view
+edit_product_view --> Admin :yêu cầu nhập dữ liệu sản phẩm mới
+deactivate edit_product_view
+Admin -> edit_product_view : nhập dữ liệu sản phẩm mới, bấm nút lưu
+deactivate Admin
+activate edit_product_view
+edit_product_view -> ProductController: gửi thông tin 
+deactivate edit_product_view
+activate ProductController
+ProductController -> ProductController : validate
+ProductController -> ProductModel : lưu dữ liệu
+activate ProductModel
+ProductModel --> ProductController : trả dữ liệu đã lưu
+deactivate ProductModel
+ProductController --> edit_product_view: trả kết qủa tạo sản phẩm mới
+deactivate ProductController
+activate edit_product_view
+edit_product_view --> Admin: Hiển thị sản phẩm mới
+deactivate edit_product_view
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+actor Admin
+boundary list_products_view
+control ProductController
+entity ProductModel
+
+Admin -> list_products_view : yêu cầu xem danh sách sản phẩm
+activate Admin
+activate list_products_view
+list_products_view -> ProductController: gửi yêu cầu
+deactivate list_products_view
+activate ProductController
+ProductController -> ProductController : validate
+ProductController -> ProductModel : lấy danh sách sản phẩm
+activate ProductModel
+ProductModel --> ProductController : trả danh sách sản phẩm
+deactivate ProductModel
+ProductController --> list_products_view: trả kết qủa danh sách sản phẩm
+deactivate ProductController
+activate list_products_view
+list_products_view --> Admin: Hiển thị danh sách sản phẩm
+deactivate list_products_view
+deactivate Admin
+
+@enduml

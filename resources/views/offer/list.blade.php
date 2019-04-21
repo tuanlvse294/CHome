@@ -28,9 +28,9 @@
                         @endif
                     </td>
                     <td style="text-align: center;width: 20%">
-                        <img src="/uploads/{{$item->get_icon()}}" style="width:90%">
+                        <img src="/uploads/{{$item->get_icon()}}" class="image_4_3">
                     </td>
-                    <td style="width: 30%">
+                    <td style="width: 10%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                     </td>
                     <td>{{money_format('%n', $item->price)}}</td>
@@ -39,7 +39,7 @@
                         <div class="ui buttons">
                             @if(isset($trash) )
                                 <a href="{{route('offers.restore',[$item->id])}}"
-                                   class="ui icon green button"><i class="recycle icon"></i> Phục hồi</a>
+                                   class="ui confirmed icon green button"><i class="recycle icon"></i> Phục hồi</a>
                             @else
                                 @if(isset($accept))
                                     <a href="{{route('offers.accept',[$item->id])}}"

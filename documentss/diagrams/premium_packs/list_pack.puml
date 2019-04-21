@@ -1,0 +1,25 @@
+@startuml
+actor Admin
+boundary list_packs_view
+control PremiumPackController
+entity PremiumPackModel
+
+Admin -> list_packs_view : view packs list
+activate Admin
+activate list_packs_view
+list_packs_view -> PremiumPackController: request packs list
+deactivate list_packs_view
+activate PremiumPackController
+PremiumPackController -> PremiumPackController : validate
+PremiumPackController -> PremiumPackModel : get packs list
+activate PremiumPackModel
+PremiumPackModel --> PremiumPackController : packs list
+deactivate PremiumPackModel
+PremiumPackController --> list_packs_view: packs list
+deactivate PremiumPackController
+activate list_packs_view
+list_packs_view --> Admin: Dislay packs list
+deactivate list_packs_view
+deactivate Admin
+
+@enduml

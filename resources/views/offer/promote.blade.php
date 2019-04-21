@@ -32,7 +32,7 @@
                                 <p> {{$pack->info}} </p>
                             </div>
                         </div>
-                        <a class="ui green fluid button"
+                        <a class="ui green confirmed fluid button"
                            href="{{route('offers.promote.pick',['offer'=>$offer,'pack'=>$pack])}}">
                             Chọn mua
                         </a>

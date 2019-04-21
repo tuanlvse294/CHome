@@ -1,0 +1,26 @@
+@startuml
+actor Admin
+boundary list_packs_view
+control PremiumPackController
+entity PremiumPackModel
+
+activate Admin
+Admin -> list_packs_view: view pack list
+activate list_packs_view
+Admin <-- list_packs_view: pack list
+Admin -> list_packs_view: click delete pack
+Admin <-- list_packs_view: confirm box
+Admin -> list_packs_view: click confirm
+list_packs_view-> PremiumPackController: request delete pack
+deactivate list_packs_view
+activate PremiumPackController
+PremiumPackController -> PremiumPackController : validate
+PremiumPackController -> PremiumPackModel : delete pack
+activate PremiumPackModel
+PremiumPackModel --> PremiumPackController : deleted
+deactivate PremiumPackModel
+PremiumPackController --> Admin: return to pack list
+deactivate PremiumPackController
+deactivate Admin
+
+@enduml

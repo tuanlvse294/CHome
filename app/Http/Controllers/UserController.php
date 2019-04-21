@@ -57,6 +57,7 @@ class UserController extends Controller
     {
         return view('offer.mine', ['items' => \Auth::user()->premium_offers()->get(), 'title' => 'Tin đặc biệt của tôi', 'user' => \Auth::user()]);
     }
+
     //show my liked offers
 
     public function liked()
@@ -175,7 +176,10 @@ class UserController extends Controller
         } else {
             return back()->withErrors('Sai mật khẩu cũ')->withInput();
         }
-        return redirect(route('password.edit'));
+        if (Auth::user()->has_role('admin') || Auth::user()->has_role('mod'))
+            return redirect(route('password.edit.admin'));
+        else
+            return redirect(route('password.edit'));
     }
 
 }

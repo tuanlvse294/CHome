@@ -48,9 +48,9 @@
                     <td>{{$item->highlight_expire_status()}}</td>
                     <td>
                         <a href="{{route('offers.delete',[$item->id])}}" class="ui icon red button"><i
-                                    class="low vision icon"></i> Ẩn tin</a>
+                                    class="low confirmed vision icon"></i> Ẩn tin</a>
                         <a href="{{route('offers.promote',[$item->id])}}"
-                           class="ui icon green button"><i class="bullhorn icon"></i> Bán nhanh hơn</a>
+                           class="ui icon confirmed green button"><i class="bullhorn icon"></i> Bán nhanh hơn</a>
                     </td>
                 </tr>
             @endforeach

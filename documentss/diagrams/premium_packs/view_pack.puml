@@ -1,0 +1,31 @@
+@startuml
+actor User
+boundary list_packs_view
+boundary detail_packs_view
+control PremiumPackController
+entity PremiumPackModel
+
+activate User
+User -> list_packs_view:  click to promote product
+activate list_packs_view
+User <-- list_packs_view: Dislay pack
+User -> list_packs_view: Bấm vào pack
+deactivate User
+list_packs_view-> detail_packs_view: chuyển tới trang chi tiết pack
+deactivate list_packs_view
+activate detail_packs_view
+detail_packs_view ->PremiumPackController:yêu cầu lấy dữ liệu
+activate PremiumPackController
+PremiumPackController -> PremiumPackController : validate
+PremiumPackController -> PremiumPackModel : lấy dữ liệu
+activate PremiumPackModel
+PremiumPackModel --> PremiumPackController : trả dữ liệu pack
+deactivate PremiumPackModel
+detail_packs_view<-- PremiumPackController : trả kết qủa xóa pack
+deactivate PremiumPackController
+User <-- detail_packs_view:hiển thị tất cả sản phẩm trong pack
+activate User
+deactivate detail_packs_view
+deactivate User
+
+@enduml
