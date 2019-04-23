@@ -36,7 +36,7 @@ class OfferController extends Controller
         Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user); //notify the offer's ownser
         \Session::flash('message', 'Tin đăng của đã được duyệt!!!'); //alert to admin
 
-        return redirect(route('offers.manage ')); //back to manage panel
+        return redirect(route('offers.manage')); //back to manage panel
     }
 
     //amdin panel to see all hidden offers
