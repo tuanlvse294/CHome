@@ -48,7 +48,9 @@
         });
 
 
-        $('table').DataTable({"pageLength": 50});
+        $('table').DataTable({"pageLength": 50,"language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
+            }});
         $('.dataTables_filter > label').attr('class', 'ui input');
         $('select[name="DataTables_Table_0_length"]').attr('class', 'ui dropdown');
         $("#advanced-switch-open").on('click', function () {

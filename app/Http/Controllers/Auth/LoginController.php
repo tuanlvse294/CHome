@@ -46,8 +46,8 @@ class LoginController extends Controller
 
         $user = User::onlyTrashed()->where('email' ,'=', $request->input('email'))->first(); //has this user been banned?
         if ($user != null) { //yes, banned
-            \Session::flash('message', 'Bạn đã bị chặn liên hệ admin bằng hotline hoặc chatbox'); //show some nag
-            return $this->sendFailedLoginResponse($request); //failed to login
+            \Session::flash('error', 'Bạn đã bị chặn liên hệ admin bằng hotline hoặc chatbox'); //show some nag
+            return redirect('login'); //failed to login
         }
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and

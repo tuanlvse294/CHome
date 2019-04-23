@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class PremiumPackController extends Controller
 {
     private $validator_rule = [
-        'price' => 'required|numeric',
-        'days' => 'required|numeric',
+        'price' => 'required|numeric|min:1',
+        'days' => 'required|numeric|min:1',
         'info' => 'required',
         'type' => 'required',
     ];

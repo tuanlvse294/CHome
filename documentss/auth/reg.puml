@@ -1,0 +1,26 @@
+@startuml
+actor User
+boundary register_view
+control RegisterController
+entity UserModel
+
+User -> register_view : go to register page
+activate User
+activate register_view
+register_view --> User : register input form
+deactivate register_view
+User -> register_view : email, password, name...
+deactivate User
+activate register_view
+register_view -> RegisterController:  email, password, name...
+deactivate register_view
+activate RegisterController
+RegisterController -> RegisterController : validate data
+RegisterController -> UserModel : try to register
+activate UserModel
+UserModel --> RegisterController : register ok
+deactivate UserModel
+RegisterController --> User: return to login page
+deactivate RegisterController
+
+@enduml

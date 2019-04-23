@@ -17,6 +17,7 @@ activate PremiumPackController
 PremiumPackController -> PremiumPackController : validate
 PremiumPackController -> PremiumPackModel : delete pack
 activate PremiumPackModel
+PremiumPackModel ->PremiumPackModel:delete pack
 PremiumPackModel --> PremiumPackController : deleted
 deactivate PremiumPackModel
 PremiumPackController --> Admin: return to pack list

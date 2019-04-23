@@ -8,15 +8,15 @@
                 </div>
             </div>
 
-            <div class="four wide column">
+            <div class="three wide column">
                 <button type="submit" class="ui orange fluid button"><i class="search icon"></i>Tìm kiếm
                 </button>
             </div>
-            <div class="two wide column" style="vertical-align: center">
+            <div class="three wide column" style="vertical-align: center;padding-top: 8px">
                 <h4 style="text-align: center"><a href="#" id="advanced-switch-open">Tìm kiếm nâng cao <i
                                 class="down arrow icon"></i></a></h4>
             </div>
-            <div class="two wide column" style="vertical-align: center;display: none">
+            <div class="two wide column" style="vertical-align: center;padding-top: 8px;display: none">
                 <h4 style="text-align: center"><a href="#" id="advanced-switch-hide">Tìm kiếm nâng cao <i
                                 class="up arrow icon"></i></a></h4>
             </div>
@@ -25,7 +25,7 @@
             <div class="three wide column" >
                 <select class="ui compact selection fluid dropdown" onchange="select_city()" name="city"
                         style="min-width: 400px">
-                    <option value="all">Tất cả tỉnh, thành phố</option>
+                    <option value="all">Tỉnh, thành phố</option>
                     @foreach(\App\City::all() as $city)
                         <option value="{{$city->id}}" {{Request::input('city')==$city->id?'selected':''}}>{{$city->name}}</option>
                     @endforeach
@@ -33,7 +33,7 @@
             </div>
             <div class="three wide column" style="padding-right: 0px">
                 <select class="ui compact selection fluid dropdown" id="districts_select" name="district">
-                    <option value="all">Tất cả quận, huyện</option>
+                    <option value="all">Quận, huyện</option>
 
                     @if(Request::input('city')!="all")
                         @foreach(\App\City::query()->findOrNew(Request::input('city'))->districts as $district)

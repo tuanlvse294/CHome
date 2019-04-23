@@ -1,0 +1,27 @@
+@startuml
+actor User
+boundary edit_info_view
+control UserController
+entity UserModel
+
+User -> edit_info_view : go to edit info page
+activate User
+activate edit_info_view
+edit_info_view --> User : edit info input form
+deactivate edit_info_view
+User -> edit_info_view : user's info
+deactivate User
+activate edit_info_view
+edit_info_view -> UserController: user's info
+deactivate edit_info_view
+activate UserController
+UserController -> UserController : validate data
+UserController -> UserModel : try to edit info
+activate UserModel
+UserModel->UserModel:update user info
+UserModel --> UserController : edit info ok
+deactivate UserModel
+UserController --> User: return to home
+deactivate UserController
+
+@enduml

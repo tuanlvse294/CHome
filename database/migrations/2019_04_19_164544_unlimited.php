@@ -15,7 +15,7 @@ class Unlimited extends Migration
     {
         Schema::table('offers', function (Blueprint $table) {
             $table->bigInteger('views')->change();
-            $table->bigInteger('area')->change();
+                    $table->bigInteger('area')->change();
             $table->bigInteger('front')->change();
         });
     }

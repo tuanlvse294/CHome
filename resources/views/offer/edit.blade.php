@@ -5,7 +5,7 @@
         <div class="ui breadcrumb">
             <a class="section" href="/">Trang chủ</a>
             <i class="right angle icon divider"></i>
-            <div class="active section">Sửa rao vặt</div>
+            <div class="active section">{{$title}}</div>
         </div>
 
 

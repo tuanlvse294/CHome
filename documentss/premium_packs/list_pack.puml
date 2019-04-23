@@ -13,12 +13,13 @@ activate PremiumPackController
 PremiumPackController -> PremiumPackController : validate
 PremiumPackController -> PremiumPackModel : get packs list
 activate PremiumPackModel
+PremiumPackModel->PremiumPackModel:get all packs
 PremiumPackModel --> PremiumPackController : packs list
 deactivate PremiumPackModel
 PremiumPackController --> list_packs_view: packs list
 deactivate PremiumPackController
 activate list_packs_view
-list_packs_view --> Admin: Dislay packs list
+list_packs_view --> Admin: dislay packs list
 deactivate list_packs_view
 deactivate Admin
 

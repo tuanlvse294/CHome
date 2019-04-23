@@ -1,0 +1,25 @@
+@startuml
+actor Guest
+boundary home_view
+control HomeController
+entity OfferModel
+
+activate Guest
+Guest -> home_view: input offer name in searchbox
+activate home_view
+home_view-> HomeController: offer name
+deactivate home_view
+activate HomeController
+HomeController -> HomeController : validate
+HomeController -> OfferModel : find offer
+activate OfferModel
+OfferModel -> OfferModel:find offer by name
+OfferModel --> HomeController : matched offers list
+deactivate OfferModel
+home_view <-- HomeController : offers list
+deactivate HomeController
+activate home_view
+Guest <-- home_view :display offers list
+deactivate home_view
+deactivate Guest
+@enduml

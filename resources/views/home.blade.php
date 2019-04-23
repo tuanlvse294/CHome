@@ -6,10 +6,10 @@
 
         @include('offer.premiums')
         <div class="ui stackable grid">
-            <div class="thirteen wide column">
+            <div class="twelve wide column">
                 @include('offer.list2')
             </div>
-            <div class="three wide column">
+            <div class="four wide column">
                 @include('ads.side')
             </div>
         </div>

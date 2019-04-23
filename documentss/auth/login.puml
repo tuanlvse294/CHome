@@ -1,0 +1,26 @@
+@startuml
+actor User
+boundary login_view
+control LoginController
+entity UserModel
+
+User -> login_view : go to login page
+activate User
+activate login_view
+login_view --> User : login input form
+deactivate login_view
+User -> login_view : email, password
+deactivate User
+activate login_view
+login_view -> LoginController: email, password
+deactivate login_view
+activate LoginController
+LoginController -> LoginController : validate data
+LoginController -> UserModel : try to login
+activate UserModel
+UserModel --> LoginController : login ok
+deactivate UserModel
+LoginController --> User: return to home
+deactivate LoginController
+
+@enduml

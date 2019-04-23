@@ -36,7 +36,7 @@ class OfferController extends Controller
         Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user); //notify the offer's ownser
         \Session::flash('message', 'Tin đăng của đã được duyệt!!!'); //alert to admin
 
-        return redirect()->back(); //back to manage panel
+        return redirect(route('offers.manage ')); //back to manage panel
     }
 
     //amdin panel to see all hidden offers
@@ -91,8 +91,10 @@ class OfferController extends Controller
         $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày."; //some info
 
         $transaction->save(); //save then
-
-        return redirect(route('users.premiums')); //go back to premium offers panel
+        if ($offer->accepted)
+            return redirect(route('users.premiums')); //go back to premium offers panel
+        else
+            return redirect(route('users.pending')); //go back to premium offers panel
     }
 
     //admin restore hidden offer
@@ -211,7 +213,7 @@ class OfferController extends Controller
             $offer->images = json_encode($urls);
         }
         $offer->save(); //save model to database
-        Notification::makeNotification("Tin đăng của bạn đang được duyệt.", route('users.pending'), Auth::user());
+        Notification::makeNotification("Tin của bạn đang chờ duyệt", route('users.pending'), Auth::user());
         return redirect('/');
     }
 

@@ -1,0 +1,33 @@
+@startuml
+actor User
+boundary list_offers_view
+boundary select_premium_packs_view
+control OfferController
+entity OfferModel
+
+activate User
+User -> list_offers_view: view my offers list
+activate list_offers_view
+User <-- list_offers_view: offers list
+User -> list_offers_view: click promote offer
+User <-- list_offers_view: confirm box
+User -> list_offers_view: click confirm
+list_offers_view -> select_premium_packs_view: select packs
+deactivate list_offers_view
+activate select_premium_packs_view
+select_premium_packs_view --> User :premium packs list
+User ->select_premium_packs_view :select pack
+select_premium_packs_view->OfferController:save pack to offer
+deactivate select_premium_packs_view
+activate OfferController
+OfferController -> OfferController : validate
+OfferController -> OfferModel : update premium expire
+activate OfferModel
+OfferModel ->OfferModel:update
+OfferModel --> OfferController : updated
+deactivate OfferModel
+OfferController --> User: return to offer list
+deactivate OfferController
+deactivate User
+
+@enduml

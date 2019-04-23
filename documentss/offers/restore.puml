@@ -1,0 +1,27 @@
+@startuml
+actor User
+boundary list_offers_view
+control OfferController
+entity OfferModel
+
+activate User
+User -> list_offers_view: view hidden offer list
+activate list_offers_view
+User <-- list_offers_view: hidden offer list
+User -> list_offers_view: click restore offer
+User <-- list_offers_view: confirm box
+User -> list_offers_view: click confirm
+list_offers_view-> OfferController: request restore offer
+deactivate list_offers_view
+activate OfferController
+OfferController -> OfferController : validate
+OfferController -> OfferModel : restore offer
+activate OfferModel
+OfferModel ->OfferModel:restore offer
+OfferModel --> OfferController : restored
+deactivate OfferModel
+OfferController --> User: return to offer list
+deactivate OfferController
+deactivate User
+
+@enduml

@@ -5,9 +5,9 @@
             <a class="item" href="/">
                 <img src="/images/logo.png" alt="">
             </a>
-            <a class="item" href="/" style="color: #EC630A;font-size: 24px;font-weight: bolder;padding-top: 0px;padding-bottom: 0px;">Cheap - Certain - Convenient</a>
-        </div>
+            <a class="item" href="/" style="color: #EC630A;font-size: 16px;font-weight: bolder;padding-top: 0px;padding-bottom: 0px;">Cheap - Certain - Convenient</a>
 
+        </div>
 
         <div class="right menu">
             <div class="item">

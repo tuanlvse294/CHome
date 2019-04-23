@@ -1,0 +1,27 @@
+@startuml
+actor User
+boundary edit_password_view
+control UserController
+entity UserModel
+
+User -> edit_password_view : go to edit password page
+activate User
+activate edit_password_view
+edit_password_view --> User : edit password input form
+deactivate edit_password_view
+User -> edit_password_view : old password, new password
+deactivate User
+activate edit_password_view
+edit_password_view -> UserController:  passwords
+deactivate edit_password_view
+activate UserController
+UserController -> UserController : validate data
+UserController -> UserModel : try to edit password
+activate UserModel
+UserModel->UserModel:update user password
+UserModel --> UserController : edit password ok
+deactivate UserModel
+UserController --> User: return to home
+deactivate UserController
+
+@enduml

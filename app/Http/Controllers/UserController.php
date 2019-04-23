@@ -167,7 +167,7 @@ class UserController extends Controller
         $request->validate([
             'old_password' => 'required',
             'new_password' => 'required|string|min:6|confirmed|different:old_password',
-        ]);
+        ], ['new_password.confirmed' => 'Mật khẩu mới không trùng khớp']);
         $user = \Auth::user(); //get the current logged-in user
         if (\Hash::check($request->get('old_password'), $user->password)) { //check if old password is match with hashed password
             $user->password = \Hash::make($request->get('new_password')); //update new password

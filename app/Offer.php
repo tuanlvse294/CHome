@@ -82,7 +82,7 @@ class Offer extends Model
     }
 
     //get some premiums to show
-    public static function get_premiums($number = 6)
+    public static function get_premiums($number = 5)
     {
         $premiums = Offer::query();
 

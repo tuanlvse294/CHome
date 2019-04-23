@@ -1,0 +1,38 @@
+@startuml
+actor User
+boundary reset_password_view
+control ResetPasswordController
+entity UserModel
+
+User -> reset_password_view : go to reset password page
+activate User
+activate reset_password_view
+reset_password_view --> User : email input form
+deactivate reset_password_view
+User -> reset_password_view : email
+deactivate User
+activate reset_password_view
+reset_password_view -> ResetPasswordController: email
+deactivate reset_password_view
+activate ResetPasswordController
+ResetPasswordController -> ResetPasswordController : validate data
+ResetPasswordController -> ResetPasswordController : generate reset URL
+ResetPasswordController --> User : send reset URL to email
+deactivate ResetPasswordController
+User -> reset_password_view: go to reset password URL
+activate reset_password_view
+reset_password_view --> User : reset password input form
+User -> reset_password_view : new password
+reset_password_view -> ResetPasswordController: new password
+deactivate reset_password_view
+activate ResetPasswordController
+ResetPasswordController -> ResetPasswordController : validate data
+ResetPasswordController -> UserModel: new password
+activate UserModel
+UserModel -> UserModel: update password
+UserModel --> ResetPasswordController : reset_password ok
+deactivate UserModel
+ResetPasswordController --> User: return to login page
+deactivate ResetPasswordController
+
+@enduml

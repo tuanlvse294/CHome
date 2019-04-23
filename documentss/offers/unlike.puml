@@ -1,0 +1,26 @@
+@startuml
+actor User
+boundary offer_detail_view
+control OfferController
+entity UserOfferLike
+
+activate User
+User -> offer_detail_view: go to offer detail page
+activate offer_detail_view
+User <-- offer_detail_view: offer detail
+User -> offer_detail_view: click unlike
+deactivate User
+offer_detail_view ->OfferController:unlike offer
+deactivate offer_detail_view
+activate OfferController
+OfferController -> OfferController : validate
+OfferController -> UserOfferLike : remove like
+activate UserOfferLike
+UserOfferLike -> UserOfferLike:remove
+UserOfferLike --> OfferController : remove ok
+deactivate UserOfferLike
+activate offer_detail_view
+offer_detail_view <-- OfferController : update like button
+offer_detail_view -->User :update like button
+deactivate offer_detail_view
+@enduml
