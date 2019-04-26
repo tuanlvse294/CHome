@@ -5,14 +5,10 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+class HomeTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testBasicTest()
+    //normally go to home
+    public function test_it_can_see_home()
     {
         $response = $this->get('/');
         $response->assertSeeText('Tin đặc biệt');
@@ -20,7 +16,8 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test404()
+    //try a random url
+    public function test_go_to_no_where()
     {
         $response = $this->get('/adawdawdaw');
         $response->assertSeeText('Không tìm thấy kết quả phù hợp!!');

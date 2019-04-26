@@ -13,7 +13,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testCreateUser()
+    public function test_can_create_user()
     {
         $user = new User();
         $user->name = 'xxx';
@@ -25,7 +25,7 @@ class UserTest extends TestCase
         $user->delete();
     }
 
-    public function testUserRole()
+    public function test_user_role()
     {
         $user = new User();
         $this->assertTrue($user->has_role("user"));

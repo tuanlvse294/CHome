@@ -4,6 +4,7 @@ boundary list_offers_view
 boundary select_premium_packs_view
 control OfferController
 entity OfferModel
+boundary NganLuong
 
 activate User
 User -> list_offers_view: view my offers list
@@ -17,10 +18,17 @@ deactivate list_offers_view
 activate select_premium_packs_view
 select_premium_packs_view --> User :premium packs list
 User ->select_premium_packs_view :select pack
-select_premium_packs_view->OfferController:save pack to offer
+select_premium_packs_view->OfferController:selected pack
 deactivate select_premium_packs_view
 activate OfferController
-OfferController -> OfferController : validate
+OfferController -> NganLuong:payment process
+deactivate OfferController
+activate NganLuong
+NganLuong -->User:payment methods select page
+User ->NganLuong:pay money
+NganLuong --> OfferController:payment success
+deactivate NganLuong
+activate OfferController
 OfferController -> OfferModel : update premium expire
 activate OfferModel
 OfferModel ->OfferModel:update
