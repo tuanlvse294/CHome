@@ -16,7 +16,7 @@
                 <h4 style="text-align: center"><a href="#" id="advanced-switch-open">Tìm kiếm nâng cao <i
                                 class="down arrow icon"></i></a></h4>
             </div>
-            <div class="two wide column" style="vertical-align: center;padding-top: 8px;display: none">
+            <div class="three wide column" style="vertical-align: center;padding-top: 8px;display: none">
                 <h4 style="text-align: center"><a href="#" id="advanced-switch-hide">Tìm kiếm nâng cao <i
                                 class="up arrow icon"></i></a></h4>
             </div>
