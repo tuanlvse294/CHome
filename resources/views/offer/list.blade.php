@@ -36,21 +36,19 @@
                     <td>{{money_format('%n', $item->price)}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td>
-                        <div class="ui buttons">
-                            @if(isset($trash) )
-                                <a href="{{route('offers.restore',[$item->id])}}"
-                                   class="ui confirmed icon green button"><i class="recycle icon"></i> Phục hồi</a>
-                            @else
-                                @if(isset($accept))
-                                    <a href="{{route('offers.accept',[$item->id])}}"
-                                       class="confirmed ui icon green button"><i
-                                                class="check icon"></i> Duyệt</a>
-                                @endif
-                                <a href="{{route('offers.delete',[$item->id])}}"
-                                   class="confirmed ui icon yellow button"><i
-                                            class="low vision icon"></i> Ẩn</a>
+                        @if(isset($trash) )
+                            <a href="{{route('offers.restore',[$item->id])}}"
+                               class="ui confirmed icon green button"><i class="recycle icon"></i> Phục hồi</a>
+                        @else
+                            @if(isset($accept))
+                                <a href="{{route('offers.accept',[$item->id])}}"
+                                   class="confirmed ui icon green button"><i
+                                            class="check icon"></i> Duyệt</a>
                             @endif
-                        </div>
+                            <a href="{{route('offers.delete',[$item->id])}}"
+                               class="confirmed ui icon yellow button"><i
+                                        class="low vision icon"></i> Ẩn</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

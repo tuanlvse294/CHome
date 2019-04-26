@@ -28,21 +28,19 @@
                     </td>
                     <td>{{$item->updated_at}}</td>
                     <td>
-                        <div class="ui buttons">
-                            @if(isset($trash))
-                                <a href="{{route('users.restore',[$item->id])}}"
-                                   class="ui icon confirmed green button"><i class="recycle icon"></i> Phục hồi</a>
-                            <!-- <a href="{{route('users.force_delete',[$item->id])}}"
+                        @if(isset($trash))
+                            <a href="{{route('users.restore',[$item->id])}}"
+                               class="ui icon confirmed green button"><i class="recycle icon"></i> Phục hồi</a>
+                        <!-- <a href="{{route('users.force_delete',[$item->id])}}"
                                    class="ui icon red button"><i class="delete icon"></i> Xóa</a> -->
-                            @else
-                                @if(Auth::id()!=$item->id)
-                                    <a href="{{route('users.delete',[$item->id])}}"
-                                       class="ui confirmed icon yellow button"><i class="low vision icon"></i> Ẩn</a>
-                                    <a href="{{route('users.edit_permission',[$item->id])}}"
-                                       class="ui confirmed icon green button"><i class="lock icon"></i> Quyền hạn</a>
-                                @endif
+                        @else
+                            @if(Auth::id()!=$item->id)
+                                <a href="{{route('users.delete',[$item->id])}}"
+                                   class="ui confirmed icon yellow button"><i class="low vision icon"></i> Ẩn</a>
+                                <a href="{{route('users.edit_permission',[$item->id])}}"
+                                   class="ui confirmed icon green button"><i class="lock icon"></i> Quyền hạn</a>
                             @endif
-                        </div>
+                        @endif
                     </td>
                 </tr>
             @endforeach

@@ -33,13 +33,11 @@
                         {{$item->updated_at}}
                     </td>
                     <td>
-                        <div class="ui buttons">
-                            <a href="{{route('premium.edit',['pack'=>$item])}}" class="ui icon blue button "><i
-                                        class="pencil icon"></i> Sửa</a>
-                            <a href="{{route('premium.delete',['pack'=>$item])}}"
-                               class="ui icon green button confirmed"><i
-                                        class="pencil icon"></i> Xóa</a>
-                        </div>
+                        <a href="{{route('premium.edit',['pack'=>$item])}}" class="ui icon blue button "><i
+                                    class="pencil icon"></i> Sửa</a>
+                        <a href="{{route('premium.delete',['pack'=>$item])}}"
+                           class="ui icon green button confirmed"><i
+                                    class="pencil icon"></i> Xóa</a>
                     </td>
                 </tr>
             @endforeach
