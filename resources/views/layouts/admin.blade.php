@@ -7,19 +7,19 @@
             <a class="ui logo icon image" href="/">
                 <img src="/images/logo.png" style="width: 40px;margin-right: 20px">
             </a>
-            <a href="/"><b>Admin panel</b></a>
+            <a href="/"><b>Bảng quản trị</b></a>
         </div>
 
         @if(Auth::user()->has_role('admin'))
             <div class="item">
-                <div class="header">Analytics</div>
+                <div class="header">Thống kê</div>
                 <div class="menu">
                     <a class="item" href="{{route('dashboard')}}"><i class="inverted chart line icon"></i>Thống
                         kê</a>
                 </div>
             </div>
             <div class="item">
-                <div class="header">Manage</div>
+                <div class="header">Quản trị</div>
                 <div class="menu">
                     <a class="item" href="{{route('offers.manage_accept')}}"><i class="inverted check icon"></i>Xét
                         duyệt
@@ -38,7 +38,7 @@
             </div>
         @elseif(Auth::user()->has_role('mod'))
             <div class="item">
-                <div class="header">Manage</div>
+                <div class="header">Quản trị</div>
                 <div class="menu">
                     <a class="item" href="{{route('offers.manage_accept')}}"><i class="inverted check icon"></i>Xét
                         duyệt
@@ -52,7 +52,7 @@
             </div>
         @endif
         <div class="item">
-            <div class="header">Profile</div>
+            <div class="header">Cá nhân</div>
             <div class="menu">
                 <a class="item" href="{{route('password.edit.admin')}}"><i class="grey user secret icon"></i>Đổi mật
                     khẩu</a>

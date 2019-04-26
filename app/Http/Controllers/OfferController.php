@@ -43,7 +43,7 @@ class OfferController extends Controller
 
     public function trash()
     {
-        return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã xoá', 'trash' => true]);
+        return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã ẩn', 'trash' => true]);
     }
 
     //show user premium packs
