@@ -33,10 +33,9 @@ class OfferController extends Controller
     {
         $offer->accepted = true;
         $offer->save();
-        Notification::makeNotification("Tin đăng của bạn đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user); //notify the offer's ownser
-        \Session::flash('message', 'Tin đăng của đã được duyệt!!!'); //alert to admin
+        Notification::makeNotification("Tin đăng đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user); //notify the offer's ownser
 
-        return redirect(route('offers.manage')); //back to manage panel
+        return redirect(route('offers.manage_accept')); //back to manage panel
     }
 
     //amdin panel to see all hidden offers
@@ -91,6 +90,8 @@ class OfferController extends Controller
         $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày."; //some info
 
         $transaction->save(); //save then
+        Notification::makeNotification("Đã mua gói đặc biệt thành công!!!", route('users.premiums'), $offer->user); //notify the offer's ownser
+
         if ($offer->accepted)
             return redirect(route('users.premiums')); //go back to premium offers panel
         else
@@ -133,7 +134,7 @@ class OfferController extends Controller
     //view the offer in detail
     public function show(Request $request, Offer $offer)
     {
-        if ($offer->accepted or (Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
+        if (($offer->accepted and !$offer->user->trashed()) or (Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
             //if it's not accepted then only admin and the owner can see
             if (!Auth::check() || Auth::id() != $offer->user_id) {
                 //if the owner see then views and ads reach will not increase
@@ -154,9 +155,12 @@ class OfferController extends Controller
     {
         $offer = Offer::withTrashed()->find($offer_id);
 
-        if ((Auth::check() && (Auth::user()->has_role('admin')) || Auth::id() == $offer->user_id)) {
+        if ((Auth::check() && (Auth::user()->has_role('admin')) || Auth::user()->has_role('mod') || Auth::id() == $offer->user_id)) {
             //if it's not accepted then only admin and the owner can see
-            Session::flash('error', "Tin này đã bị ẩn - Liên hệ admin bằng chatbox hoặc hotline"); //show the nag after the header
+            if (Auth::id() == $offer->user_id)
+                Session::flash('error', "Tin này đã bị ẩn - Liên hệ admin bằng chatbox hoặc hotline"); //show the nag after the header
+            else
+                Session::flash('error', "Tin này đã bị ẩn");
             return view('offer.detail', ['item' => $offer,
                 'title' => $offer->title,
             ]);

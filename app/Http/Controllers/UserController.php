@@ -30,7 +30,7 @@ class UserController extends Controller
     {
         \Session::flash("message", "Đã xoá tài khoản " . $user->email);
         $user->delete();
-        return redirect()->back();
+        return redirect(route('users.trash'));
     }
 
     //show offers of any user

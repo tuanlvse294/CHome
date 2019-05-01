@@ -27,12 +27,12 @@ class Offer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function likers()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTrashed();
     }
 
     public function get_icon()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Offer;
 use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -22,8 +23,10 @@ class HomeController extends Controller
         if (\Auth::check() && (\Auth::user()->has_role('admin') || \Auth::user()->has_role('mod'))) { //you are admin or moderator?
             return redirect(url('admin')); //then go to admin panel then
         }
-        $offers = Offer::query()->where('accepted', '=', true); //here the searching goes, first we make sure only take accepted offers
-
+        $offers = Offer::query()->whereHas(
+            'user', function ( $query) {
+            $query->where('deleted_at', '=', null);
+        })->where('accepted', '=', true); //here the searching goes, first we make sure only take accepted offers
         if ($request->has('query')) //search for name?
             $offers = $offers->where('title', 'like', "%" . $request->get('query') . "%"); //then find offers which has name contained the search query
         if ($request->has('city') and $request->get('city') != 'all') { //choosed a city?

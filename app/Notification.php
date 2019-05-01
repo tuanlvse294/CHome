@@ -17,10 +17,11 @@ class Notification extends Model
         $notification->url = $url;
         $notification->user_id = $user->id;
         $notification->save();
+        \Session::flash('message', $title); //alert to admin
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 }
