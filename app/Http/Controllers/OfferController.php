@@ -207,11 +207,11 @@ class OfferController extends Controller
             'title' => 'required|string',
             'city_id' => 'required|numeric',
             'district_id' => 'required|numeric',
-            'area' => 'required|numeric|min:1',
-            'front' => 'required|numeric|min:1',
+            'area' => 'required|numeric|min:1|max:999999',
+            'front' => 'required|numeric|min:1|max:99999',
             'address' => 'required',
             'content' => 'required',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0|max:9999999999999'
         ]);
         $offer->fill($request->all()); //fill all inputs to model
         $offer->user_id = \Auth::id();
