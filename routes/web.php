@@ -113,7 +113,7 @@ Auth::routes();
 
 Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
 Route::get('/receive_payment', function () {
-    return route('offers.promote.pick', ['offer' => Input::get('transaction_info'), 'pack' => Input::get('order_code')]);
+    return redirect(route('offers.promote.pick', ['offer' => Input::get('transaction_info'), 'pack' => Input::get('order_code')]));
 })->name('receive_payment');
 
 
