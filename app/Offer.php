@@ -84,7 +84,10 @@ class Offer extends Model
     //get some premiums to show
     public static function get_premiums($number = 6)
     {
-        $premiums = Offer::query();
+        $premiums = Offer::query()->whereHas(
+            'user', function ($query) {
+            $query->where('deleted_at', '=', null);
+        });
 
         $premiums = $premiums->where('accepted', '=', true)->where("premium_expire", ">", Carbon::now('Asia/Ho_Chi_Minh'))->orderBy("last_seen")->limit($number)->get();
         foreach ($premiums as $offer) {
@@ -97,7 +100,10 @@ class Offer extends Model
     //get some top offers to show
     public static function get_top($number = 2)
     {
-        $tops = Offer::query();
+        $tops = Offer::query()->whereHas(
+            'user', function ($query) {
+            $query->where('deleted_at', '=', null);
+        });
 
         $tops = $tops->where('accepted', '=', true)->where("top_expire", ">", Carbon::now('Asia/Ho_Chi_Minh'))->orderBy("last_seen")->limit($number)->get();
         foreach ($tops as $offer) {
@@ -139,7 +145,7 @@ class Offer extends Model
 
     public function is_highlight()
     {
-        return (Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->highlight_expire, false) > 0);
+        return (Carbon::now('Asia/Ho_Chi_Minh')->diffInSeconds($this->highlight_expire, false) > 0);
     }
 
     /**
@@ -147,7 +153,7 @@ class Offer extends Model
      */
     public function is_top(): bool
     {
-        return Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->top_expire, false) > 0;
+        return Carbon::now('Asia/Ho_Chi_Minh')->diffInSeconds($this->top_expire, false) > 0;
     }
 
     /**
@@ -155,8 +161,14 @@ class Offer extends Model
      */
     public function is_premium(): bool
     {
-        return Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($this->premium_expire, false) > 0;
+        return Carbon::now('Asia/Ho_Chi_Minh')->diffInSeconds($this->premium_expire, false) > 0;
     }
+
+    public function has_ads(): bool
+    {
+        return ($this->is_highlight() || $this->is_top() || $this->is_premium());
+    }
+
 
     //compare two offer, the smaller distance, more similar they are,
     public function distance(Offer $other)

@@ -4,7 +4,11 @@
              class="image_4_3">
     </div>
     <div class="content">
-        <a class="header" href="/offers/{{$item->id}}">{{$item->title}}</a>
+        @if($item->has_ads())
+            <a class="header" href="{{route('offers.show',['offer'=>$item,'click'=>'from_ads'])}}">{{$item->title}}</a>
+        @else
+            <a class="header" href="{{route('offers.show',['offer'=>$item])}}">{{$item->title}}</a>
+        @endif
         <div class="description">
             <h3 style="color: red"><i class="money icon"></i> Giá: {{$item->get_price_vnd()}}</h3>
             <p><i class="grey eye icon"></i> Lượt xem: {{$item->views}}</p>
