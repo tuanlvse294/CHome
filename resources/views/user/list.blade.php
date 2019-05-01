@@ -3,6 +3,8 @@
 
     <div class="ui fluid container">
         <div class="ui huge header">{{$title}}</div>
+        @include('layouts.messages')
+
         <a href="{{route('users.export')}}" class="ui green button"><i class="download icon"></i> Download as CSV</a>
         <br>
         <br>

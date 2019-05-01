@@ -18,10 +18,13 @@ class OfferController extends Controller
     //amdin panel to see all accepted offers
     public function manage()
     {
-        return view('offer.list', ['items' => Offer::all()->where('accepted', '=', true), 'title' => 'Quản lý tin rao vặt']);
+        return view('offer.list', ['items' => Offer::query()->whereHas(
+            'user', function ($query) {
+            $query->where('deleted_at', '=', null);
+        })->where('accepted', '=', true)->get(), 'title' => 'Quản lý tin rao vặt']);
     }
 
-    //amdin panel to see all unaccepted offers
+    //admin panel to see all unaccepted offers
 
     public function manage_accept()
     {
@@ -34,7 +37,6 @@ class OfferController extends Controller
         $offer->accepted = true;
         $offer->save();
         Notification::makeNotification("Tin đăng đã được duyệt!!!", route('offers.show', ['offer' => $offer]), $offer->user); //notify the offer's ownser
-
         return redirect(route('offers.manage_accept')); //back to manage panel
     }
 
@@ -42,7 +44,13 @@ class OfferController extends Controller
 
     public function trash()
     {
-        return view('offer.list', ['items' => Offer::onlyTrashed()->get(), 'title' => 'Quản lý tin rao vặt đã ẩn', 'trash' => true]);
+        $from_trashed_users = Offer::query()->whereHas(
+            'user', function ($query) {
+            $query->where('deleted_at', '!=', null);
+        })->where('accepted', '=', true)->get();
+
+        $all_trashed = Offer::onlyTrashed()->get();
+        return view('offer.list', ['items' => $all_trashed->merge($from_trashed_users), 'title' => 'Quản lý tin rao vặt đã ẩn']);
     }
 
     //show user premium packs
@@ -90,7 +98,7 @@ class OfferController extends Controller
         $transaction->info = "Mua gói " . $pack->type_str() . " thời hạn " . $pack->days . " ngày."; //some info
 
         $transaction->save(); //save then
-        Notification::makeNotification("Đã mua gói đặc biệt thành công!!!", route('users.premiums'), $offer->user); //notify the offer's ownser
+        Notification::makeNotification("Đã mua gói " . $transaction->info . " thành công!!!", route('users.premiums'), $offer->user); //notify the offer's ownser
 
         if ($offer->accepted)
             return redirect(route('users.premiums')); //go back to premium offers panel

@@ -23,9 +23,7 @@
                     <td>{{$loop->index	+1}}</td>
 
                     <td>
-                        @if($item->user != null)
-                            <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a>
-                        @endif
+                        <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a>
                     </td>
                     <td style="text-align: center;width: 20%">
                         <img src="/uploads/{{$item->get_icon()}}" class="image_4_3">
@@ -36,7 +34,10 @@
                     <td>{{money_format('%n', $item->price)}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td>
-                        @if(isset($trash) )
+
+                        @if($item->user->trashed() )
+
+                        @elseif($item->trashed() )
                             <a href="{{route('offers.restore',[$item->id])}}"
                                class="ui confirmed icon green button"><i class="recycle icon"></i> Phục hồi</a>
                         @else

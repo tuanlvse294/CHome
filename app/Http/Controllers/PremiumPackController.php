@@ -31,7 +31,6 @@ class PremiumPackController extends Controller
      */
     public function create()
     {
-
         return view('premium.edit', ['title' => 'Tạo gói tin đặc biệt mới']);
     }
 
@@ -50,6 +49,7 @@ class PremiumPackController extends Controller
         $pack = new PremiumPack();
         $pack->fill($request->all());
         $pack->save();
+        \Session::flash('message', 'Đã lưu!!');
 
         return redirect(route('premium.manage'));
 
@@ -85,6 +85,7 @@ class PremiumPackController extends Controller
         );
         $premium->fill($request->all());
         $premium->save();
+        \Session::flash('message', 'Đã lưu!!');
 
         return redirect(route('premium.manage'));
     }
@@ -103,6 +104,8 @@ class PremiumPackController extends Controller
     public function delete(PremiumPack $premium)
     {
         $premium->delete();
+        \Session::flash('error', 'Đã xoá!!');
+
         return redirect()->back();
     }
 }
