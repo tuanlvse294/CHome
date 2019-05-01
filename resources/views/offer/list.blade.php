@@ -22,6 +22,7 @@
                 <tr>
                     <td>{{$item->id}}</td>
                     <td>
+
                         <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user_id}}</a>
                     </td>
                     <td style="text-align: center;width: 20%">
@@ -34,8 +35,8 @@
                     <td>{{$item->updated_at}}</td>
                     <td>
 
-                        @if($item->user->trashed() )
-
+                        @if($item->user ==null )
+                            {{$item->user_id}}
                         @elseif($item->trashed() )
                             <a href="{{route('offers.restore',[$item->id])}}"
                                class="ui confirmed icon green button"><i class="recycle icon"></i> Phục hồi</a>
