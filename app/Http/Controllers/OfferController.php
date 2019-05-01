@@ -248,3 +248,5 @@ class OfferController extends Controller
 
 
 }
+
+

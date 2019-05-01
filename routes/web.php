@@ -13,6 +13,8 @@
 
 
 //auth zone
+use Illuminate\Support\Facades\Input;
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('logout', function () {
@@ -110,6 +112,9 @@ Route::get('/cities', function () {
 Auth::routes();
 
 Route::get('/users/{user}/show', 'UserController@show')->name('users.show');
+Route::get('/receive_payment', function () {
+    return route('offers.promote.pick', ['offer' => Input::get('transaction_info'), 'pack' => Input::get('order_code')]);
+})->name('receive_payment');
 
 
 Route::resource('offers', 'OfferController')->only([

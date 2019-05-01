@@ -68,7 +68,7 @@ class User extends Authenticatable
             $q
                 ->orwhere('premium_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'))
                 ->orwhere('top_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'))
-                ->orwhere('top_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'));
+                ->orwhere('highlight_expire', '>', Carbon::now('Asia/Ho_Chi_Minh'));
         });
     }
 
@@ -76,7 +76,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Offer::class)->where('accepted', '=', true)->where('premium_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'))
             ->where('top_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'))
-            ->where('top_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'));
+            ->where('highlight_expire', '<', Carbon::now('Asia/Ho_Chi_Minh'));
     }
 
     public function transactions()
