@@ -20,4 +20,11 @@ $premiums = \App\Offer::get_premiums()
             @endforeach
         </div>
     </div>
+    <script>
+        $(() => {
+            $('.image_4_3').each(function () {
+                $(this).height($(this).width() * 3 / 4);
+            });
+        });
+    </script>
 @endif

@@ -187,7 +187,7 @@ class OfferController extends Controller
     {
         \Session::flash("message", "Đã ẩn tin rao vặt " . $offer->title);
         $offer->delete();
-        Notification::makeNotification("Tin đăng của bạn đã bị ẩn!!!", route('offers.show_hidden', ['offer' => $offer]), $offer->user);
+        Notification::makeNotification("Tin đăng đã bị ẩn!!!", route('offers.show_hidden', ['offer' => $offer]), $offer->user);
         return redirect()->back();
     }
 
