@@ -8,7 +8,7 @@
         <table class="ui celled table">
             <thead>
             <tr>
-                <th>#</th>
+                <th>#ID</th>
                 <th>Người đăng</th>
                 <th>Hình ảnh</th>
                 <th>Nội dung</th>
@@ -20,10 +20,9 @@
             <tbody>
             @foreach($items as $item)
                 <tr>
-                    <td>{{$loop->index	+1}}</td>
-
+                    <td>{{$item->id}}</td>
                     <td>
-                        <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a>
+                        <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user_id}}</a>
                     </td>
                     <td style="text-align: center;width: 20%">
                         <img src="/uploads/{{$item->get_icon()}}" class="image_4_3">

@@ -132,7 +132,7 @@ class UserController extends Controller
 
     public function edit_permission(Request $request, User $user)
     {
-        $title = 'Chỉnh sửa quyền hạn';
+        $title = "Chỉnh sửa quyền hạn '$user->name''";
         return view('user.permission', compact('title', 'user'));
     }
 

@@ -11,8 +11,10 @@
         <table class="ui celled table">
             <thead>
             <tr>
-                <th>#</th>
+                <th>#ID</th>
                 <th>Email</th>
+                <th>Tên</th>
+                <th>SĐT</th>
                 <th>Quyền hạn</th>
                 <th>Thời gian</th>
                 <th>Hành động</th>
@@ -21,10 +23,12 @@
             <tbody>
             @foreach($items as $item)
                 <tr>
-                    <td>{{$loop->index	+1}}</td>
-                    <td style="width: 40%">
+                    <td>{{$item->id}}</td>
+                    <td>
                         <b><a href="{{route('users.show',[$item->id])}}">{{$item->email}}</a></b>
                     </td>
+                    <td>{{$item->name}}</td>
+                    <td>{{$item->phone}}</td>
                     <td>
                         {{$item->roles_str()}}
                     </td>
