@@ -22,6 +22,11 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect('/');
+    }
+
     /**
      * Where to redirect users after login.
      *
@@ -44,7 +49,7 @@ class LoginController extends Controller
     {
         $this->validateLogin($request); //validatte email, password
 
-        $user = User::onlyTrashed()->where('email' ,'=', $request->input('email'))->first(); //has this user been banned?
+        $user = User::onlyTrashed()->where('email', '=', $request->input('email'))->first(); //has this user been banned?
         if ($user != null) { //yes, banned
             \Session::flash('error', 'Bạn đã bị chặn liên hệ admin bằng hotline hoặc chatbox'); //show some nag
             return redirect('login'); //failed to login
