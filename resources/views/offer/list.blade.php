@@ -23,7 +23,7 @@
                     <td>{{$item->id}}</td>
                     <td>
 
-                        <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user_id}}</a>
+                        <a href="{{route('users.show',['user'=>$item->user])}}">{{$item->user->email}}</a>
                     </td>
                     <td style="text-align: center;width: 20%">
                         <img src="/uploads/{{$item->get_icon()}}" class="image_4_3">
@@ -35,8 +35,8 @@
                     <td>{{$item->updated_at}}</td>
                     <td>
 
-                        @if($item->user ==null )
-                            {{$item->user_id}}
+                        @if($item->user->trashed())
+                            Tài khoản đã bị khoá
                         @elseif($item->trashed() )
                             <a href="{{route('offers.restore',[$item->id])}}"
                                class="ui confirmed icon green button"><i class="recycle icon"></i> Phục hồi</a>
