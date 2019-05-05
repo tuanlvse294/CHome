@@ -207,17 +207,17 @@ class OfferController extends Controller
             'title' => 'required|string',
             'city_id' => 'required|numeric',
             'district_id' => 'required|numeric',
-            'area' => 'required|numeric|min:1|max:999999',
-            'front' => 'required|numeric|min:1|max:99999',
+            'area' => 'required|numeric|min:1|max:9223372036854775807',
+            'front' => 'required|numeric|min:1|max:9223372036854775807',
             'address' => 'required',
             'content' => 'required',
-            'price' => 'required|numeric|min:0|max:9999999999999'
+            'price' => 'required|numeric|min:0|max:9223372036854775807'
         ]);
         $offer->fill($request->all()); //fill all inputs to model
         $offer->user_id = \Auth::id();
         if ($request->files->has('image')) { //save uploaded images
             $urls = array();
-
+            $request->files->count();
             foreach ($request->files->get('image') as $file) {
                 $path = $this->process_image($file);
                 array_push($urls, $path);
