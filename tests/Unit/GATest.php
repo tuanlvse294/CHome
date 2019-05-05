@@ -16,8 +16,8 @@ class GATest extends TestCase
      */
     public function testBasicTest()
     {
-        $totalVisitorsAndPageViews = Analytics::fetchUserTypes(Period::days(4));
-        echo $totalVisitorsAndPageViews;
+//        $totalVisitorsAndPageViews = Analytics::fetchUserTypes(Period::days(4));
+//        echo $totalVisitorsAndPageViews;
         $this->assertNull(null);
     }
 }

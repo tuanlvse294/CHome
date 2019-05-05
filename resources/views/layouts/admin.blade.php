@@ -15,7 +15,10 @@
                 <div class="header">Thống kê</div>
                 <div class="menu">
                     <a class="item" href="{{route('dashboard')}}"><i class="inverted chart line icon"></i>Thống
-                        kê</a>
+                        kê truy cập</a>
+                    <a class="item" href="{{route('revenue')}}"><i class="green money icon"></i>Thống kê doanh thu
+                    </a>
+
                 </div>
             </div>
             <div class="item">
@@ -31,7 +34,6 @@
                     <a class="item" href="{{route('users.manage')}}"><i class="inverted users icon"></i>Người
                         dùng</a>
                     <a class="item" href="{{route('users.trash')}}"><i class="grey users icon"></i>Người dùng đã ẩn</a>
-                    <a class="item" href="{{route('revenue')}}"><i class="green money icon"></i>Doanh thu</a>
                     <a class="item" href="{{route('transaction.manage')}}"><i class="green exchange icon"></i>Giao dịch</a>
                     <a class="item" href="{{route('premium.manage')}}"><i class="yellow star icon"></i>Gói tin đặc biệt</a>
                 </div>
