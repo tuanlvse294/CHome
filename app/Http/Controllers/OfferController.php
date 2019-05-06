@@ -211,7 +211,7 @@ class OfferController extends Controller
             'front' => 'required|numeric|min:1|max:9223372036854775807',
             'address' => 'required',
             'content' => 'required',
-            'price' => 'required|numeric|min:0|max:9999999999999',
+            'price' => 'required|numeric|min:0|max:9223372036854775807',
             'image.*' => 'mimes:jpg,jpeg,png,bmp|max:2000'
         ], [
             'image.*.mimes' => 'Chỉ hỗ trợ định dạng ảnh jpeg, png, jpg và bmp!',
