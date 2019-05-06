@@ -19,7 +19,7 @@ class OfferTest extends TestCase
         $offer=new Offer();
         $offer->price=1500000000;
         $this->assertEquals($offer->get_price_vnd(),"1 tỉ 500 triệu");
-        $this->assertNull($offer->user());
+        $this->assertNull($offer->user);
         $offer->user_id=User::query()->first()->id;
         $this->assertNotNull($offer->user());
     }

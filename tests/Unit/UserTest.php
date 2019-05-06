@@ -8,21 +8,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_can_create_user()
     {
-        $user = new User();
-        $user->name = 'xxx';
-        $user->email = 'aaa@fmail.com';
-        $user->password = 'xxx';
-        $this->assertNull($user->id);
-        $user->save();
+        $user = factory(User::class)->create();
         $this->assertNotNull($user->id);
-        $user->delete();
+        $this->assertNotNull($user->name);
+        $this->assertNotNull($user->email);
+        $user->forceDelete();
     }
 
     public function test_user_role()
