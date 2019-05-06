@@ -1,20 +1,23 @@
-@extends('layouts.default')
-
+<?php
+$is_admin = (Auth::check() && (Auth::user()->has_role('admin') || Auth::user()->has_role('mod')));
+?>
+@extends($is_admin?'layouts.admin':'layouts.default')
 @section('content')
-    <div class="ui container">
-
-        <div class="ui breadcrumb">
-            <a class="section" href="/">Trang chủ</a>
-            <i class="right angle icon divider"></i>
-            <a class="section" href="/?city={{$item->city->id}}">{{$item->city->name}}</a>
-            <i class="right angle icon divider"></i>
-            <a class="section"
-               href="/?city={{$item->city->id}}&district={{$item->district->id}}">{{$item->district->name}}</a>
-            <i class="right angle icon divider"></i>
-            <div class="active section">{{$title}}</div>
-        </div>
-        @include('ads.leaderboard')
-        @include('offer.premiums')
+    <div class="ui {{$is_admin?'fluid':''}} container">
+        @if(!$is_admin)
+            <div class="ui breadcrumb">
+                <a class="section" href="/">Trang chủ</a>
+                <i class="right angle icon divider"></i>
+                <a class="section" href="/?city={{$item->city->id}}">{{$item->city->name}}</a>
+                <i class="right angle icon divider"></i>
+                <a class="section"
+                   href="/?city={{$item->city->id}}&district={{$item->district->id}}">{{$item->district->name}}</a>
+                <i class="right angle icon divider"></i>
+                <div class="active section">{{$title}}</div>
+            </div>
+            @include('ads.leaderboard')
+            @include('offer.premiums')
+        @endif
 
 
         <div class="ui huge header">{{$title}}</div>
@@ -77,8 +80,8 @@
             </div>
 
         </div>
-
-        @include('offer.similars',['similars'=>$item->similars()])
-
+        @if(!$is_admin)
+            @include('offer.similars',['similars'=>$item->similars()])
+        @endif
     </div>
 @endsection
