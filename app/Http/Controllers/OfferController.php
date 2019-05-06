@@ -211,7 +211,11 @@ class OfferController extends Controller
             'front' => 'required|numeric|min:1|max:99999',
             'address' => 'required',
             'content' => 'required',
-            'price' => 'required|numeric|min:0|max:9999999999999'
+            'price' => 'required|numeric|min:0|max:9999999999999',
+            'image.*' => 'mimes:jpg,jpeg,png,bmp|max:2000'
+        ], [
+            'image.*.mimes' => 'Chỉ hỗ trợ định dạng ảnh jpeg, png, jpg và bmp!',
+            'image.*.max' => 'Kích cỡ ảnh tối đa là 2MB!',
         ]);
         $offer->fill($request->all()); //fill all inputs to model
         $offer->user_id = \Auth::id();
