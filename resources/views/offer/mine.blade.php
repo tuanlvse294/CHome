@@ -39,7 +39,7 @@
                     <td style="width: 30%">
                         <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                     </td>
-                    <td>{{money_format('%n', $item->price)}}</td>
+                    <td>{{str_replace(',', '.', number_format($item->price))."₫"}}</td>
 
                     <td>{{$item->views}}</td>
                     <td data-tooltip="Lượt tiếp cận qua QC" data-position="top center">{{$item->ads_reach}}</td>

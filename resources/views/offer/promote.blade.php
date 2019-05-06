@@ -17,8 +17,8 @@
                         <div class="ui segments">
                             <div class="ui center aligned secondary segment">
                                 <div class="ui statistic">
-                                    <div class="value">
-                                        {{money_format('%n', $pack->price)}}
+                                    <div>
+                                        {{str_replace(',', '.', number_format($pack->price))."₫"}}
                                     </div>
                                     <div class="label">
                                         / {{$pack->days}} ngày

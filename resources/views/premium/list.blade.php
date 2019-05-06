@@ -19,9 +19,7 @@
             <tbody>
             @foreach($items as $item)
                 <tr>
-                    <td>
-                        {{money_format('%n', $item->price)}}
-                    </td>
+                    <td>{{str_replace(',', '.', number_format($item->price))."₫"}}</td>
                     <td>
                         {{$item->days}}
                     </td>

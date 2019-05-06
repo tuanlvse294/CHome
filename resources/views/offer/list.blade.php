@@ -35,7 +35,7 @@
                             <b><a href="{{route('offers.show',[$item->id])}}">{{$item->title}}</a></b>
                         @endif
                     </td>
-                    <td>{{money_format('%n', $item->price)}}</td>
+                    <td>{{str_replace(',', '.', number_format($item->price))."₫"}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td>
 

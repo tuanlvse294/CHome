@@ -18,9 +18,7 @@
                     <td>
                         {{$item->user->email}}
                     </td>
-                    <td>
-                        {{money_format('%n', $item->amount)}}
-                    </td>
+                    <td>{{str_replace(',', '.', number_format($item->amount))."₫"}}</td>
                     <td>
                         {{$item->info}}
                     </td>
