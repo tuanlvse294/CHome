@@ -11,6 +11,9 @@ $is_admin = (Auth::check() && (Auth::user()->has_role('admin') || Auth::user()->
                 <i class="right angle icon divider"></i>
                 <div class="active section">{{$title}}</div>
             </div>
+        @else
+            @include('layouts.messages')
+
         @endif
         <div class="ui huge header">{{$title}}</div>
         @include('offer.list2',['offers'=>$items])

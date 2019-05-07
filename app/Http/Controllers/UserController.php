@@ -22,13 +22,13 @@ class UserController extends Controller
     //admin see all the banned users
     public function trash()
     {
-        return view('user.list', ['items' => User::onlyTrashed()->get(), 'title' => 'Quản lý người dùng đã xoá', 'trash' => true]);
+        return view('user.list', ['items' => User::onlyTrashed()->get(), 'title' => 'Quản lý người dùng đã ẩn', 'trash' => true]);
     }
 
     //admin ban a  user
     public function delete(User $user)
     {
-        \Session::flash("message", "Đã xoá tài khoản " . $user->email);
+        \Session::flash("message", "Đã ẩn tài khoản " . $user->email);
         $user->delete();
         return redirect(route('users.trash'));
     }

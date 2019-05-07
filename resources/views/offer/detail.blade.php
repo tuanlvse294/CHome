@@ -17,6 +17,9 @@ $is_admin = (Auth::check() && (Auth::user()->has_role('admin') || Auth::user()->
             </div>
             @include('ads.leaderboard')
             @include('offer.premiums')
+        @else
+            @include('layouts.messages')
+
         @endif
 
 
