@@ -1,26 +1,28 @@
 @startuml
 actor User
-boundary register_view
 control RegisterController
+boundary auth.register
 entity UserModel
 
-User -> register_view : go to register page
+User -> RegisterController : go to login page
 activate User
-activate register_view
-register_view --> User : register input form
-deactivate register_view
-User -> register_view : email, password, name...
-deactivate User
-activate register_view
-register_view -> RegisterController:  email, password, name...
-deactivate register_view
 activate RegisterController
-RegisterController -> RegisterController : validate data
-RegisterController -> UserModel : try to register
+RegisterController -> auth.register:showRegistrationForm ()
+deactivate RegisterController
+activate auth.register
+auth.register -> auth.register:render()
+auth.register --> User
+deactivate auth.register
+User -> RegisterController: email, password, name...
+activate RegisterController
+RegisterController -> RegisterController : register()
+RegisterController -> RegisterController : validate()
+RegisterController -> UserModel
 activate UserModel
-UserModel --> RegisterController : register ok
+UserModel->UserModel:create()
+UserModel --> RegisterController : login ok
 deactivate UserModel
-RegisterController --> User: return to login page
+RegisterController --> User: return to home
 deactivate RegisterController
 
 @enduml
