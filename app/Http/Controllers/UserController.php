@@ -35,17 +35,18 @@ class UserController extends Controller
     }
 
     //show offers of any user
-    public function show(User $user)
+    public function show($user)
     {
         if (Auth::check() && (Auth::user()->has_role('admin') || Auth::user()->has_role('mod'))) {
+            $user = User::query()->withTrashed()->findOrFail($user);
             $offers = $user->all_offers();
             return view('offer.list', ['items' => $offers->get(), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
 
         } else {
+            $user = User::query()->findOrFail($user);
             $offers = $user->offers();
             return view('offer.show', ['items' => $offers->paginate(10), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
         }
-
     }
 
 
