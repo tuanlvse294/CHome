@@ -165,10 +165,10 @@ class OfferController extends Controller
 
         if ((Auth::check() && (Auth::user()->has_role('admin')) || Auth::user()->has_role('mod') || Auth::id() == $offer->user_id)) {
             //if it's not accepted then only admin and the owner can see
-            if (Auth::id() == $offer->user_id)
+            if (Auth::user()->has_role('admin') || Auth::user()->has_role('mod')) {
+//                Session::flash('error', "Tin này đã bị ẩn");
+            } elseif (Auth::id() == $offer->user_id)
                 Session::flash('error', "Tin này đã bị ẩn - Liên hệ admin bằng chatbox hoặc hotline"); //show the nag after the header
-            else
-                Session::flash('error', "Tin này đã bị ẩn");
             return view('offer.detail', ['item' => $offer,
                 'title' => $offer->title,
             ]);
@@ -221,7 +221,6 @@ class OfferController extends Controller
         $offer->user_id = \Auth::id();
         if ($request->files->has('image')) { //save uploaded images
             $urls = array();
-
             foreach ($request->files->get('image') as $file) {
                 $path = $this->process_image($file);
                 array_push($urls, $path);

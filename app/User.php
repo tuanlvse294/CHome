@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(Offer::class)->where('accepted', '=', true);
     }
 
+    public function all_offers()
+    {
+        return $this->hasMany(Offer::class)->withTrashed();
+    }
+
     public function pending_offers()
     {
         return $this->hasMany(Offer::class)->where('accepted', '=', false);

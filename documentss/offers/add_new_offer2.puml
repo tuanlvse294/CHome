@@ -1,0 +1,29 @@
+@startuml
+actor User
+control OfferController
+boundary offer.edit
+entity OfferModel
+
+User -> OfferController : click create new offer button
+activate User
+activate OfferController
+OfferController -> OfferController:create()
+OfferController -> offer.edit : view()
+deactivate OfferController
+activate offer.edit
+offer.edit -> offer.edit:render()
+offer.edit -->User
+deactivate offer.edit
+User -> OfferController : new offer's info
+activate OfferController
+OfferController->OfferController:store()
+OfferController->OfferController:validate()
+OfferController->OfferModel:offer's info
+activate OfferModel
+OfferModel->OfferModel:save()
+OfferModel --> OfferController
+deactivate OfferModel
+OfferController --> User: return home, show notification
+deactivate OfferController
+deactivate User
+@enduml

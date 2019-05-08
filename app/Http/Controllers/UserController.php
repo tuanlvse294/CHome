@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Notification;
+use App\Offer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,61 +37,78 @@ class UserController extends Controller
     //show offers of any user
     public function show(User $user)
     {
-        return view('offer.show', ['items' => $user->offers()->paginate(10), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
+        if (Auth::check() && (Auth::user()->has_role('admin') || Auth::user()->has_role('mod'))) {
+            $offers = $user->all_offers();
+            return view('offer.list', ['items' => $offers->get(), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
+
+        } else {
+            $offers = $user->offers();
+            return view('offer.show', ['items' => $offers->paginate(10), 'title' => 'Tin đăng của ' . $user->name, 'user' => $user]);
+        }
+
     }
 
 
-    //show my offers
-    public function show_mine()
+//show my offers
+    public
+    function show_mine()
     {
         return view('offer.mine', ['items' => \Auth::user()->non_premium_offers()->get(), 'title' => 'Tin đăng thường của tôi', 'user' => \Auth::user()]);
     }
 
-    //show my pending offers
+//show my pending offers
 
-    public function show_pending()
+    public
+    function show_pending()
     {
         return view('offer.mine', ['items' => \Auth::user()->pending_offers()->get(), 'title' => 'Tin đăng chờ duyệt của ' . \Auth::user()->name, 'user' => \Auth::user()]);
     }
 
-    public function show_premium()
+    public
+    function show_premium()
     {
         return view('offer.mine', ['items' => \Auth::user()->premium_offers()->get(), 'title' => 'Tin đặc biệt của tôi', 'user' => \Auth::user()]);
     }
 
-    //show my liked offers
+//show my liked offers
 
-    public function liked()
+    public
+    function liked()
     {
         return view('offer.liked_list', ['offers' => \Auth::user()->liked_offers()->paginate(10), 'title' => 'Danh sách yêu thích']);
     }
 
-    public function show_notification(Notification $notification)
+    public
+    function show_notification(Notification $notification)
     {
         $notification->seen = true;
         $notification->save();
         return redirect($notification->url);
     }
 
-    public function notifications()
+    public
+    function notifications()
     {
         return view('user.notifications', ['notifications' => \Auth::user()->all_notifications()->paginate(10), 'title' => 'Tất cả thông báo']);
     }
 
 
-    public function my_transactions()
+    public
+    function my_transactions()
     {
         return view('transaction.list', ['transactions' => Auth::user()->transactions, 'title' => 'Tất cả giao dịch']);
     }
 
-    //admin export all users data
-    public function export_csv()
+//admin export all users data
+    public
+    function export_csv()
     {
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 
-    //admin unban a user
-    public function restore($user)
+//admin unban a user
+    public
+    function restore($user)
     {
         $user = User::withTrashed()->find($user);
         $user->restore();
@@ -98,8 +116,9 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    //admin permanently delete a user
-    public function force_delete($user)
+//admin permanently delete a user
+    public
+    function force_delete($user)
     {
         $user = User::withTrashed()->find($user);
         \Session::flash("message", "Đã xoá vĩnh viễn tài khoản " . $user->email);
@@ -108,14 +127,16 @@ class UserController extends Controller
     }
 
 //show all user's info
-    public function edit_info(Request $request)
+    public
+    function edit_info(Request $request)
     {
         \Auth::user()->fill_olds();
         return view('user.info');
     }
 
 //save edited info
-    public function save_info(Request $request)
+    public
+    function save_info(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -130,13 +151,15 @@ class UserController extends Controller
         return redirect(route('info.edit'));
     }
 
-    public function edit_permission(Request $request, User $user)
+    public
+    function edit_permission(Request $request, User $user)
     {
         $title = "Chỉnh sửa quyền hạn '$user->name''";
         return view('user.permission', compact('title', 'user'));
     }
 
-    public function save_permission(Request $request, User $user)
+    public
+    function save_permission(Request $request, User $user)
     {
         $request->validate([
             'roles' => 'required',
@@ -148,12 +171,14 @@ class UserController extends Controller
     }
 
 //change password page
-    public function edit_password(Request $request)
+    public
+    function edit_password(Request $request)
     {
         return view('user.password');
     }
 
-    public function edit_password_admin(Request $request)
+    public
+    function edit_password_admin(Request $request)
     {
         return view('user.password_admin');
     }
