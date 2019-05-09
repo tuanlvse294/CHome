@@ -219,11 +219,12 @@ class OfferController extends Controller
             'image.*.mimes' => 'Chỉ hỗ trợ định dạng ảnh jpeg, png, jpg và bmp!',
             'image.*.max' => 'Kích cỡ ảnh tối đa là 2MB!',
         ]);
+
         $offer->fill($request->all()); //fill all inputs to model
         $offer->user_id = \Auth::id();
         if ($request->files->has('image')) { //save uploaded images
             $urls = array();
-            if ($request->files->count() > 10) {
+            if (sizeof($request->files->get('image')) > 10) {
                 throw  ValidationException::withMessages(['image' => 'Tối đa 10 ảnh!']);
             }
             foreach ($request->files->get('image') as $file) {
