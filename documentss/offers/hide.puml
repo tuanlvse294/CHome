@@ -1,24 +1,24 @@
 @startuml
 actor User
-boundary list_offers_view
 control OfferController
+boundary list_offers_view
 entity OfferModel
 
 activate User
-User -> list_offers_view: view offer list
-activate list_offers_view
-User <-- list_offers_view: offer list
-User -> list_offers_view: click hide offer
-User <-- list_offers_view: confirm box
-User -> list_offers_view: click confirm
-list_offers_view-> OfferController: request delete offer
-deactivate list_offers_view
+User -> OfferController: view offer list
 activate OfferController
-OfferController -> OfferController : validate
-OfferController -> OfferModel : hide offer
+OfferController -> list_offers_view:manage()
+deactivate OfferController
+activate list_offers_view
+list_offers_view -> list_offers_view:render()
+list_offers_view -->User
+deactivate list_offers_view
+User -> OfferController: click hide offer
+activate OfferController
+OfferController -> OfferModel : hide()
 activate OfferModel
-OfferModel ->OfferModel:soft delete offer
-OfferModel --> OfferController : deleted
+OfferModel ->OfferModel:soft_delete()
+OfferModel --> OfferController
 deactivate OfferModel
 OfferController --> User: return to offer list
 deactivate OfferController

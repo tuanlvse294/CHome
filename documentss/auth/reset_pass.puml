@@ -1,36 +1,41 @@
 @startuml
 actor User
-boundary reset_password_view
 control ResetPasswordController
+boundary auth.passwords.email
+boundary auth.passwords.reset
 entity UserModel
 
-User -> reset_password_view : go to reset password page
+User -> ResetPasswordController : go to reset password page
 activate User
-activate reset_password_view
-reset_password_view --> User : email input form
-deactivate reset_password_view
-User -> reset_password_view : email
-deactivate User
-activate reset_password_view
-reset_password_view -> ResetPasswordController: email
-deactivate reset_password_view
 activate ResetPasswordController
-ResetPasswordController -> ResetPasswordController : validate data
-ResetPasswordController -> ResetPasswordController : generate reset URL
-ResetPasswordController --> User : send reset URL to email
+ResetPasswordController->auth.passwords.email: showLinkRequestForm()
 deactivate ResetPasswordController
-User -> reset_password_view: go to reset password URL
-activate reset_password_view
-reset_password_view --> User : reset password input form
-User -> reset_password_view : new password
-reset_password_view -> ResetPasswordController: new password
-deactivate reset_password_view
+activate auth.passwords.email
+auth.passwords.email -> auth.passwords.email:render()
+auth.passwords.email -->User
+deactivate auth.passwords.email
+User -> ResetPasswordController : email
 activate ResetPasswordController
-ResetPasswordController -> ResetPasswordController : validate data
-ResetPasswordController -> UserModel: new password
+ResetPasswordController ->ResetPasswordController:validate()
+ResetPasswordController -> ResetPasswordController:sendResetLinkEmail()
+ResetPasswordController -->User:
+deactivate ResetPasswordController
+
+User -> ResetPasswordController: go to reset password URL
+activate ResetPasswordController
+ResetPasswordController -> auth.passwords.reset:showResetForm()
+deactivate ResetPasswordController
+activate auth.passwords.reset
+auth.passwords.reset -> auth.passwords.reset:render()
+auth.passwords.reset --> User :
+deactivate auth.passwords.reset
+User -> ResetPasswordController: new password
+activate ResetPasswordController
+ResetPasswordController ->ResetPasswordController:validate()
+ResetPasswordController ->UserModel:reset()
 activate UserModel
-UserModel -> UserModel: update password
-UserModel --> ResetPasswordController : reset_password ok
+UserModel -> UserModel: update_password()
+UserModel --> ResetPasswordController :
 deactivate UserModel
 ResetPasswordController --> User: return to login page
 deactivate ResetPasswordController

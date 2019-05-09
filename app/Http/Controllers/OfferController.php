@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class OfferController extends Controller
 {
@@ -203,6 +204,7 @@ class OfferController extends Controller
     //this process step is same for store new offer and save old edited offer
     protected function process(Request $request, Offer $offer)
     {
+
         $request->validate([
             'title' => 'required|string',
             'city_id' => 'required|numeric',
@@ -212,7 +214,7 @@ class OfferController extends Controller
             'address' => 'required',
             'content' => 'required',
             'price' => 'required|numeric|min:0|max:9223372036854775807',
-            'image.*' => 'mimes:jpg,jpeg,png,bmp|max:2000'
+            'image.*' => 'required|mimes:jpg,jpeg,png,bmp|max:2000'
         ], [
             'image.*.mimes' => 'Chỉ hỗ trợ định dạng ảnh jpeg, png, jpg và bmp!',
             'image.*.max' => 'Kích cỡ ảnh tối đa là 2MB!',
@@ -221,6 +223,9 @@ class OfferController extends Controller
         $offer->user_id = \Auth::id();
         if ($request->files->has('image')) { //save uploaded images
             $urls = array();
+            if ($request->files->count() > 10) {
+                throw  ValidationException::withMessages(['image' => 'Tối đa 10 ảnh!']);
+            }
             foreach ($request->files->get('image') as $file) {
                 $path = $this->process_image($file);
                 array_push($urls, $path);
